@@ -31,7 +31,7 @@ case class Spielfeld(x: Int, y: Int) {
   for(yy <- 0 until y){
     for(xx <- 0 until x){
       val r: Random.type = Random
-      matrix(yy)(xx) = kanten(r.nextInt(3))
+      matrix(xx)(yy) = kanten(r.nextInt(3))
     }
   }
 

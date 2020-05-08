@@ -9,7 +9,7 @@ object Carcassonne {
 
     //print(Spielfeld(2,2).feldgenerator())
 
-    //print(Spielfeld(5,5).feldgenerator("g", "r", "c", "r"))
+    print(Spielfeld(2,2).feldgenerator(" ", " ", " ", " "))
 
     println(""" ┌   ┐ ┌   ┐ ┌ g ┐ ┌   ┐ ┌   ┐
               |             c   r
@@ -17,9 +17,9 @@ object Carcassonne {
               | ┌   ┐ ┌ g ┐ ┌ g ┐ ┌ g ┐ ┌   ┐
               |       r   c c   r r   c
               | └   ┘ └ r ┘ └ r ┘ └ g ┘ └   ┘
-              | ┌   ┐ ┌ r ┐ ┌ r ┐ ┌ g ┐ ┌   ┐
-              |       r   c c   r r   c
-              | └   ┘ └ r ┘ └ c ┘ └ r ┘ └   ┘""".stripMargin)
+              | ┌   ┐ ┌ r ┐ ┌   ┐ ┌ g ┐ ┌   ┐
+              |       r   c       r   c
+              | └   ┘ └ r ┘ └   ┘ └ r ┘ └   ┘""".stripMargin)
 
   }
 }
