@@ -7,7 +7,7 @@ object Carcassonne {
     val student = Player("Mark Boehme")
     println("Hello, " + student.name)
 
-    val spielfeld = Spielfeld(4).aufbau()
+    val spielfeld = Spielfeld(5, 0).feldgenerator()
 
     print(spielfeld)
   }
