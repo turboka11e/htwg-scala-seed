@@ -7,6 +7,19 @@ object Carcassonne {
     val student = Player("Mark Boehme")
     println("Hello, " + student.name)
 
-    print(Spielfeld(2,3).feldgenerator())
+    //print(Spielfeld(2,2).feldgenerator())
+
+    //print(Spielfeld(5,5).feldgenerator("g", "r", "c", "r"))
+
+    println(""" ┌   ┐ ┌   ┐ ┌ g ┐ ┌   ┐ ┌   ┐
+              |             c   r
+              | └   ┘ └   ┘ └ g ┘ └   ┘ └   ┘
+              | ┌   ┐ ┌ g ┐ ┌ g ┐ ┌ g ┐ ┌   ┐
+              |       r   c c   r r   c
+              | └   ┘ └ r ┘ └ r ┘ └ g ┘ └   ┘
+              | ┌   ┐ ┌ r ┐ ┌ r ┐ ┌ g ┐ ┌   ┐
+              |       r   c c   r r   c
+              | └   ┘ └ r ┘ └ c ┘ └ r ┘ └   ┘""".stripMargin)
+
   }
 }
