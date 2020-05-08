@@ -6,7 +6,9 @@ object Carcassonne {
   def main(args: Array[String]): Unit = {
     val student = Player("Mark Boehme")
     println("Hello, " + student.name)
-    val spielfeld = Spielfeld(1)
+
+    val spielfeld = Spielfeld(4).aufbau()
+
     print(spielfeld)
   }
 }

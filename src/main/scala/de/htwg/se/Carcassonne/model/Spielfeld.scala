@@ -1,5 +1,5 @@
 package de.htwg.se.Carcassonne.model
 
 case class Spielfeld(size: Int) {
-  print("Test"*size)
+  def aufbau():String = " ┌ g ┐\n g   c \n └ r ┘\n" * size
 }
