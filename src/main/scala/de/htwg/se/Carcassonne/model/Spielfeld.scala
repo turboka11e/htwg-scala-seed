@@ -22,40 +22,52 @@ case class Spielfeld(x: Int, y: Int) {
   }
 
 
-  /*************************** WORK IN PROGRESS ********************************/
+  /*************************** SPIELFELD ALS MATRIX ********************************/
 
-  val matrix: Array[Array[String]] = Array.ofDim[String](x, y)
+  val matrix: Array[Array[Karte]] = Array.ofDim[Karte](x, y)
 
-  val kanten: Array[String] = Array("g", "c", "r")
+  val kanten: Array[String] = Array("g", "r", "c")
 
-  for(yy <- 0 until y){
-    for(xx <- 0 until x){
-      val r: Random.type = Random
-      matrix(xx)(yy) = kanten(r.nextInt(3))
+  def randmatrix(): Unit = {
+    for(yy <- 0 until y){
+      for(xx <- 0 until x){
+          val r: Random.type = Random
+          matrix(yy)(xx) = Karte(kanten(r.nextInt(3)), kanten(r.nextInt(3)), kanten(r.nextInt(3)), kanten(r.nextInt(3)))
+      }
     }
   }
+
+  def emptymatrix(): Unit = {
+    for(yy <- 0 until y){
+      for(xx <- 0 until x){
+        matrix(xx)(yy) = Karte()
+      }
+    }
+  }
+
+  def insertKarte(x:Int, y:Int):Unit = matrix(x)(y) = Karte("g", "r", "r", "c")
 
   def matrixfeldgenerator():String = {
 
     var tmpstring:String = ""
 
-      for(yy <- 0 until y * 3 by 3){
+      for(yy <- 0 until y){
 
         for (xx <- 0 until x) {
-          val o = matrix(yy / 3)(xx)
+          val o = matrix(xx)(yy).o
           tmpstring += s" ┌ $o ┐"
         }
-        tmpstring += s" yy: $yy\n"
+        tmpstring += s"\n"
 
         for (xx <- 0 until x) {
-          val l = matrix(yy / 3)(xx)
-          val r = matrix(yy / 3)(xx)
+          val l = matrix(xx)(yy).l
+          val r = matrix(xx)(yy).r
           tmpstring += s" $l   $r"
         }
         tmpstring += "\n"
 
         for (xx <- 0 until x) {
-          val u = matrix(yy / 3)(xx)
+          val u = matrix(xx)(yy).u
           tmpstring += s" └ $u ┘"
         }
         tmpstring += "\n"
