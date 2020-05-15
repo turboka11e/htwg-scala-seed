@@ -1,33 +1,16 @@
 package de.htwg.se.Carcassonne
 
-import de.htwg.se.Carcassonne.model.{Player, Spielfeld}
-import io.StdIn._
+import de.htwg.se.Carcassonne.model.{Grid, Player}
 
 object Carcassonne {
   def main(args: Array[String]): Unit = {
-    val student = Player("Mark Boehme")
+    val student = Player("Max Mustermann")
     println("Hello, " + student.name)
 
-    val spielfeld1 = Spielfeld(3, 3)
+    var gamefield = new Grid(3)
+    gamefield = gamefield.set(1, 1, 'g', 'c', 'r', 'c')
 
-    // spielfeld1.rmatrix()
-    spielfeld1.emptymatrix()
-    println(spielfeld1.matrixfeldgenerator())
-
-    while(true) {
-      print("Geben Sie eine X-Koord. ein: ")
-      val xc = readInt()
-      print("Geben Sie eine Y-Koord. ein: ")
-      val yc = readInt()
-      println()
-      spielfeld1.insertKarte(xc, yc)
-      println(spielfeld1.matrixfeldgenerator())
-    }
-
-    //print(spielfeld1.feldgenerator(" ", " ", " ", " "))
-
-
-
+    print(gamefield.printgrid())
 
     /*
     println(""" ┌   ┐ ┌   ┐ ┌ g ┐ ┌   ┐ ┌   ┐
