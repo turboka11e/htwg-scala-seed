@@ -22,5 +22,10 @@ case class Card(areas:List[Area] = List(Area(corners = List('n')), Area(corners 
     check
   }
 
+  def rotateRight():Card = {
+    val rotatedAreas:List[Area] = areas.map { x => x.rotateRight() }
+    Card(rotatedAreas)
+  }
+
 }
 

@@ -8,8 +8,8 @@ case class Grid(private val cells:Matrix[Card]) {
 
   def card(row: Int, col: Int): Card = cells.card(row, col)
 
-  def set(row: Int, col: Int, areas:List[Area]): Grid =
-    copy(cells.replaceCell(row, col, Card(areas)))
+  def set(row: Int, col: Int, newCard:Card): Grid =
+    copy(cells.replaceCell(row, col, newCard))
 
   def printgrid():String = {
 
