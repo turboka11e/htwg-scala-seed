@@ -6,9 +6,10 @@ case class Grid(private val cells:Matrix[Card]) {
 
   val size: Int = cells.size
 
-  def cell(row: Int, col: Int): Card = cells.card(row, col)
+  def card(row: Int, col: Int): Card = cells.card(row, col)
 
-  def set(row: Int, col: Int, nord:Char, west:Char, east:Char, south:Char): Grid = copy(cells.replaceCell(row, col, Card(nord, west, east, south)))
+  def set(row: Int, col: Int, areas:List[Area]): Grid =
+    copy(cells.replaceCell(row, col, Card(areas)))
 
   def printgrid():String = {
 
@@ -17,21 +18,32 @@ case class Grid(private val cells:Matrix[Card]) {
     for(yy <- 0 until size){
 
       for (xx <- 0 until size) {
-        val o = cell(xx, yy).nord
-        tmpstring += s" ┌ $o ┐"
+        val o = card(xx, yy).getValue('n')
+        var ol = '┌'
+        var or = '┐'
+        if(card(xx, yy).getLinksLookingFrom('n').contains('w')) ol = o
+        if(card(xx, yy).getLinksLookingFrom('n').contains('e')) or = o
+        tmpstring += s" $ol $o $or"
       }
       tmpstring += s"\n"
 
       for (xx <- 0 until size) {
-        val l = cell(xx, yy).west
-        val r = cell(xx, yy).east
-        tmpstring += s" $l   $r"
+        val l = card(xx, yy).getValue('w')
+        val r = card(xx, yy).getValue('e')
+        var m = ' '
+        if(card(xx, yy).getLinksLookingFrom('e').contains('w')) m = l
+        if(card(xx, yy).getLinksLookingFrom('n').contains('s')) m = card(xx, yy).getValue('n')
+        tmpstring += s" $l $m $r"
       }
       tmpstring += "\n"
 
       for (xx <- 0 until size) {
-        val u = cell(xx, yy).south
-        tmpstring += s" └ $u ┘"
+        val u = card(xx, yy).getValue('s')
+        var ul = '└'
+        var ur = '┘'
+        if(card(xx, yy).getLinksLookingFrom('s').contains('w')) ul = u
+        if(card(xx, yy).getLinksLookingFrom('s').contains('e')) ur = u
+        tmpstring += s" $ul $u $ur"
       }
       tmpstring += "\n"
     }
