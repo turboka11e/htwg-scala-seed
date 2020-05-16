@@ -32,7 +32,7 @@ class GridSpec extends WordSpec with Matchers {
         smallGrid.card(1, 1) should be(Card())
       }
       "allow to set individual Cells and remain immutable" in {
-        val changedGrid = smallGrid.set(0, 0, List(Area('c', List('n', 'w', 'e', 's'))))
+        val changedGrid = smallGrid.set(0, 0, Card(List(Area('c', List('n', 'w', 'e', 's')))))
         changedGrid.card(0, 0) should be(Card(List(Area('c', List('n', 'w', 'e', 's')))))
         smallGrid.card(0, 0) should be(Card())
       }
