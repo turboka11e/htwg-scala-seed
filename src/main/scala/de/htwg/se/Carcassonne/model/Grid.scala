@@ -21,8 +21,8 @@ case class Grid(private val cells:Matrix[Card]) {
         val o = card(xx, yy).getValue('n')
         var ol = '┌'
         var or = '┐'
-        if(card(xx, yy).getLinksLookingFrom('n').contains('w')) ol = o
-        if(card(xx, yy).getLinksLookingFrom('n').contains('e')) or = o
+        if(card(xx, yy).getCornersLookingFrom('n').contains('w')) ol = o
+        if(card(xx, yy).getCornersLookingFrom('n').contains('e')) or = o
         tmpstring += s" $ol $o $or"
       }
       tmpstring += s"\n"
@@ -31,8 +31,8 @@ case class Grid(private val cells:Matrix[Card]) {
         val l = card(xx, yy).getValue('w')
         val r = card(xx, yy).getValue('e')
         var m = ' '
-        if(card(xx, yy).getLinksLookingFrom('e').contains('w')) m = l
-        if(card(xx, yy).getLinksLookingFrom('n').contains('s')) m = card(xx, yy).getValue('n')
+        if(card(xx, yy).getCornersLookingFrom('e').contains('w')) m = l
+        if(card(xx, yy).getCornersLookingFrom('n').contains('s')) m = card(xx, yy).getValue('n')
         tmpstring += s" $l $m $r"
       }
       tmpstring += "\n"
@@ -41,8 +41,8 @@ case class Grid(private val cells:Matrix[Card]) {
         val u = card(xx, yy).getValue('s')
         var ul = '└'
         var ur = '┘'
-        if(card(xx, yy).getLinksLookingFrom('s').contains('w')) ul = u
-        if(card(xx, yy).getLinksLookingFrom('s').contains('e')) ur = u
+        if(card(xx, yy).getCornersLookingFrom('s').contains('w')) ul = u
+        if(card(xx, yy).getCornersLookingFrom('s').contains('e')) ur = u
         tmpstring += s" $ul $u $ur"
       }
       tmpstring += "\n"

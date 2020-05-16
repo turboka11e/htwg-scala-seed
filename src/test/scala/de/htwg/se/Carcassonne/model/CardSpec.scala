@@ -32,7 +32,7 @@ class CardSpec extends WordSpec with Matchers {
     "looking from a corner" should {
       val nonEmptyCell = Card(List(Area('c', List('n', 's')), Area('g', List('w', 'e'))))
       "return List of all corners area touches" in {
-        nonEmptyCell.getLinksLookingFrom('n') should be(List('n', 's'))
+        nonEmptyCell.getCornersLookingFrom('n') should be(List('n', 's'))
       }
     }
     "looking from a corner" should {
