@@ -1,27 +1,16 @@
 package de.htwg.se.Carcassonne
 
-import de.htwg.se.Carcassonne.model.{Grid, Player}
+import de.htwg.se.Carcassonne.model.{Area, Grid, Player}
 
 object Carcassonne {
   def main(args: Array[String]): Unit = {
     val student = Player("Max Mustermann")
     println("Hello, " + student.name)
 
-    var gamefield = new Grid(3)
-    gamefield = gamefield.set(1, 1, 'g', 'c', 'r', 'c')
+    val g0 = new Grid(3)
 
-    print(gamefield.printgrid())
+    val g1 = g0.set(1, 1, List(Area('c', List('n', 's', 'w')), Area('g', List('e'))))
 
-    /*
-    println(""" ┌   ┐ ┌   ┐ ┌ g ┐ ┌   ┐ ┌   ┐
-              |             c   r
-              | └   ┘ └   ┘ └ g ┘ └   ┘ └   ┘
-              | ┌   ┐ ┌ g ┐ ┌ g ┐ ┌ g ┐ ┌   ┐
-              |       r   c c   r r   c
-              | └   ┘ └ r ┘ └ r ┘ └ g ┘ └   ┘
-              | ┌   ┐ ┌ r ┐ ┌   ┐ ┌ g ┐ ┌   ┐
-              |       r   c       r   c
-              | └   ┘ └ r ┘ └   ┘ └ r ┘ └   ┘""".stripMargin)
-    */
+    print(g1.printgrid())
   }
 }
