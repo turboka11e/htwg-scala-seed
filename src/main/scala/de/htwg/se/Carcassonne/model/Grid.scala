@@ -11,7 +11,7 @@ case class Grid(private val cells:Matrix[Card]) {
   def set(row: Int, col: Int, newCard:Card): Grid =
     copy(cells.replaceCell(row, col, newCard))
 
-  def printgrid():String = {
+  override def toString:String = {
 
     var tmpstring:String = ""
 
