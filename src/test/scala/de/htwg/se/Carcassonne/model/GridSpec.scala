@@ -22,7 +22,7 @@ class GridSpec extends WordSpec with Matchers {
     "created properly but empty" should {
       val tinygrid = new Grid(1)
       val smallGrid = new Grid(4)
-      val normalGrid = new Grid(9)
+      val printGrid = new Grid(3)
       val awkwardGrid = new Grid(2)
       "give access to its Cells" in {
         tinygrid.card(0, 0) should be(Card())
@@ -35,6 +35,17 @@ class GridSpec extends WordSpec with Matchers {
         val changedGrid = smallGrid.set(0, 0, Card(List(Area('c', List('n', 'w', 'e', 's')))))
         changedGrid.card(0, 0) should be(Card(List(Area('c', List('n', 'w', 'e', 's')))))
         smallGrid.card(0, 0) should be(Card())
+      }
+      "print field as String correctly" in {
+        printGrid.toString should be(" ┌   ┐ ┌   ┐ ┌   ┐\n " +
+                                      "                 " +
+                                   "\n └   ┘ └   ┘ └   ┘\n " +
+                                      "┌   ┐ ┌   ┐ ┌   ┐\n" +
+                                      "                  \n " +
+                                      "└   ┘ └   ┘ └   ┘\n " +
+                                      "┌   ┐ ┌   ┐ ┌   ┐\n" +
+                                      "                  \n " +
+                                      "└   ┘ └   ┘ └   ┘\n")
       }
     }
     "created properly and with one Card" should {
@@ -66,6 +77,18 @@ class GridSpec extends WordSpec with Matchers {
 
         gridWithOneCard.checkSet(3, 2, validEastCard) should be(true)
         gridWithOneCard.checkSet(3, 2, notValidEastCard) should be(false)
+      }
+      "only allow placing same territores next to each other and ignore Borders of the Game" in {
+        val gridWithTwoCards = gridWithOneCard.set(0, 1, oneCard)
+
+        gridWithTwoCards.checkSet(0, 0, validNordCard) should be(true)
+      }
+      "a new Card only be placed next to a Card" in {
+        val gridWithTwoCards = gridWithOneCard.set(4, 3, oneCard)
+
+        gridWithOneCard.checkSet(4, 4, oneCard) should be(false)
+        gridWithTwoCards.checkSet(4, 4, validSouthCard) should be(true)
+
       }
     }
   }

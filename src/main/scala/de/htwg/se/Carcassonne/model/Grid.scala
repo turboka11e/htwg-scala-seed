@@ -9,13 +9,14 @@ case class Grid(private val cells:Matrix[Card]) {
   def card(row: Int, col: Int): Card = cells.card(row, col)
 
   def checkSet(row: Int, col: Int, checkCard:Card): Boolean = {
-    var check = card(row, col).isEmpty
+    var check = false
+
     if(col > 0){ // Prüfe Nord Karte, wenn nicht oberste Karte
       if(!card(row, col - 1).isEmpty) {
         check = card(row, col - 1).getValue('s').equals(checkCard.getValue('n'))
       }
     }
-    if(col < size) { // Prüfe Süd Karte, wenn nicht unterste Karte
+    if(col < size - 1) { // Prüfe Süd Karte, wenn nicht unterste Karte
       if(!card(row, col + 1).isEmpty) {
         check = card(row, col + 1).getValue('n').equals(checkCard.getValue('s'))
       }
@@ -25,12 +26,12 @@ case class Grid(private val cells:Matrix[Card]) {
         check = card(row - 1, col).getValue('e').equals(checkCard.getValue('w'))
       }
     }
-    if(row < size) { // Prüfe Ost Karte, wenn nicht ganz rechts
+    if(row < size - 1) { // Prüfe Ost Karte, wenn nicht ganz rechts
       if(!card(row + 1, col).isEmpty) {
         check = card(row + 1, col).getValue('w').equals(checkCard.getValue('e'))
       }
     }
-    check
+    check && card(row, col).isEmpty
   }
 
   def set(row: Int, col: Int, newCard:Card): Grid =

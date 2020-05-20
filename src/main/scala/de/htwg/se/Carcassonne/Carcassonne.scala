@@ -7,7 +7,8 @@ object Carcassonne {
     val student = Player("Max Mustermann")
     println("Hello, " + student.name)
 
-    val g0 = new Grid(5)
+    val g0 = new Grid(3)
+    print(g0.toString)
     val toBeInsertedCard1 = Card(List(Area('c', List('n', 's', 'w')), Area('g', List('e'))))
     val toBeInsertedCard2 = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s'))))
 
@@ -18,7 +19,7 @@ object Carcassonne {
     println(g2.toString())
     val g3 = g2.set(1, 2, toBeInsertedCard2)
     println(g3.toString())
-    val g4 = g3.set(2, 4, toBeInsertedCard2.rotateRight())
+    val g4 = g3.set(2, 1, toBeInsertedCard2.rotateRight())
     println(g4.toString())
   }
 }
