@@ -13,12 +13,12 @@ object Carcassonne {
 
 
     val g1 = g0.set(1, 1, toBeInsertedCard1)
-    println(g1.printgrid())
+    println(g1.toString())
     val g2 = g1.set(1, 1, toBeInsertedCard1.rotateRight())
-    println(g2.printgrid())
+    println(g2.toString())
     val g3 = g2.set(1, 0, toBeInsertedCard2)
-    println(g3.printgrid())
+    println(g3.toString())
     val g4 = g3.set(1, 0, toBeInsertedCard2.rotateRight())
-    println(g4.printgrid())
+    println(g4.toString())
   }
 }
