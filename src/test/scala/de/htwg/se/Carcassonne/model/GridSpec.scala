@@ -37,5 +37,36 @@ class GridSpec extends WordSpec with Matchers {
         smallGrid.card(0, 0) should be(Card())
       }
     }
+    "created properly and with one Card" should {
+      val oneCard = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s'))))
+
+      val validNordCard = Card(List(Area('c', List('n', 's', 'w')), Area('g', List('e'))))
+      val notValidNordCard = Card(List(Area('r', List('s', 'w')), Area('g', List('n', 'e'))))
+
+      val validSouthCard = Card(List(Area('g', List('n', 's', 'w')), Area('c', List('e'))))
+      val notValidSouthCard = Card(List(Area('r', List('s', 'w')), Area('r', List('n', 'e'))))
+
+      val validWestCard = Card(List(Area('c', List('n', 's', 'w')), Area('r', List('e'))))
+      val notValidWestCard = Card(List(Area('r', List('s', 'w')), Area('g', List('n', 'e'))))
+
+      val validEastCard = Card(List(Area('r', List('n', 's', 'w')), Area('g', List('e'))))
+      val notValidEastCard = Card(List(Area('c', List('s', 'w')), Area('g', List('n', 'e'))))
+
+      val emptyGrid = new Grid(5)
+      val gridWithOneCard = emptyGrid.set(2, 2, oneCard)
+      "only allow placing same territories next to each other" in {
+        gridWithOneCard.checkSet(2, 1, validNordCard) should be(true)
+        gridWithOneCard.checkSet(2, 1, notValidNordCard) should be(false)
+
+        gridWithOneCard.checkSet(2, 3, validSouthCard) should be(true)
+        gridWithOneCard.checkSet(2, 3, notValidSouthCard) should be(false)
+
+        gridWithOneCard.checkSet(1, 2, validWestCard) should be(true)
+        gridWithOneCard.checkSet(1, 2, notValidWestCard) should be(false)
+
+        gridWithOneCard.checkSet(3, 2, validEastCard) should be(true)
+        gridWithOneCard.checkSet(3, 2, notValidEastCard) should be(false)
+      }
+    }
   }
 }
