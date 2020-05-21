@@ -11,12 +11,12 @@ class AreaSpec extends WordSpec with Matchers {
     "not set to any value " should {
       val emptyArea = Area()
       "have List with ' '" in {
-
       }
     }
     "filld with corners" should {
       val realArea = Area('c', List('n', 's', 'w'))
-      "rotate right" in {
+      " check if there are corners to return then rotate right" in {
+        realArea.getCorners should be (List('n', 's', 'w'))
         realArea.rotateRight() should be(Area('c', List('e', 'w', 'n')))
       }
     }
