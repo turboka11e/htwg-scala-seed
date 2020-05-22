@@ -1,10 +1,7 @@
 package de.htwg.se.Carcassonne.model
 
 import org.scalatest._
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
 class AreaSpec extends WordSpec with Matchers {
 
   "An Area" when {
