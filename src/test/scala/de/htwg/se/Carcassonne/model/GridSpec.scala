@@ -1,10 +1,7 @@
 package de.htwg.se.Carcassonne.model
 
 import org.scalatest._
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 
-@RunWith(classOf[JUnitRunner])
 class GridSpec extends WordSpec with Matchers {
   "A Grid is the playingfield of Carcassonne. A Grid" when {
     "to be constructed" should {
