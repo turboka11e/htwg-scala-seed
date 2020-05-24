@@ -33,7 +33,19 @@ case class Grid(private val cells:Matrix[Card]) {
     }
     check && card(row, col).isEmpty
   }
+  /*
+  def checkNorth(row: Int, col: Int, checkCard:Card): Boolean =
+    card(row, col - 1).getValue('s').equals(checkCard.getValue('n'))
 
+  def checkSouth(row: Int, col: Int, checkCard:Card): Boolean =
+    card(row, col + 1).getValue('n').equals(checkCard.getValue('s'))
+
+  def checkWest(row: Int, col: Int, checkCard:Card): Boolean =
+    card(row - 1, col).getValue('e').equals(checkCard.getValue('w'))
+
+  def checkEast(row: Int, col: Int, checkCard:Card): Boolean =
+    card(row + 1, col).getValue('w').equals(checkCard.getValue('e'))
+  */
   def set(row: Int, col: Int, newCard:Card): Grid =
     copy(cells.replaceCell(row, col, newCard))
 
