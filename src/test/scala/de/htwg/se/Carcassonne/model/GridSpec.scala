@@ -62,6 +62,12 @@ class GridSpec extends WordSpec with Matchers {
 
       val emptyGrid = new Grid(5)
       val gridWithOneCard = emptyGrid.set(2, 2, oneCard)
+      val gridWithOneCardonEdge = emptyGrid.set(0, 0, oneCard)
+      "should be able to check egdges" in {
+        gridWithOneCard.checkEdge(2, 2, 'n') should be(true)
+        gridWithOneCardonEdge.checkEdge(0, 0, 'n') should be(false)
+      }
+
       "only allow placing same territories next to each other" in {
         gridWithOneCard.checkSet(2, 1, validNordCard) should be(true)
         gridWithOneCard.checkSet(2, 1, notValidNordCard) should be(false)

@@ -8,29 +8,63 @@ case class Grid(private val cells:Matrix[Card]) {
 
   def card(row: Int, col: Int): Card = cells.card(row, col)
 
-  def checkSet(row: Int, col: Int, checkCard:Card): Boolean = {
+  def checkEdge(row: Int, col: Int, dir: Char):Boolean = {
+    dir match {
+      case 'n' => col > 0
+      case 's' => col < size -1
+      case 'w' => row > 0
+      case 'e' => row < size -1
+    }
+  }
+
+  def checkEnvEmpty(row: Int, col: Int, dir:Char):Boolean = {
+    if(checkEdge(row, col, dir)) {
+      dir match {
+        case 'n' => card(row, col - 1).isEmpty
+        case 's' => card(row, col + 1).isEmpty
+        case 'w' => card(row - 1, col).isEmpty
+        case 'e' => card(row + 1, col).isEmpty
+      }
+    } else {
+      true
+    }
+  }
+
+  def checkEnv(row: Int, col: Int, dir: Char, checkCard: Card):Boolean = {
+    if(!checkEnvEmpty(row, col, dir)){
+      dir match{
+        case 'n' => card(row, col - 1).getValue('s').equals(checkCard.getValue('n'))
+        case 's' => card(row, col + 1).getValue('n').equals(checkCard.getValue('s'))
+        case 'w' => card(row - 1, col).getValue('e').equals(checkCard.getValue('w'))
+        case 'e' => card(row + 1, col).getValue('w').equals(checkCard.getValue('e'))
+      }
+    } else {
+      true
+    }
+  }
+
+  def hasNeighbor(row: Int, col: Int): Boolean = {
     var check = false
 
-    if(col > 0){ // Prüfe Nord Karte, wenn nicht oberste Karte
-      if(!card(row, col - 1).isEmpty) {
-        check = card(row, col - 1).getValue('s').equals(checkCard.getValue('n'))
-      }
-    }
-    if(col < size - 1) { // Prüfe Süd Karte, wenn nicht unterste Karte
-      if(!card(row, col + 1).isEmpty) {
-        check = card(row, col + 1).getValue('n').equals(checkCard.getValue('s'))
-      }
-    }
-    if(row > 0){ // Prüfe West Karte, wenn Karte nicht ganz links
-      if(!card(row - 1, col).isEmpty) {
-        check = card(row - 1, col).getValue('e').equals(checkCard.getValue('w'))
-      }
-    }
-    if(row < size - 1) { // Prüfe Ost Karte, wenn nicht ganz rechts
-      if(!card(row + 1, col).isEmpty) {
-        check = card(row + 1, col).getValue('w').equals(checkCard.getValue('e'))
-      }
-    }
+    check = check || !checkEnvEmpty(row, col, 'n')
+    check = check || !checkEnvEmpty(row, col, 's')
+    check = check || !checkEnvEmpty(row, col, 'e')
+    check = check || !checkEnvEmpty(row, col, 'w')
+
+    check
+  }
+
+  def checkSet(row: Int, col: Int, checkCard:Card): Boolean = {
+
+    var check = true
+
+    check = check && checkEnv(row, col, 'n', checkCard)
+    check = check && checkEnv(row, col, 's', checkCard)
+    check = check && checkEnv(row, col, 'w', checkCard)
+    check = check && checkEnv(row, col, 'e', checkCard)
+
+    check = check && hasNeighbor(row, col)
+
     check && card(row, col).isEmpty
   }
   /*
@@ -46,6 +80,7 @@ case class Grid(private val cells:Matrix[Card]) {
   def checkEast(row: Int, col: Int, checkCard:Card): Boolean =
     card(row + 1, col).getValue('w').equals(checkCard.getValue('e'))
   */
+
   def set(row: Int, col: Int, newCard:Card): Grid =
     copy(cells.replaceCell(row, col, newCard))
 
