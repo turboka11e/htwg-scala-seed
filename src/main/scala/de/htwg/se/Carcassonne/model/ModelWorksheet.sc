@@ -10,3 +10,5 @@ val area2 = Area()
 val area3 = Area()
 
 val cardterritories:List[Area] = List(area1, area2)
+
+area1::cardterritories
