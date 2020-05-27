@@ -93,6 +93,19 @@ class GridSpec extends WordSpec with Matchers {
         gridWithTwoCards.checkSet(4, 4, validSouthCard) should be(true)
 
       }
+      "a new Card only be placed to a card not selected with other Player in area" in {
+        //val validNordCard = Card(List(Area('c', List('n', 's', 'w')), Area('g', List('e'))))
+        //val notValidNordCard = Card(List(Area('r', List('s', 'w')), Area('g', List('n', 'e'))))
+      }
+    }
+    "created properly and with four cards Card" should {
+      val oneCard = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s'))))
+      val emptyGrid = new Grid(5)
+      val g1 = emptyGrid.set(2, 1, oneCard)
+      val g2 = g1.set(1, 2, oneCard)
+      val g3 = g2.set(3, 2, oneCard)
+      val gridWithFourCards = g3.set(2, 3, oneCard)
+
     }
   }
 }

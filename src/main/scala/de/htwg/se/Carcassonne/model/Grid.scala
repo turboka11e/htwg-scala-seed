@@ -11,9 +11,9 @@ case class Grid(private val cells:Matrix[Card]) {
   def checkEdge(row: Int, col: Int, dir: Char):Boolean = {
     dir match {
       case 'n' => col > 0
-      case 's' => col < size -1
+      case 's' => col < size - 1
       case 'w' => row > 0
-      case 'e' => row < size -1
+      case 'e' => row < size - 1
     }
   }
 
@@ -43,13 +43,40 @@ case class Grid(private val cells:Matrix[Card]) {
     }
   }
 
+  def getDirEnv(row: Int, col: Int, dir:Char):Area = {
+    if(!checkEnvEmpty(row, col, dir)){
+      dir match{
+        case 'n' => card(row, col - 1).getAreaLookingFrom('s')
+        case 's' => card(row, col + 1).getAreaLookingFrom('n')
+        case 'w' => card(row - 1, col).getAreaLookingFrom('e')
+        case 'e' => card(row + 1, col).getAreaLookingFrom('w')
+      }
+    } else {
+      Area()
+    }
+  }
+
+  /*
+  def checkPlayer(row: Int, col:Int, dir: Char, checkCard: Card):Boolean = {
+    if(!checkEnvEmpty(row, col, dir) && checkCard.getPlayer(dir) != Player("not selected")){
+      dir match{
+        case 'n' => card(row, col - 1).getPlayer('s').equals(checkCard.getPlayer('n'))
+        case 's' => card(row, col + 1).getPlayer('n').equals(checkCard.getPlayer('s'))
+        case 'w' => card(row - 1, col).getPlayer('e').equals(checkCard.getPlayer('w'))
+        case 'e' => card(row + 1, col).getPlayer('w').equals(checkCard.getPlayer('e'))
+      }
+    } else {
+      true
+    }
+  }
+  */
+
   def hasNeighbor(row: Int, col: Int): Boolean = {
     var check = false
 
-    check = check || !checkEnvEmpty(row, col, 'n')
-    check = check || !checkEnvEmpty(row, col, 's')
-    check = check || !checkEnvEmpty(row, col, 'e')
-    check = check || !checkEnvEmpty(row, col, 'w')
+    for(x <- List('n', 's', 'w', 'e')){
+      check = check || !checkEnvEmpty(row, col, x)
+    }
 
     check
   }
@@ -58,14 +85,11 @@ case class Grid(private val cells:Matrix[Card]) {
 
     var check = true
 
-    check = check && checkEnv(row, col, 'n', checkCard)
-    check = check && checkEnv(row, col, 's', checkCard)
-    check = check && checkEnv(row, col, 'w', checkCard)
-    check = check && checkEnv(row, col, 'e', checkCard)
+    for(x <- List('n', 's', 'w', 'e')){
+      check = check && checkEnv(row, col, x, checkCard)
+    }
 
-    check = check && hasNeighbor(row, col)
-
-    check && card(row, col).isEmpty
+    check && card(row, col).isEmpty && hasNeighbor(row, col)
   }
   /*
   def checkNorth(row: Int, col: Int, checkCard:Card): Boolean =
