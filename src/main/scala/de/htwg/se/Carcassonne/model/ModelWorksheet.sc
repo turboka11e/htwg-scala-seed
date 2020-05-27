@@ -1,5 +1,12 @@
-import de.htwg.se.Carcassonne.model.{Area, Card}
+import de.htwg.se.Carcassonne.model.{Area, Player}
 
-val neu = Card(List(Area('c', List('n', 's', 'w')))).areas
+val test = Area(value = 'n', corners = List('n'), player = Player("Kalle"))
 
-val areasrotated = neu.map{ x => x.rotateRight()}
+val territories = List(List(Area))
+
+val area1 = Area()
+val area2 = Area()
+
+val area3 = Area()
+
+val cardterritories:List[Area] = List(area1, area2)
