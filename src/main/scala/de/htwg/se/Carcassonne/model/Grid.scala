@@ -1,8 +1,11 @@
 package de.htwg.se.Carcassonne.model
 
-case class Grid(private val cells:Matrix[Card], private val territories: Territories = Territories()) {
+case class Grid(private val cells:Matrix[Card], private val territories: Territories = Territories(),
+                private val playerlist:List[Player] = List(Player("Wall-E"))) {
 
   def this(size: Int) = this(new Matrix[Card](size, Card()), Territories())
+
+  def this(size: Int, playerList: List[Player]) = this(new Matrix[Card](size, Card()), Territories(), playerList)
 
   val size: Int = cells.size
 
@@ -57,21 +60,6 @@ case class Grid(private val cells:Matrix[Card], private val territories: Territo
       Area()
     }
   }
-
-  /*
-  def checkPlayer(row: Int, col:Int, dir: Char, checkCard: Card):Boolean = {
-    if(!checkEnvEmpty(row, col, dir) && checkCard.getPlayer(dir) != Player("not selected")){
-      dir match{
-        case 'n' => card(row, col - 1).getPlayer('s').equals(checkCard.getPlayer('n'))
-        case 's' => card(row, col + 1).getPlayer('n').equals(checkCard.getPlayer('s'))
-        case 'w' => card(row - 1, col).getPlayer('e').equals(checkCard.getPlayer('w'))
-        case 'e' => card(row + 1, col).getPlayer('w').equals(checkCard.getPlayer('e'))
-      }
-    } else {
-      true
-    }
-  }
-  */
 
   def hasNeighbor(row: Int, col: Int): Boolean = {
     var check = false

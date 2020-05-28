@@ -29,5 +29,40 @@ case class Card(areas:List[Area] = List(Area(corners = List('n')), Area(corners 
     Card(rotatedAreas)
   }
 
+  override def toString:String = {
+
+    var tmpstring = ""
+
+    val o = getValue('n')
+    var ol = '┌'
+    var or = '┐'
+    if (getCornersLookingFrom('n').contains('w')) ol = o
+    if (getCornersLookingFrom('n').contains('e')) or = o
+    tmpstring += s" $ol $o $or"
+
+    tmpstring += s"\n"
+
+    val l = getValue('w')
+    val r = getValue('e')
+    var m = ' '
+    if (getCornersLookingFrom('e').contains('w')) m = l
+    if (getCornersLookingFrom('n').contains('s')) m = getValue('n')
+    tmpstring += s" $l $m $r"
+
+    tmpstring += "\n"
+
+    val u = getValue('s')
+    var ul = '└'
+    var ur = '┘'
+    if (getCornersLookingFrom('s').contains('w')) ul = u
+    if (getCornersLookingFrom('s').contains('e')) ur = u
+    tmpstring += s" $ul $u $ur"
+
+    tmpstring += "\n"
+
+    tmpstring
+
+  }
+
 }
 
