@@ -7,19 +7,16 @@ object Carcassonne {
     val student = Player("Max Mustermann")
     println("Hello, " + student.name)
 
-    val g0 = new Grid(3)
-    print(g0.toString)
-    val toBeInsertedCard1 = Card(List(Area('c', List('n', 's', 'w')), Area('g', List('e'))))
-    val toBeInsertedCard2 = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s'))))
+    val emptyGrid = new Grid(3)
+    val oneCard = Card(List(Area('r', List('w', 'e'), Player("Lukas")), Area('c', List('n')), Area('g', List('s'))))
+    val twoCard = Card(List(Area('r', List('w', 'e'), Player("Mark")), Area('c', List('n')), Area('g', List('s'))))
+    val threeCard = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('c', List('s'), Player("Adam"))))
+    val oneCardGrid = emptyGrid.place(1, 1, oneCard)
+    val twoCardGrid = oneCardGrid.place(0, 1, twoCard)
+    val threeCardGrid = twoCardGrid.place(1, 0, threeCard)
 
+    println(threeCardGrid.toString)
+    println(threeCardGrid.summonTerritories.toString)
 
-    val g1 = g0.set(2, 2, toBeInsertedCard1)
-    println(g1.toString())
-    val g2 = g1.set(2, 2, toBeInsertedCard1.rotateRight())
-    println(g2.toString())
-    val g3 = g2.set(1, 2, toBeInsertedCard2)
-    println(g3.toString())
-    val g4 = g3.set(2, 1, toBeInsertedCard2.rotateRight())
-    println(g4.toString())
   }
 }

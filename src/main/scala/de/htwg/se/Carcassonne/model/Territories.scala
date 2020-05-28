@@ -55,4 +55,18 @@ case class Territories(territories: List[List[Area]] = Nil) {
 
   def getTerritories:List[List[Area]] = territories
 
+  override def toString:String = {
+    var tmpString = ""
+    for(x <- territories){
+      val areaType = x.head.getValue
+      val terrisize = x.size
+      var namelist = ""
+      for (elem <- x.filterNot(name => name.getPlayer.equals(Player("")))) {
+        namelist+= elem.getPlayer.name + ", "
+      }
+
+      tmpString += s"$areaType $terrisize $namelist\n"
+    }
+    tmpString
+  }
 }
