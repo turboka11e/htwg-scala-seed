@@ -8,15 +8,21 @@ import scala.io.StdIn.readLine
 object Carcassonne {
 
   var grid = new Grid(5)
+  var card = Card()
   val TUI = new TUI
 
   def main(args: Array[String]): Unit = {
     var input: String = ""
+    var inputX: String = ""
+    var inputY: String = ""
 
     do {
-      println("Grid : " + grid.toString)
+      println("Hello")
+      TUI.processPlayerNumber(input)
       input = readLine()
-      grid = TUI.processInputLine(input, grid)
+      inputX = readLine()
+      inputY = readLine()
+      grid = TUI.processInputGrid(inputX, inputY, grid, card)
     } while (input != "q")
   }
 }
