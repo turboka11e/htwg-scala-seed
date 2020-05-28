@@ -1,6 +1,6 @@
 package de.htwg.se.Carcassonne.model
 
-case class Area(value:Char = ' ', corners:List[Char] = List('n', 'w', 'e', 's'), player:Player = Player("not selected")) {
+case class Area(value:Char = ' ', corners:List[Char] = List('n', 'w', 'e', 's'), player:Player = Player("")) {
 
   def getValue:Char = value
 

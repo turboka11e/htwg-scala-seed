@@ -6,6 +6,8 @@ case class Grid(private val cells:Matrix[Card], private val territories: Territo
 
   val size: Int = cells.size
 
+  def getCount:Int = cells.getCount
+
   def card(row: Int, col: Int): Card = cells.card(row, col)
 
   def checkEdge(row: Int, col: Int, dir: Char):Boolean = {
@@ -95,9 +97,17 @@ case class Grid(private val cells:Matrix[Card], private val territories: Territo
   def set(row: Int, col: Int, newCard:Card): Grid =
     copy(cells.replaceCell(row, col, newCard))
 
-  def place(row: Int, col: Int, newCard:Card): Grid = copy(cells.replaceCell(row, col, newCard), territories.addCard(this, row, col, newCard))
+  def place(row: Int, col: Int, newCard:Card): Grid = {
+    if(!checkSet(row, col, newCard) && cells.getCount > 0){
+      copy()
+    } else {
+      copy(cells.replaceCell(row, col, newCard), territories.addCard(this, row, col, newCard))
+    }
+  }
 
   def getTerritories:List[List[Area]] = territories.getTerritories
+
+  def summonTerritories:Territories = territories
 
   override def toString:String = {
 

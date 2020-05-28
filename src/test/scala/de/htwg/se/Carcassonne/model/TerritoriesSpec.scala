@@ -17,6 +17,8 @@ class TerritoriesSpec extends WordSpec with Matchers {
         oneCardGrid.getTerritories should be(List(List(Area('r', List('w', 'e'),
           Player("Road1"))), List(Area('g', List('s'), Player("not selected"))), List(Area('c', List('n'), Player("not selected")))))
 
+        oneCardGrid.summonTerritories.toString should be("r 1 Road1\ng 1 not selected\nc 1 not selected\n")
+
         twoCardGrid.getTerritories should be(List(List(Area('r', List('w', 'e'), Player("Road2")), Area('r', List('w', 'e'),
           Player("Road1"))), List(Area('g', List('s'), Player("not selected"))), List(Area('c', List('n'), Player("not selected"))),
           List(Area('g', List('s'), Player("not selected"))), List(Area('c', List('n'), Player("not selected")))))
