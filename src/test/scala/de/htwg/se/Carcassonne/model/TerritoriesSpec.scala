@@ -4,38 +4,29 @@ import org.scalatest._
 
 class TerritoriesSpec extends WordSpec with Matchers {
 
-  "Territories " when {
-    "Grid is empty " should {
-      val emptyArea = Territories()
-      val oneCard = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s'))))
+  "Territories grow in grid " when {
+    "Cards are placed next to another " should {
       val emptyGrid = new Grid(3)
-      val oneCardGrid = emptyGrid.set(1, 1, oneCard)
-      val twoCardGrid = oneCardGrid.set(0, 1, oneCard)
-      val notEmptyTerri = emptyArea.addCard(oneCardGrid, 0, 1, oneCard)
-      "have List with areas" in {
-        emptyArea should be(Territories(List()))
-      }
-      "and one Card is added" in {
-        emptyArea.addCard(emptyGrid, 1, 1, oneCard) should be(Territories(List(List(Area('r', List('w', 'e'),
-          Player("not selected"))), List(Area('g', List('s'), Player("not selected"))), List(Area('c', List('n'), Player("not selected"))))))
-        emptyArea.addCard(emptyGrid, 2, 2, oneCard) should be(Territories(List(List(Area('r', List('w', 'e'),
-          Player("not selected"))), List(Area('g', List('s'), Player("not selected"))), List(Area('c', List('n'), Player("not selected"))))))
-      }
-      "and one Card is added next to another" in {
-        emptyArea.addCard(oneCardGrid, 0, 1, oneCard) should be(Territories(List(List(Area('r', List('w', 'e'),
-          Player("not selected")), Area('r', List('w', 'e'),
-          Player("not selected"))), List(Area('g', List('s'), Player("not selected"))), List(Area('c', List('n'), Player("not selected"))))))
-      }
-      "and one Card is added again to another" in {
-        notEmptyTerri.addCard(twoCardGrid, 2, 1, oneCard) should be(Territories(List(List(Area('r', List('w', 'e'),
-          Player("not selected")), Area('r', List('w', 'e'),
-          Player("not selected")), Area('r', List('w', 'e'),
-          Player("not selected"))), List(Area('g', List('s'), Player("not selected"))), List(Area('c', List('n'), Player("not selected"))))))
-      }
-    }
-    "Grid is filled " should {
-      val emptyGrid = new Grid(3)
+      val oneCard = Card(List(Area('r', List('w', 'e'), Player("Road1")), Area('c', List('n')), Area('g', List('s'))))
+      val twoCard = Card(List(Area('r', List('w', 'e'), Player("Road2")), Area('c', List('n')), Area('g', List('s'))))
+      val threeCard = Card(List(Area('r', List('w', 'e'), Player("Road3")), Area('c', List('n')), Area('c', List('s'))))
+      val oneCardGrid = emptyGrid.place(1, 1, oneCard)
+      val twoCardGrid = oneCardGrid.place(0, 1, twoCard)
+      val threeCardGrid = twoCardGrid.place(1, 0, threeCard)
+      "and create Territory List" in {
+        oneCardGrid.getTerritories should be(List(List(Area('r', List('w', 'e'),
+          Player("Road1"))), List(Area('g', List('s'), Player("not selected"))), List(Area('c', List('n'), Player("not selected")))))
 
+        twoCardGrid.getTerritories should be(List(List(Area('r', List('w', 'e'), Player("Road2")), Area('r', List('w', 'e'),
+          Player("Road1"))), List(Area('g', List('s'), Player("not selected"))), List(Area('c', List('n'), Player("not selected"))),
+          List(Area('g', List('s'), Player("not selected"))), List(Area('c', List('n'), Player("not selected")))))
+
+        threeCardGrid.getTerritories should be(List(List(Area('r',List('w', 'e'), Player("Road3"))), List(Area('c',List('s'), Player("not selected")),
+          Area('c',List('n'), Player("not selected"))), List(Area('c',List('n'), Player("not selected"))), List(Area('r',List('w', 'e'), Player("Road2")),
+          Area('r',List('w', 'e'), Player("Road1"))), List(Area('g',List('s'), Player("not selected"))), List(Area('c',List('n'), Player("not selected"))),
+          List(Area('g',List('s'), Player("not selected")))))
+
+      }
     }
   }
 }

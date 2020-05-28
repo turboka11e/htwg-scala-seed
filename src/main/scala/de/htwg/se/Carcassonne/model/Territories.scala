@@ -14,23 +14,45 @@ case class Territories(territories: List[List[Area]] = Nil) {
     }
 
   def tmpTerriList(grid: Grid, row:Int, col:Int, dir:Char, newCard: Card, list:List[List[Area]]):List[List[Area]] = {
-    val areaOfDir = newCard.getAreaLookingFrom(dir)
+
     var tmpTerri = list
+    val currentArea = newCard.getAreaLookingFrom(dir)
 
-    if (grid.getDirEnv(row, col, dir) != Area()) {
+    var col_ind:List[Area] = List() // sammle angrenzende Areas
 
-      val index = tmpTerri.indexWhere(p => p.contains(grid.getDirEnv(row, col, dir)))
-      val coalesced = areaOfDir::tmpTerri.find(p => p.contains(grid.getDirEnv(row, col, dir))).get
-      tmpTerri = tmpTerri.updated(index, coalesced)
+    /* Schau in alle Richtungen der Area */
+    for (x <- currentArea.getCorners) {
+      val neighbor = grid.getDirEnv(row, col, x)
+      /* Schaue ob in der Richtung eine Karte ist */
+      if (neighbor != Area()) {
+        /* Speicher die Area in List col_ind */
+        col_ind = neighbor::col_ind
+      }
+    }
 
+    if(col_ind.nonEmpty){
+      var joinedTerri:List[Area] = Nil
+      for(x <- col_ind){
+        val id = tmpTerri.indexWhere(p => p.exists(b => b.eq(x)))
+        joinedTerri = joinedTerri:::tmpTerri.apply(id)
+      }
+      for(x <- col_ind){
+        val id = tmpTerri.indexWhere(p => p.exists(b => b.eq(x)))
+        tmpTerri = tmpTerri.filter(_.ne(tmpTerri.apply(id)))
+      }
+      if(!joinedTerri.exists(p => p.eq(currentArea))){
+        joinedTerri = currentArea::joinedTerri
+      }
+      tmpTerri = joinedTerri::tmpTerri
     } else {
-      val tmpElementList = List(areaOfDir)
-      if(!tmpTerri.exists(p => p.contains(areaOfDir))) {
-        tmpTerri = tmpElementList :: tmpTerri
+      if (!tmpTerri.exists(p => p.exists(p => p.eq(newCard.getAreaLookingFrom(dir))))) {
+        tmpTerri = List(newCard.getAreaLookingFrom(dir)) :: tmpTerri
       }
     }
 
     tmpTerri
   }
+
+  def getTerritories:List[List[Area]] = territories
 
 }

@@ -1,8 +1,8 @@
 package de.htwg.se.Carcassonne.model
 
-case class Grid(private val cells:Matrix[Card]) {
+case class Grid(private val cells:Matrix[Card], private val territories: Territories = Territories()) {
 
-  def this(size: Int) = this(new Matrix[Card](size, Card()))
+  def this(size: Int) = this(new Matrix[Card](size, Card()), Territories())
 
   val size: Int = cells.size
 
@@ -91,22 +91,13 @@ case class Grid(private val cells:Matrix[Card]) {
 
     check && card(row, col).isEmpty && hasNeighbor(row, col)
   }
-  /*
-  def checkNorth(row: Int, col: Int, checkCard:Card): Boolean =
-    card(row, col - 1).getValue('s').equals(checkCard.getValue('n'))
-
-  def checkSouth(row: Int, col: Int, checkCard:Card): Boolean =
-    card(row, col + 1).getValue('n').equals(checkCard.getValue('s'))
-
-  def checkWest(row: Int, col: Int, checkCard:Card): Boolean =
-    card(row - 1, col).getValue('e').equals(checkCard.getValue('w'))
-
-  def checkEast(row: Int, col: Int, checkCard:Card): Boolean =
-    card(row + 1, col).getValue('w').equals(checkCard.getValue('e'))
-  */
 
   def set(row: Int, col: Int, newCard:Card): Grid =
     copy(cells.replaceCell(row, col, newCard))
+
+  def place(row: Int, col: Int, newCard:Card): Grid = copy(cells.replaceCell(row, col, newCard), territories.addCard(this, row, col, newCard))
+
+  def getTerritories:List[List[Area]] = territories.getTerritories
 
   override def toString:String = {
 
