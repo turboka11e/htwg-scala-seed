@@ -11,10 +11,9 @@ class TUI {
     greetings
   }
 
-  def processPlayerNumber(input1: String): Int = {
-    println("Wie viele Spieler gibt es?")
-    input1 match {
-      case _ => input1.toInt
+  def processPlayerNumber(input: String): Int = {
+    input match {
+      case _ => input.toInt
     }
   }
 
@@ -24,12 +23,12 @@ class TUI {
     }
   }
 
-   def processInputGrid(input1: String, input2: String, grid:Grid, card: Card):Grid = {
-     (input1, input2) match {
+   def processInputGrid(inputX: String, inputY: String, grid:Grid, card: Card):Grid = {
+     (inputX, inputY) match {
        case ("","") => grid
-       case (_,"0") => new Grid(input1.toInt)
-       case (_,_) => grid.set(input1.toInt, input2.toInt, card)
-         if (grid.checkSet(input1.toInt, input2.toInt, card) != 0)
+       case (_,"0") => new Grid(inputX.toInt)
+       case (_,_) => grid.set(inputX.toInt, inputY.toInt, card)
+         if (grid.checkSet(inputX.toInt, inputY.toInt, card) != 0)
 
 
      }

@@ -1,25 +1,23 @@
 package de.htwg.se.Carcassonne
 
+import de.htwg.se.Carcassonne.aview.TUI
 import de.htwg.se.Carcassonne.model.{Area, Card, Grid, Player}
 
+import scala.io.StdIn.readLine
+
 object Carcassonne {
+
+  var grid = new Grid(5)
+  val TUI = new TUI
+
   def main(args: Array[String]): Unit = {
-    val student = Player("Max Mustermann")
-    println("Hello, " + student.name)
+    var input: String = ""
 
-    val g0 = new Grid(3)
-    print(g0.toString)
-    val toBeInsertedCard1 = Card(List(Area('c', List('n', 's', 'w')), Area('g', List('e'))))
-    val toBeInsertedCard2 = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s'))))
-
-
-    val g1 = g0.set(2, 2, toBeInsertedCard1)
-    println(g1.toString())
-    val g2 = g1.set(2, 2, toBeInsertedCard1.rotateRight())
-    println(g2.toString())
-    val g3 = g2.set(1, 2, toBeInsertedCard2)
-    println(g3.toString())
-    val g4 = g3.set(2, 1, toBeInsertedCard2.rotateRight())
-    println(g4.toString())
+    do {
+      println("Grid : " + grid.toString)
+      input = readLine()
+      grid = TUI.processInputLine(input, grid)
+    } while (input != "q")
   }
 }
+
