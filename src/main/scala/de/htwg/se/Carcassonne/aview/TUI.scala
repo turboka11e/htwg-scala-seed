@@ -4,7 +4,7 @@ import de.htwg.se.Carcassonne.model.{Area, Card, Grid, Matrix, Player, Territori
 
 class TUI {
 
-  val greetings: String = "WELCOME TO THE EXPIERECNE THAT IS CARCASONNE."
+  val greetings: String = "WELCOME TO THE EXPERIENCE THAT IS CARCASSONNE."
   val help: String = "Help messages"
 
   def welcomeMessageHelp: String = {
