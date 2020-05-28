@@ -4,6 +4,8 @@ import de.htwg.se.Carcassonne.model.{Area, Card, Grid, Matrix, Player, Territori
 
 class TUI {
 
+  
+  /*
   val greetings: String = "WELCOME TO THE EXPERIENCE THAT IS CARCASSONNE."
   val help: String = "Help messages"
 
@@ -19,7 +21,6 @@ class TUI {
 
   def processPlayerName(input: String): Player = { //PlayerOverview dann reinspeihern
     if (processPlayerNumber(input.toString) != 0) {
-      val Player1 = input.
     }
   }
 
@@ -28,9 +29,6 @@ class TUI {
        case ("","") => grid
        case (_,"0") => new Grid(inputX.toInt)
        case (_,_) => grid.set(inputX.toInt, inputY.toInt, card)
-         if (grid.checkSet(inputX.toInt, inputY.toInt, card) != 0)
-
-
      }
    }
 
@@ -40,5 +38,5 @@ class TUI {
         case "rotate" => card.rotateRight()
       }
   }
-
+*/
 }
