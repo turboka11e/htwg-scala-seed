@@ -1,6 +1,7 @@
 package de.htwg.se.Carcassonne.model
 
-case class Grid(private val cells:Matrix[Card], private val territories: Territories = Territories(),private val playerlist:List[Player] = List(Player("Wall-E"))) {
+case class Grid(private val cells:Matrix[Card], private val territories: Territories = Territories(),
+                private val playerlist:List[Player] = List(Player("Wall-E"))) {
 
   def this(size: Int) = this(new Matrix[Card](size, Card()), Territories())
 

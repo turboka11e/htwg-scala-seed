@@ -29,13 +29,9 @@ case class CardCreator(playerCard: Player, card: Card = Card()){
     copy(card = card.rotateRight())
   }
 
-  def rotateLeft:CardCreator = {
-    copy(card = card.rotateRight().rotateRight().rotateRight())
-  }
+  def rotateLeft:CardCreator = copy(card = card.rotateRight().rotateRight().rotateRight())
 
-  def showCard:String = {
-    card.toString
-  }
+  def showCard:String = card.toString
 
   def showTerri:String = {
     var tmpString = ""
