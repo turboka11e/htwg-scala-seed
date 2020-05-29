@@ -100,6 +100,7 @@ object Carcassonne {
               playerIsOn += 1
             }
             gameMode = 2
+            print("\n" + grid.summonTerritories.toString)
           }
       }
 
