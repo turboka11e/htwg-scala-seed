@@ -12,6 +12,7 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
       case 2 => g2
       case 3 => g3
       case 4 => g4
+      case 5 => g5
     }
   }
 
@@ -23,10 +24,11 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
 
   def g3:String = playfieldView + "Karte drehen: Rechts: 'r', Links: 'l'\nWenn passt: 'y'\nEingabe: "
 
-  def g4:String = playfieldView + "Männchen auf Gebiet setzen! Blau: 0, Rot: 1, Gelb: 2, Grün: 3"
+  def g4:String = playfieldView + "Männchen auf Gebiet setzen! Blau: 0, Rot: 1, Gelb: 2, Grün: 3\nEingabe: "
 
+  def g5:String = playfieldView + "Setze Karte in das Spielfeld! 'x y'\nEingabe: "
 
-  def playfieldView:String = nameLine + betweenLine + freshCardPart + restPart
+  def playfieldView:String = "\n" + nameLine + betweenLine + freshCardPart + restPart
 
   def nameLine: String = {
     var tmpString = ""

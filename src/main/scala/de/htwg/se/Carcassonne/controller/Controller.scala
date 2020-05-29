@@ -10,15 +10,16 @@ class Controller(var playfield: Playfield) extends Observable {
     notifyObservers
   }
 
-  def forkDigit(singleDigit:Int):Unit = {
-    if(playfield.getGameState == 0){
-      createGrid(singleDigit)
-    }
-  }
-
   def createGrid(size: Int):Unit = {
     playfield = playfield.fieldSize(size)
     notifyObservers
+  }
+
+  def forkDigit(input:Int):Unit = {
+    playfield.getGameState match {
+      case 0 => createGrid(input)
+      case 4 => selectArea(input)
+    }
   }
 
   def addPlayer(name:String):Unit = {
@@ -32,6 +33,8 @@ class Controller(var playfield: Playfield) extends Observable {
         if(!dc){
           playfield = playfield.changeGameState(3)
           playfield = playfield.getFreshCard
+        } else {
+          playfield = playfield.changeGameState(1)
         }
       case 3 =>
         if(dc){
@@ -48,6 +51,20 @@ class Controller(var playfield: Playfield) extends Observable {
 
   def rotateLeft():Unit = {
     playfield = playfield.rotateL
+    notifyObservers
+  }
+
+  def selectArea(nr: Int):Unit = {
+    playfield = playfield.selectArea(nr)
+    notifyObservers
+  }
+
+  def placeCard(x:Int, y:Int):Unit = {
+    playfield = playfield.placeCard(x, y)
+    if(playfield.getSuccess) {
+      playfield = playfield.getFreshCard
+      playfield = playfield.nextPlayer
+    }
     notifyObservers
   }
 
