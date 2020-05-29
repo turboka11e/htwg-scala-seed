@@ -9,9 +9,9 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
 
   def getSuccess:Boolean = success
 
-  def fieldSize(size:Int):Playfield = copy(grid = new Grid(size))                    // GameState 0
+  def fieldSize(size:Int):Playfield = copy(grid = new Grid(size), gameState = 1)                    // GameState 0
 
-  def addPlayer(name:String):Playfield = copy(players = Player(name)::players)       // GameState 1
+  def addPlayer(name:String):Playfield = copy(players = Player(name)::players, gameState = 2)       // GameState 1
 
   def getFreshCard:Playfield = copy(freshCard = CardCreator(players(isOn)).randCard)                // GameState 2
 
@@ -27,18 +27,7 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
     if(check == CardAdded.getCount) copy(success = false) else copy(grid = CardAdded)
   }
 
-  def playFieldToString:String = {
-    gameState match {
-      case 0 => g0
-      case 1 => g1
-    }
-
-
-  }
-
-  def g0:String = "Bitte Feldgröße angeben: "
-
-  def g1:String = "Name eingeben: "
+  def playFieldToString:String = PrettyPrint(gameState, grid, freshCard, players, isOn).toString
 
 
 
