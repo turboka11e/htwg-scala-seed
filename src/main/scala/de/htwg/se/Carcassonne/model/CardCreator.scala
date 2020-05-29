@@ -12,7 +12,7 @@ case class CardCreator(playerCard: Player, card: Card = Card()){
 
     Card(List(Area('c', List('n')), Area('g', List('s', 'w', 'e')))),
 
-    Card(List(Area('c', List('w', 'e')), Area('g', List('s', 'n')))),
+    //Card(List(Area('c', List('w', 'e')), Area('g', List('s', 'n')))),
 
     Card(List(Area('c', List('w')), Area('c', List('e')), Area('g', List('n', 's')))),
 
