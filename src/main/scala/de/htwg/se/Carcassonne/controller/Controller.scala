@@ -19,6 +19,7 @@ class Controller(var playfield: Playfield) extends Observable {
     playfield.getGameState match {
       case 0 => createGrid(input)
       case 4 => selectArea(input)
+      case _ =>
     }
   }
 
@@ -36,10 +37,11 @@ class Controller(var playfield: Playfield) extends Observable {
         } else {
           playfield = playfield.changeGameState(1)
         }
-      case 3 =>
-        if(dc){
-          playfield = playfield.changeGameState(4)
-        }
+      case 3 => if(dc) playfield = playfield.changeGameState(4)
+
+      case 4 => if(!dc) playfield = playfield.changeGameState(5)
+
+      case _ =>
     }
     notifyObservers
   }
