@@ -28,7 +28,16 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
 
   def g5:String = playfieldView + "Setze Karte in das Spielfeld! 'x y'\nEingabe: "
 
-  def playfieldView:String = "\n" + nameLine + betweenLine + freshCardPart + restPart
+  def playfieldView:String = "\n" + playerLine + nameLine + betweenLine + freshCardPart + restPart
+
+  def playerLine: String = {
+    var tmpString = ""
+    val newList = players.map(p => p.name).zipWithIndex
+    for((x, i) <- newList){
+      tmpString += color(i) + x + Console.RESET + "\t"
+    }
+    tmpString + "\n"
+  }
 
   def nameLine: String = {
     var tmpString = ""
@@ -80,32 +89,43 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
   }
 
   def topSeg(x: Int, y: Int):String = {
-    val o = grid.card(x, y).getValue('n')
-    var ol = '┌'
-    var or = '┐'
+    val o = getColoredCorner(x, y, 'n')
+    var ol = "┌"
+    var or = "┐"
     if(grid.card(x, y).getCornersLookingFrom('n').contains('w')) ol = o
     if(grid.card(x, y).getCornersLookingFrom('n').contains('e')) or = o
     s" $ol $o $or"
   }
 
   def midSeg(x: Int, y: Int):String = {
-    val l = grid.card(x, y).getValue('w')
-    val r = grid.card(x, y).getValue('e')
-    var m = ' '
+    val l = getColoredCorner(x, y, 'w')
+    val r = getColoredCorner(x, y, 'e')
+    var m = " "
     if(grid.card(x, y).getCornersLookingFrom('e').contains('w')) m = l
-    if(grid.card(x, y).getCornersLookingFrom('n').contains('s')) m = grid.card(x, y).getValue('n')
+    if(grid.card(x, y).getCornersLookingFrom('n').contains('s')) m = getColoredCorner(x, y, 'n')
     s" $l $m $r"
   }
   def lowSeg(x: Int, y: Int):String = {
-    val u = grid.card(x, y).getValue('s')
-    var ul = '└'
-    var ur = '┘'
+    val u = getColoredCorner(x, y, 's')
+    var ul = "└"
+    var ur = "┘"
     if(grid.card(x, y).getCornersLookingFrom('s').contains('w')) ul = u
     if(grid.card(x, y).getCornersLookingFrom('s').contains('e')) ur = u
     s" $ul $u $ur"
   }
 
+  def getColoredCorner(x: Int, y: Int, dir:Char):String = {
 
+    val index = players.indexWhere(p => p == grid.card(x, y).getPlayer(dir))
+    var tmpString = ""
+
+    if(index >= 0) {
+      tmpString = color(index) + grid.card(x, y).getValue(dir) + Console.RESET
+    } else {
+      tmpString = grid.card(x, y).getValue(dir).toString
+    }
+    tmpString
+  }
 
   def curPla():String = ""
 

@@ -62,8 +62,8 @@ class Controller(var playfield: Playfield) extends Observable {
   def placeCard(x:Int, y:Int):Unit = {
     playfield = playfield.placeCard(x, y)
     if(playfield.getSuccess) {
-      playfield = playfield.getFreshCard
-      playfield = playfield.nextPlayer
+      playfield = playfield.nextPlayer.getFreshCard
+      
     }
     notifyObservers
   }
