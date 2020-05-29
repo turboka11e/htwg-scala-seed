@@ -1,42 +1,46 @@
 package de.htwg.se.Carcassonne.aview
 
-import de.htwg.se.Carcassonne.model.{Area, Card, Grid, Matrix, Player, Territories}
+import de.htwg.se.Carcassonne.model.{Area, Card, CardCreator, Grid, GridCreator, Matrix, Player, Territories}
 
 class TUI {
 
-  
-  /*
-  val greetings: String = "WELCOME TO THE EXPERIENCE THAT IS CARCASSONNE."
+  val greetings: String = "WELCOME TO CARCASSONNE.\n"
   val help: String = "Help messages"
 
-  def welcomeMessageHelp: String = {
+  def welcomeMessage: String = {
     greetings
   }
 
-  def processPlayerNumber(input: String): Int = {
-    input match {
-      case _ => input.toInt
+  def processGridSize(size: Int): GridCreator = {
+    new GridCreator(size)
+  }
+
+  def processAddingPlayer(name: String, gridCreator: GridCreator): GridCreator = {
+    gridCreator.addPlayer(name)
+  }
+
+  def processRotateCard(input:String, freshCard: CardCreator):CardCreator = {
+    if(input == "r"){
+      print(freshCard.rotateRight.showCard)
+      freshCard.rotateRight
+    } else if (input == "l"){
+      print(freshCard.rotateLeft.showCard)
+      freshCard.rotateLeft
+    } else {
+      freshCard
     }
   }
 
-  def processPlayerName(input: String): Player = { //PlayerOverview dann reinspeihern
-    if (processPlayerNumber(input.toString) != 0) {
-    }
+  def processSelectArea(input:String, freshCard:CardCreator):CardCreator = {
+    freshCard.setPlayerToArea(input.toInt)
   }
 
-   def processInputGrid(inputX: String, inputY: String, grid:Grid, card: Card):Grid = {
-     (inputX, inputY) match {
-       case ("","") => grid
-       case (_,"0") => new Grid(inputX.toInt)
-       case (_,_) => grid.set(inputX.toInt, inputY.toInt, card)
-     }
-   }
+  def processPlacingCard(input:Array[String], grid: Grid, freshCard:CardCreator):Grid = {
+    val x = input.apply(0).toInt
+    val y = input.apply(1).toInt
 
-  def processInputCards(input: String, card: Card):Card = {
-      input match {
-        case "c" => card
-        case "rotate" => card.rotateRight()
-      }
+    grid.place(x, y, freshCard.finalCard)
+
   }
-*/
+
 }

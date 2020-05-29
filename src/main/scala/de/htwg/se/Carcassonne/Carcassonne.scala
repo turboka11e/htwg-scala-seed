@@ -1,39 +1,109 @@
 package de.htwg.se.Carcassonne
 
-import de.htwg.se.Carcassonne.model.{Area, Card, CardCreator, Grid, Player}
+import de.htwg.se.Carcassonne.aview.TUI
+import de.htwg.se.Carcassonne.model.{Area, Card, CardCreator, Grid, GridCreator, Player}
+import scala.io.StdIn._
+
 
 object Carcassonne {
+
+  var grid: Grid = new Grid(1)
+  val tui = new TUI
+
+  var playerList: List[Player] = Nil
+  var playerIsOn: Int = 0
+
+
   def main(args: Array[String]): Unit = {
-    val student = Player("Max Mustermann")
-    println("Hello, " + student.name)
+    var input: String = ""
+    var preGrid = new GridCreator(3)
+    var gameMode = 0
+    var freshCard = CardCreator(Player("Empty"))
 
-    val emptyCardCreator = new CardCreator(Player("Lukas"))
-    val selectedCardCreator = emptyCardCreator.randCard
-    println(selectedCardCreator.showCard)
-    println(selectedCardCreator.showTerri)
-    val playerSetCardCreator = selectedCardCreator.setPlayerToArea(1)
-    println(playerSetCardCreator.showTerri)
-    val rotatedLeft = playerSetCardCreator.rotateLeft
-    println(rotatedLeft.showCard)
-    println(rotatedLeft.showTerri)
+    do {
 
+      gameMode match {
+        case 0 =>
+          print(tui.welcomeMessage)
 
+          print("\nFeldgröße auswählen: ")
 
+          input = readLine()
 
-/*
-    val emptyGrid = new Grid(3, List(Player("Wall-E")))
-    val oneCard = Card(List(Area('r', List('w', 'e'), Player("Lukas")), Area('c', List('n')), Area('g', List('s'))))
-    val twoCard = Card(List(Area('r', List('w', 'e'), Player("Mark")), Area('c', List('n')), Area('g', List('s'))))
-    val threeCard = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('c', List('s'), Player("Adam"))))
-    val oneCardGrid = emptyGrid.place(1, 1, oneCard)
-    val twoCardGrid = oneCardGrid.place(0, 1, twoCard)
-    val threeCardGrid = twoCardGrid.place(1, 0, threeCard)
+          if (input forall Character.isDigit) {
+            preGrid = tui.processGridSize(input.toInt)
+            gameMode += 1
+          }
 
 
+        case 1 =>
+          print("\nSpieler hinzufügen!\n")
+          do {
+            print("Name eingeben: ")
+            input = readLine()
 
-    println(threeCardGrid.toString)
-    println(threeCardGrid.summonTerritories.toString)
+            preGrid = tui.processAddingPlayer(input, preGrid)
 
-    */
+            print("Weitere Spieler hinzufügen?\n('Y', 'N') Eingabe: ")
+            input = readLine()
+          }
+          while (input == "Y" || input == "y")
+          grid = preGrid.getPlayerReadyGrid
+          playerList = grid.getPlayerlist
+          print(grid.toString)
+          gameMode += 1
+
+
+        case 2 =>
+          val currentplayer = playerList(playerIsOn)
+          print(s"\nSpieler $currentplayer ist dran. Hier ist deine Karte: \n")
+          freshCard = CardCreator(playerList(playerIsOn)).randCard
+          print(freshCard.showCard)
+          gameMode = 3
+
+        case 3 =>
+          print("\nKarte rotieren?\nRechts: 'r' Links:'l' Nein: 'n'\nEingabe: ")
+          input = readLine()
+          freshCard = tui.processRotateCard(input, freshCard)
+          if (input == "r" || input == "l") {
+            gameMode = 3
+          } else {
+            gameMode = 4
+          }
+
+        case 4 =>
+          print("\nMännchen auf Gebiet in der Karte setzen?\n")
+          print(freshCard.showCard)
+          print(freshCard.showTerri)
+          print("\nGebiet über Zahl auswählen: ")
+          input = readLine()
+          freshCard = tui.processSelectArea(input, freshCard)
+          print(freshCard.showTerri)
+          gameMode = 5
+
+        case 5 =>
+          print("\nKarte in Spielfeld einsetzen: \n")
+          print(grid.toString)
+          freshCard.showCard
+          print("\nX und Y Koordinate ('x y') eingeben: ")
+          input = readLine()
+          val xy = input.split(" ")
+          val addedCheck = grid.getCount
+          grid = tui.processPlacingCard(xy, grid, freshCard)
+          if (addedCheck == grid.getCount) {
+            print("Kein gültiger Zug. Nochmal versuchen!\n")
+          } else {
+            print(grid.toString)
+            if (playerIsOn == playerList.size - 1) {
+              playerIsOn = 0
+            } else {
+              playerIsOn += 1
+            }
+            gameMode = 2
+          }
+      }
+
+    } while (input != "q")
+
   }
 }
