@@ -55,6 +55,7 @@ case class Territories(territories: List[List[Area]] = Nil) {
 
   def getTerritories:List[List[Area]] = territories
 
+  /*
   override def toString:String = {
     var tmpString = ""
     for(x <- territories){
@@ -69,4 +70,6 @@ case class Territories(territories: List[List[Area]] = Nil) {
     }
     tmpString
   }
+
+   */
 }

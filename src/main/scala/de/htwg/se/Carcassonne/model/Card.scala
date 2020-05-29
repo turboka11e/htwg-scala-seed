@@ -6,7 +6,7 @@ case class Card(areas:List[Area] = List(Area(corners = List('n')), Area(corners 
 
   def getValue(dir:Char): Char = areas.find(_.getCorners.contains(dir)).get.getValue
 
-  def getPlayer(dir:Char): Player = areas.find(_.getCorners.contains(dir)).get.getPlayer
+  def getPlayer(dir:Char): Int = areas.find(_.getCorners.contains(dir)).get.getPlayer
 
   def getCornersLookingFrom(dir:Char): List[Char] = areas.find(_.getCorners.contains(dir)).get.getCorners
 

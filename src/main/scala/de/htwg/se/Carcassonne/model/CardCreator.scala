@@ -2,9 +2,9 @@ package de.htwg.se.Carcassonne.model
 
 import scala.util.Random
 
-case class CardCreator(playerCard: Player, card: Card = Card()){
+case class CardCreator(playerCard: Int, card: Card = Card()){
 
-  def this() = this(playerCard = Player("default"))
+  def this() = this(playerCard = -1)
 
   val randomCards: List[Card] = List(
 
@@ -33,15 +33,17 @@ case class CardCreator(playerCard: Player, card: Card = Card()){
 
   def rotateLeft:CardCreator = copy(card = card.rotateRight().rotateRight().rotateRight())
 
+  /*
   def showCard:String = card.toString
 
   def showTerri:String = {
     var tmpString = ""
     for((x, i) <- card.areas.zipWithIndex){
-      tmpString += s"Area: $i " + x.getValue + " " + x.getCorners.toString() + " " + x.getPlayer.name + "\n"
+      tmpString += s"Area: $i " + x.getValue + " " + x.getCorners.toString() + " " + x.getPlayer + "\n"
     }
     tmpString
   }
+   */
 
   def setPlayerToArea(index:Int):CardCreator = {
     if(index < card.areas.size){
