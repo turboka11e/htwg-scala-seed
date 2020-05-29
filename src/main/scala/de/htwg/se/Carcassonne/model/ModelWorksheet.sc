@@ -16,3 +16,6 @@ val twoCard = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g
 val threeCard = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s'))))
 
 oneCard.areas.ne(twoCard.areas)
+val input = "3"
+val xy = input.split(" ")
+val x = xy.apply(0).toInt

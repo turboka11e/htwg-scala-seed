@@ -40,7 +40,7 @@ case class CardCreator(playerCard: Player, card: Card = Card()){
   def showTerri:String = {
     var tmpString = ""
     for((x, i) <- card.areas.zipWithIndex){
-      tmpString += s"Area: $i " + x.getValue + " " + x.getPlayer.name + "\n"
+      tmpString += s"Area: $i " + x.getValue + " " + x.getCorners.toString() + " " + x.getPlayer.name + "\n"
     }
     tmpString
   }
@@ -54,5 +54,7 @@ case class CardCreator(playerCard: Player, card: Card = Card()){
       copy()
     }
   }
+
+  def finalCard:Card = this.card
 
 }
