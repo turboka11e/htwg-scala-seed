@@ -21,11 +21,12 @@ class TUI(controller: Controller) extends Observer {
   }
 
   def validateLongString(input: String): Unit = {
-    if (input.forall(p => (p.isDigit || p == ' ')) && input.nonEmpty) {
+    if (input.forall(p => p.isDigit || p == ' ') && input.nonEmpty) {
       val extract = input.split(" ")
       extract.length match {
         case 1 => controller.forkDigit(extract.head.toInt)
         case 2 => controller.placeCard(extract(0).toInt, extract(1).toInt)
+        case _ =>
       }
     } else if (input.nonEmpty) {
       controller.addPlayer(input)
