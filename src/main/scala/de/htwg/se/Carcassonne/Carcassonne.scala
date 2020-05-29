@@ -16,7 +16,8 @@ object Carcassonne {
   def main(args: Array[String]): Unit = {
     var input: String = ""
 
-    print("Welcome to Carcassonne\nNeues Spiel mit 'n' starten.\n")
+    print("Welcome to Carcassonne\nNeues Spiel mit 'new' starten.\n")
+    controller.notifyObservers
 
     do {
       input = readLine()

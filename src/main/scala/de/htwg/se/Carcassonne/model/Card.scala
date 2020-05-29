@@ -64,28 +64,30 @@ case class Card(areas:List[Area] = List(Area(corners = List('n')), Area(corners 
 
   }
 
+  private val color = List(Console.BLUE, Console.RED, Console.YELLOW, Console.GREEN)
+
   def topString:String = {
-    val o = getValue('n')
-    var ol = '┌'
-    var or = '┐'
+    val o = color(areas.indexWhere(p => p == getAreaLookingFrom('n')) ) + getValue('n') + Console.RESET
+    var ol = "┌"
+    var or = "┐"
     if (getCornersLookingFrom('n').contains('w')) ol = o
     if (getCornersLookingFrom('n').contains('e')) or = o
     s" $ol $o $or"
   }
 
   def midString:String = {
-    val l = getValue('w')
-    val r = getValue('e')
-    var m = ' '
+    val l = color(areas.indexWhere(p => p == getAreaLookingFrom('w')) ) + getValue('w') + Console.RESET
+    val r = color(areas.indexWhere(p => p == getAreaLookingFrom('e')) ) + getValue('e') + Console.RESET
+    var m = " "
     if (getCornersLookingFrom('e').contains('w')) m = l
-    if (getCornersLookingFrom('n').contains('s')) m = getValue('n')
+    if (getCornersLookingFrom('n').contains('s')) m = color(areas.indexWhere(p => p == getAreaLookingFrom('n')) ) + getValue('n') + Console.RESET
     s" $l $m $r"
   }
 
   def lowString:String = {
-    val u = getValue('s')
-    var ul = '└'
-    var ur = '┘'
+    val u = color(areas.indexWhere(p => p == getAreaLookingFrom('n')) ) + getValue('n') + Console.RESET
+    var ul = "└"
+    var ur = "┘"
     if (getCornersLookingFrom('s').contains('w')) ul = u
     if (getCornersLookingFrom('s').contains('e')) ur = u
     s" $ul $u $ur"

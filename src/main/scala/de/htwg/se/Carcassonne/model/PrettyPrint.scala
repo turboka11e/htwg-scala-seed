@@ -2,7 +2,7 @@ package de.htwg.se.Carcassonne.model
 
 case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, players:List[Player], isOn: Int) {
 
-  private val color = List(Console.BLUE, Console.RED, Console.YELLOW)
+  private val color = List(Console.BLUE, Console.RED, Console.YELLOW, Console.GREEN)
 
   override def toString:String = {
 
@@ -11,6 +11,7 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
       case 1 => g1
       case 2 => g2
       case 3 => g3
+      case 4 => g4
     }
   }
 
@@ -20,10 +21,12 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
 
   def g2:String = "Weitere Spieler hinzufügen? 'y' = Ja 'n' = Spiel anfangen!\nEingabe: "
 
-  def g3:String = nameLine + betweenLine + freshCardPart + restPart
+  def g3:String = playfieldView + "Karte drehen: Rechts: 'r', Links: 'l'\nWenn passt: 'y'\nEingabe: "
+
+  def g4:String = playfieldView + "Männchen auf Gebiet setzen! Blau: 0, Rot: 1, Gelb: 2, Grün: 3"
 
 
-
+  def playfieldView:String = nameLine + betweenLine + freshCardPart + restPart
 
   def nameLine: String = {
     var tmpString = ""
