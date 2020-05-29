@@ -5,7 +5,6 @@ import de.htwg.se.Carcassonne.controller.Controller
 import de.htwg.se.Carcassonne.model.{Area, Card, CardCreator, Grid, Player, Playfield}
 
 import scala.io.StdIn._
-import Console.{GREEN, RED, RESET, UNDERLINED, YELLOW_B}
 
 object Carcassonne {
 
