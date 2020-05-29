@@ -19,3 +19,5 @@ oneCard.areas.ne(twoCard.areas)
 val input = "3"
 val xy = input.split(" ")
 val x = xy.apply(0).toInt
+
+Console.out.println( "Test " + Console.RED + " RED " + Console.RESET )
