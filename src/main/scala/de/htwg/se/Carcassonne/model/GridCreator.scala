@@ -4,9 +4,6 @@ case class GridCreator(private val grid: Grid, private val allPlayers:List[Playe
 
   def this(size:Int) = this(new Grid(size), allPlayers = Nil)
 
-  def addPlayer(player:String):GridCreator = copy(grid.copy(playerlist = Player(player)::allPlayers),
-    allPlayers =  Player(player)::allPlayers)
-
   def getPlayerReadyGrid:Grid = grid
   
 }

@@ -3,7 +3,7 @@ package de.htwg.se.Carcassonne
 import de.htwg.se.Carcassonne.aview.TUI
 import de.htwg.se.Carcassonne.model.{Area, Card, CardCreator, Grid, GridCreator, Player}
 import scala.io.StdIn._
-
+import Console.{GREEN, RED, RESET, YELLOW_B, UNDERLINED}
 
 object Carcassonne {
 
@@ -49,7 +49,7 @@ object Carcassonne {
           }
           while (input == "Y" || input == "y")
           grid = preGrid.getPlayerReadyGrid
-          playerList = grid.getPlayerlist
+          //playerList = grid.getPlayerlist
           print(grid.toString)
           gameMode += 1
 

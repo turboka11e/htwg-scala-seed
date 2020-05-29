@@ -4,6 +4,8 @@ import scala.util.Random
 
 case class CardCreator(playerCard: Player, card: Card = Card()){
 
+  def this() = this(playerCard = Player("default"))
+
   val randomCards: List[Card] = List(
 
     Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s')))),
