@@ -3,7 +3,7 @@ package de.htwg.se.Carcassonne.model
 import org.scalatest._
 
 class TerritoriesSpec extends WordSpec with Matchers {
-
+/*
   "Territories grow in grid " when {
     "Cards are placed next to another " should {
       val emptyGrid = new Grid(3)
@@ -31,4 +31,6 @@ class TerritoriesSpec extends WordSpec with Matchers {
       }
     }
   }
+
+ */
 }

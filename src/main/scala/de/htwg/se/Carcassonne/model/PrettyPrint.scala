@@ -116,11 +116,11 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
 
   def getColoredCorner(x: Int, y: Int, dir:Char):String = {
 
-    val index = players.indexWhere(p => p == grid.card(x, y).getPlayer(dir))
+    val playerIndex = grid.card(x, y).getPlayer(dir)
     var tmpString = ""
 
-    if(index >= 0) {
-      tmpString = color(index) + grid.card(x, y).getValue(dir) + Console.RESET
+    if(playerIndex >= 0) {
+      tmpString = color(playerIndex) + grid.card(x, y).getValue(dir) + Console.RESET
     } else {
       tmpString = grid.card(x, y).getValue(dir).toString
     }
