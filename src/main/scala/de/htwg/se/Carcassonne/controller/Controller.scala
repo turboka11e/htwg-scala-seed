@@ -33,8 +33,21 @@ class Controller(var playfield: Playfield) extends Observable {
           playfield = playfield.changeGameState(3)
           playfield = playfield.getFreshCard
         }
-      case 5 =>
+      case 3 =>
+        if(dc){
+          playfield = playfield.changeGameState(4)
+        }
     }
+    notifyObservers
+  }
+
+  def rotateRight():Unit = {
+    playfield = playfield.rotateR
+    notifyObservers
+  }
+
+  def rotateLeft():Unit = {
+    playfield = playfield.rotateL
     notifyObservers
   }
 
