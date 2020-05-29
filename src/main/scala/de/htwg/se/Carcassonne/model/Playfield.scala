@@ -19,12 +19,20 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
 
   def rotateL:Playfield = copy(freshCard = freshCard.rotateLeft)                                    // Gamestate 3
 
-  def selectArea(nr:Int):Playfield = copy(freshCard = freshCard.setPlayerToArea(nr))                // Gamestate 4
+  def selectArea(nr:Int):Playfield = copy(freshCard = freshCard.setPlayerToArea(nr), gameState = 5)                // Gamestate 4
 
   def placeCard(x: Int, y:Int):Playfield = {                                                        // Gamestate 5
     val check = grid.getCount
     val CardAdded = grid.place(x, y, freshCard.finalCard)
-    if(check == CardAdded.getCount) copy(success = false) else copy(grid = CardAdded)
+    if(check == CardAdded.getCount) copy(success = false) else copy(grid = CardAdded, gameState = 3)
+  }
+
+  def nextPlayer:Playfield = {
+    if(isOn == players.size - 1){
+      copy(isOn = 0)
+    } else {
+      copy(isOn = isOn + 1)
+    }
   }
 
   def playFieldToString:String = PrettyPrint(gameState, grid, freshCard, players, isOn).toString

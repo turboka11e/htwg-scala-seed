@@ -15,17 +15,17 @@ class TUI(controller: Controller) extends Observer {
       case "y" => controller.decide(true)
       case "n" => controller.decide(false)
       case "r" => controller.rotateRight()
-      case "l" =>
+      case "l" => controller.rotateLeft()
       case _ => validateLongString(input)
     }
   }
 
   def validateLongString(input: String): Unit = {
-    if (input.forall(p => p.isDigit) && input.nonEmpty) {
-      val extract = input.split(" ").map(c => c.toInt)
+    if (input.forall(p => (p.isDigit || p == ' ')) && input.nonEmpty) {
+      val extract = input.split(" ")
       extract.length match {
-        case 1 => controller.forkDigit(extract.head)
-        case 2 =>
+        case 1 => controller.forkDigit(extract.head.toInt)
+        case 2 => controller.placeCard(extract(0).toInt, extract(1).toInt)
       }
     } else if (input.nonEmpty) {
       controller.addPlayer(input)

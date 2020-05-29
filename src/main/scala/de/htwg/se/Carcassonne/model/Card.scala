@@ -85,7 +85,7 @@ case class Card(areas:List[Area] = List(Area(corners = List('n')), Area(corners 
   }
 
   def lowString:String = {
-    val u = color(areas.indexWhere(p => p == getAreaLookingFrom('n')) ) + getValue('n') + Console.RESET
+    val u = color(areas.indexWhere(p => p == getAreaLookingFrom('s')) ) + getValue('s') + Console.RESET
     var ul = "└"
     var ur = "┘"
     if (getCornersLookingFrom('s').contains('w')) ul = u
