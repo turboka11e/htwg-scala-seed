@@ -64,5 +64,31 @@ case class Card(areas:List[Area] = List(Area(corners = List('n')), Area(corners 
 
   }
 
+  def topString:String = {
+    val o = getValue('n')
+    var ol = '┌'
+    var or = '┐'
+    if (getCornersLookingFrom('n').contains('w')) ol = o
+    if (getCornersLookingFrom('n').contains('e')) or = o
+    s" $ol $o $or"
+  }
+
+  def midString:String = {
+    val l = getValue('w')
+    val r = getValue('e')
+    var m = ' '
+    if (getCornersLookingFrom('e').contains('w')) m = l
+    if (getCornersLookingFrom('n').contains('s')) m = getValue('n')
+    s" $l $m $r"
+  }
+
+  def lowString:String = {
+    val u = getValue('s')
+    var ul = '└'
+    var ur = '┘'
+    if (getCornersLookingFrom('s').contains('w')) ul = u
+    if (getCornersLookingFrom('s').contains('e')) ur = u
+    s" $ul $u $ur"
+  }
 }
 

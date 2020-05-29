@@ -1,0 +1,107 @@
+package de.htwg.se.Carcassonne.model
+
+case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, players:List[Player], isOn: Int) {
+
+  private val color = List(Console.BLUE, Console.RED, Console.YELLOW)
+
+  override def toString:String = {
+
+    gameState match {
+      case 0 => g0
+      case 1 => g1
+      case 2 => g2
+      case 3 => g3
+    }
+  }
+
+  def g0:String = "Bitte Feldgröße angeben: "
+
+  def g1:String = "Name eingeben: "
+
+  def g2:String = "Weitere Spieler hinzufügen? 'y' = Ja 'n' = Spiel anfangen!\nEingabe: "
+
+  def g3:String = nameLine + betweenLine + freshCardPart + restPart
+
+
+
+
+  def nameLine: String = {
+    var tmpString = ""
+    tmpString = topRow(0) + "\t" + color(isOn) + players(isOn).name + Console.RESET + " ist an der Reihe\n"
+    tmpString
+  }
+
+  def betweenLine: String = midRow(0) + "\n"
+
+  def freshCardPart: String = {
+    var tmpString = ""
+    tmpString = lowRow(0) + "\tDeine neue Karte:\n" +
+      topRow(1) + "\t" + freshCard.card.topString + "\n" +
+      midRow(1) + "\t" + freshCard.card.midString + "\n" +
+      lowRow(1) + "\t" + freshCard.card.lowString + "\n"
+    tmpString
+  }
+
+  def restPart: String = {
+    var tmpString = ""
+    for(y <- 2 until grid.size){
+      tmpString += topRow(y) + "\n" + midRow(y) + "\n" + lowRow(y) + "\n"
+    }
+    tmpString
+  }
+
+  def topRow(y: Int):String = {
+    var tmpString = ""
+    for(x <- 0 until grid.size){
+      tmpString = tmpString + topSeg(x, y)
+    }
+    tmpString
+  }
+
+  def midRow(y: Int):String = {
+    var tmpString = ""
+    for(x <- 0 until grid.size){
+      tmpString = tmpString + midSeg(x, y)
+    }
+    tmpString
+  }
+
+  def lowRow(y: Int):String = {
+    var tmpString = ""
+    for(x <- 0 until grid.size){
+      tmpString = tmpString + lowSeg(x, y)
+    }
+    tmpString
+  }
+
+  def topSeg(x: Int, y: Int):String = {
+    val o = grid.card(x, y).getValue('n')
+    var ol = '┌'
+    var or = '┐'
+    if(grid.card(x, y).getCornersLookingFrom('n').contains('w')) ol = o
+    if(grid.card(x, y).getCornersLookingFrom('n').contains('e')) or = o
+    s" $ol $o $or"
+  }
+
+  def midSeg(x: Int, y: Int):String = {
+    val l = grid.card(x, y).getValue('w')
+    val r = grid.card(x, y).getValue('e')
+    var m = ' '
+    if(grid.card(x, y).getCornersLookingFrom('e').contains('w')) m = l
+    if(grid.card(x, y).getCornersLookingFrom('n').contains('s')) m = grid.card(x, y).getValue('n')
+    s" $l $m $r"
+  }
+  def lowSeg(x: Int, y: Int):String = {
+    val u = grid.card(x, y).getValue('s')
+    var ul = '└'
+    var ur = '┘'
+    if(grid.card(x, y).getCornersLookingFrom('s').contains('w')) ul = u
+    if(grid.card(x, y).getCornersLookingFrom('s').contains('e')) ur = u
+    s" $ul $u $ur"
+  }
+
+
+
+  def curPla():String = ""
+
+}
