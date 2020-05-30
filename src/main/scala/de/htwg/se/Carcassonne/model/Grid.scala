@@ -4,13 +4,15 @@ case class Grid(private val cells:Matrix[Card], private val territories: Territo
 
   def this(size: Int) = this(new Matrix[Card](size, Card()), Territories())
 
-  def this(size: Int, playerList: List[Player]) = this(new Matrix[Card](size, Card()), Territories())
+
 
   val size: Int = cells.size
 
   def getCount:Int = cells.getCount
 
   def card(row: Int, col: Int): Card = cells.card(row, col)
+
+  def getPoints:List[Double] = territories.getPoints
 
   def checkEdge(row: Int, col: Int, dir: Char):Boolean = {
     dir match {
