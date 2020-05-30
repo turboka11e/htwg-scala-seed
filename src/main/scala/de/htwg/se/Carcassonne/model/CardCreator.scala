@@ -12,13 +12,15 @@ case class CardCreator(playerCard: Int, card: Card = Card()){
 
     Card(List(Area('c', List('n')), Area('g', List('s', 'w', 'e')))),
 
-    //Card(List(Area('c', List('w', 'e')), Area('g', List('s', 'n')))),
+    //Card(List(Area('c', List('w', 'e')), Area('g', List('s', 'n')))), falsch
 
     Card(List(Area('c', List('w')), Area('c', List('e')), Area('g', List('n', 's')))),
 
     Card(List(Area('c', List('n', 'e')), Area('g', List('s', 'w')))),
 
-    Card(List(Area('c', List('n')), Area('g', List('w')), Area('r', List('s', 'e'))))
+    Card(List(Area('c', List('n')), Area('g', List('w')), Area('r', List('s', 'e')))),
+
+    Card(List(Area('c', List('n')), Area('c', List('w')), Area('c', List('e')), Area('c', List('s'))))
 
   )
 
