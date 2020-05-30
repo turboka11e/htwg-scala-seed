@@ -1,25 +1,33 @@
 import de.htwg.se.Carcassonne.model.{Area, Card, Player}
 
-val test = Area(value = 'n', corners = List('n'), player = Player("Kalle"))
+val terriList = List(List(Area('c', List('n'), 0), Area('c', List('n'), 3)),
+  List(Area('r', List('n'), 2), Area('r', List('w', 'e', 's'), 1)), List(Area('r', List('n'), 3), Area('r', List('w'), -1)))
 
-val territories = List(List(Area))
+val closList = terriList.map(l => l.map(a => a.getCorners.size).map{case 1 => -1; case 2 => 2; case 3 => 3; case 4 => 4})
+val reduced = closList.map(l => l.sum::Nil)
+val finishedList = reduced.map(l => l.map {case -2 => 1.0; case 0 => 1.0; case _ => 0.0})
 
-val area1 = Area()
-val area2 = Area()
+val playList = terriList.map(l => l.map(a => a.player).distinct.filter(a => a != -1))
+val typeList = terriList.map(l => l.map(a => a.getValue).distinct.map {case 'c' => 2.0; case 'r' => 1.0; case _ => 0.0})
+val poinList = terriList.map(l => l.size::Nil)
 
-val area3 = Area()
+val calcPoin = typeList.zip(poinList).map(l => l._1.sum * l._2.sum::Nil)
 
-val cardterritories:List[Area] = List(area1, area2)
+val reducedCalcPoint = calcPoin.zip(finishedList).filter(p => p._2.head == 1).map(l => l._1:::l._2).map(l => l.product)
 
-val oneCard = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s'))))
-val twoCard = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s'))))
-val threeCard = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s'))))
+val sharedTerri = playList.map(l => l.size.toDouble)
+val reducedTerri = sharedTerri.zip(finishedList).filter(p => p._2.head == 1).map(l => l._1::Nil:::l._2).map(l => l.product)
+val divideCalcPoint = reducedCalcPoint.zip(reducedTerri).map(l => l._1 / l._2)
 
-oneCard.areas.ne(twoCard.areas)
-val input = "3"
-val xy = input.split(" ")
-val x = xy.apply(0).toInt
+val reducedPlayList = playList.zip(finishedList).filter(p => p._2.head == 1).map {a => a._1}
 
-val playerList = List(Player("Hallo"), Player("Halli"))
+val perTerriPlayerPointList = reducedPlayList.zip(divideCalcPoint)
 
-val newList = playerList.map(p => p.name).
+var perPlayerPointsList:List[Double] = List(0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+for(terri <- perTerriPlayerPointList) {
+  for(player <- terri._1){
+    perPlayerPointsList = perPlayerPointsList.updated(player, perPlayerPointsList.apply(player) + terri._2)
+  }
+}
+perPlayerPointsList

@@ -23,9 +23,13 @@ class Controller(var playfield: Playfield) extends Observable {
     }
   }
 
-  def addPlayer(name:String):Unit = {
-    playfield = playfield.addPlayer(name)
-    notifyObservers
+  def addPlayer(name: String): Unit = {
+    playfield.getGameState match {
+      case 1 => playfield = playfield.addPlayer(name)
+        notifyObservers
+      case _ =>
+    }
+
   }
 
   def decide(dc:Boolean):Unit = {

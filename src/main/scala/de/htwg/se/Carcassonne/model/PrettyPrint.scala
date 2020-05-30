@@ -20,13 +20,13 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
 
   def g1:String = "Name eingeben: "
 
-  def g2:String = "Weitere Spieler hinzufügen? 'y' = Ja 'n' = Spiel anfangen!\nEingabe: "
+  def g2:String = "Weitere Spieler hinzufügen? [y],[n]\nEingabe: "
 
-  def g3:String = playfieldView + "Karte drehen: Rechts: 'r', Links: 'l'\nWenn passt: 'y'\nEingabe: "
+  def g3:String = playfieldView + "Karte drehen: Rechts [r], Links [l]\nFertig: [y]\nEingabe: "
 
-  def g4:String = playfieldView + "Männchen auf Gebiet setzen! Blau: 0, Rot: 1, Gelb: 2, Grün: 3\nEingabe: "
+  def g4:String = playfieldView + "Männchen auf Gebiet setzen! Blau [0], Rot [1], Gelb [2], Grün [3]\nEingabe: "
 
-  def g5:String = playfieldView + "Setze Karte in das Spielfeld! 'x y'\nEingabe: "
+  def g5:String = playfieldView + "Setze Karte in das Spielfeld! [x y]\nEingabe: "
 
   def playfieldView:String = "\n" + playerLine + nameLine + betweenLine + freshCardPart + restPart
 
@@ -34,7 +34,7 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
     var tmpString = ""
     val newList = players.map(p => p.name).zipWithIndex
     for((x, i) <- newList){
-      tmpString += color(i) + x + Console.RESET + "    "
+      tmpString += color(i) + x + Console.RESET + " (" + grid.getPoints(i) + ") " +  "    "
     }
     tmpString + "\n"
   }
