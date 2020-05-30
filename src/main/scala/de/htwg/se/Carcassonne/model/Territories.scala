@@ -39,7 +39,7 @@ case class Territories(territories: List[List[Area]] = Nil, private val points:L
       }
       for(x <- col_ind){
         val id = tmpTerri.indexWhere(p => p.exists(b => b.eq(x)))
-        tmpTerri = tmpTerri.filter(_.ne(tmpTerri.apply(id)))
+        if(id > 0) tmpTerri = tmpTerri.filter(_.ne(tmpTerri.apply(id)))
       }
       if(!joinedTerri.exists(p => p.eq(currentArea))){
         joinedTerri = currentArea::joinedTerri
