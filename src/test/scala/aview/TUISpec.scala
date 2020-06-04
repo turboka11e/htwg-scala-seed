@@ -1,5 +1,0 @@
-package aview
-
-class TUISpec {
-
-}
