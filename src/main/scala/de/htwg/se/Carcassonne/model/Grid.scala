@@ -29,8 +29,6 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
       tmpList = tmpTerriList(row:Int, col:Int, dir:Char, newCard, tmpList)
     }
 
-    print(tmpList)
-
     tmpList
 
   }
