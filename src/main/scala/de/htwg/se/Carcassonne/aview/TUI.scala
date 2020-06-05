@@ -24,7 +24,7 @@ class TUI(controller: Controller) extends Observer {
     if (input.forall(p => p.isDigit || p == ' ') && input.nonEmpty) {
       val extract = input.split(" ")
       extract.length match {
-        case 1 => controller.forkDigit(extract.head.toInt)
+        case 1 => forkDigit(extract.head.toInt)
         case 2 => controller.placeCard(extract(0).toInt, extract(1).toInt)
         case _ =>
       }
@@ -33,6 +33,13 @@ class TUI(controller: Controller) extends Observer {
     }
   }
 
+  def forkDigit(input:Int):Unit = {
+    controller.getGameState match {
+      case 0 => controller.createGrid(input)
+      case 4 => controller.selectArea(input)
+      case _ =>
+    }
+  }
 
 
   override def update: Unit = print(controller.playFieldToString)
