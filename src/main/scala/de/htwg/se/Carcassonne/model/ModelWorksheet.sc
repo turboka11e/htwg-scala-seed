@@ -1,14 +1,18 @@
 import de.htwg.se.Carcassonne.model.{Area, Card, Player}
 
-val terriList = List(List(Area('c', List('n'), 0), Area('c', List('n'), 3)),
-  List(Area('r', List('n'), 2), Area('r', List('w', 'e', 's'), 1)), List(Area('r', List('n'), 3), Area('r', List('w'), -1)))
+val terriList:List[List[(Int, Area)]] = List(List((0, Area('c', List('n'), 0)), (1, Area('c', List('n'), 3))),
+  List((1, Area('r', List('n'), 2)), (2, Area('r', List('w', 'e', 's'), 1))), List((1, Area('r', List('n'), 3)), (0, Area('r', List('w'), -1))))
 
-val closList = terriList.map(l => l.map(a => a.getCorners.size).map{case 1 => -1; case 2 => 2; case 3 => 3; case 4 => 4})
+val closList = terriList.map(l => l.map(a => a._2.getCorners.size).map{case 1 => -1; case 2 => 2; case 3 => 3; case 4 => 4})
 val reduced = closList.map(l => l.sum::Nil)
+val openReduced = terriList.map(l => l.head._1).map{case 0 => 1; case _ => 0}.map(l => l.toDouble :: Nil)
 val finishedList = reduced.map(l => l.map {case -2 => 1.0; case 0 => 1.0; case _ => 0.0})
 
-val playList = terriList.map(l => l.map(a => a.player).distinct.filter(a => a != -1))
-val typeList = terriList.map(l => l.map(a => a.getValue).distinct.map {case 'c' => 2.0; case 'r' => 1.0; case _ => 0.0})
+val openFinishedList = openReduced.zip(finishedList).map(l => l._1 ::: l._2).map(l => l.product :: Nil).map(n => n.map{case 0 => 1; case _ => 0})
+
+
+val playList = terriList.map(l => l.map(a => a._2.player).distinct.filter(a => a != -1))
+val typeList = terriList.map(l => l.map(a => a._2.getValue).distinct.map {case 'c' => 2.0; case 'r' => 1.0; case _ => 0.0})
 val poinList = terriList.map(l => l.size::Nil)
 
 val calcPoin = typeList.zip(poinList).map(l => l._1.sum * l._2.sum::Nil)

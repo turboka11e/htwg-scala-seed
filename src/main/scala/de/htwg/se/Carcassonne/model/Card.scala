@@ -1,8 +1,14 @@
 package de.htwg.se.Carcassonne.model
 
-case class Card(areas:List[Area] = List(Area(corners = List('n')), Area(corners = List('w')), Area(corners = List('e')), Area(corners = List('s')))){
+case class Card(areas:List[Area] = List(Area())){
+
+  def this(xy:(Int, Int)) = this(areas = List(Area(corners = List('n'), xy = (xy._1, xy._2)),
+    Area(corners = List('w'), xy = (xy._1, xy._2)), Area(corners = List('e'), xy = (xy._1, xy._2)),
+    Area(corners = List('s'), xy = (xy._1, xy._2))))
 
   def isEmpty: Boolean = areas.head.getValue == ' ' && areas.size == 4
+
+  def setAreasXY(x:Int, y:Int):Card = copy(areas = areas.map(areas => areas.copy(xy = (x, y))))
 
   def getValue(dir:Char): Char = areas.find(_.getCorners.contains(dir)).get.getValue
 
