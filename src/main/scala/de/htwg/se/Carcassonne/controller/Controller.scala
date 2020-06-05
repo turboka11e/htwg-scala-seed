@@ -15,14 +15,6 @@ class Controller(var playfield: Playfield) extends Observable {
     notifyObservers
   }
 
-  def forkDigit(input:Int):Unit = {
-    playfield.getGameState match {
-      case 0 => createGrid(input)
-      case 4 => selectArea(input)
-      case _ =>
-    }
-  }
-
   def addPlayer(name: String): Unit = {
     playfield.getGameState match {
       case 1 => playfield = playfield.addPlayer(name)
@@ -49,6 +41,8 @@ class Controller(var playfield: Playfield) extends Observable {
     }
     notifyObservers
   }
+
+  def getGameState:Int = playfield.getGameState
 
   def rotateRight():Unit = {
     playfield = playfield.rotateR
