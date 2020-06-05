@@ -1,7 +1,7 @@
 package de.htwg.se.Carcassonne.model
 
 import org.scalatest._
-
+/*
 class GridSpec extends WordSpec with Matchers {
   "A Grid is the playingfield of Carcassonne. A Grid" when {
     "to be constructed" should {
@@ -109,3 +109,4 @@ class GridSpec extends WordSpec with Matchers {
     }
   }
 }
+*/

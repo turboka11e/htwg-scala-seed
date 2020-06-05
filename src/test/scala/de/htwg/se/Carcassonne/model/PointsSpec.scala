@@ -2,7 +2,7 @@ package de.htwg.se.Carcassonne.model
 
 import org.scalatest._
 
-class TerritoriesSpec extends WordSpec with Matchers {
+class PointsSpec extends WordSpec with Matchers {
 /*
   "Territories grow in grid " when {
     "Cards are placed next to another " should {

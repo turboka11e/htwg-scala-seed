@@ -1,10 +1,8 @@
 package de.htwg.se.Carcassonne.model
 
-case class Grid(private val cells:Matrix[Card], private val territories: Territories = Territories()) {
+case class Grid(private val cells:Matrix[Card], private val territories: List[List[Area]] = Nil) {
 
-  def this(size: Int) = this(new Matrix[Card](size, Card()), Territories())
-
-
+  def this(size: Int) = this(new Matrix[Card](size, Card()))
 
   val size: Int = cells.size
 
@@ -12,92 +10,71 @@ case class Grid(private val cells:Matrix[Card], private val territories: Territo
 
   def card(row: Int, col: Int): Card = cells.card(row, col)
 
-  def getPoints:List[Double] = territories.getPoints
-
-  def checkEdge(row: Int, col: Int, dir: Char):Boolean = {
-    dir match {
-      case 'n' => col > 0
-      case 's' => col < size - 1
-      case 'w' => row > 0
-      case 'e' => row < size - 1
-    }
-  }
-
-  def checkEnvEmpty(row: Int, col: Int, dir:Char):Boolean = {
-    if(checkEdge(row, col, dir)) {
-      dir match {
-        case 'n' => card(row, col - 1).isEmpty
-        case 's' => card(row, col + 1).isEmpty
-        case 'w' => card(row - 1, col).isEmpty
-        case 'e' => card(row + 1, col).isEmpty
-      }
-    } else {
-      true
-    }
-  }
-
-  def checkEnv(row: Int, col: Int, dir: Char, checkCard: Card):Boolean = {
-    if(!checkEnvEmpty(row, col, dir)){
-      dir match{
-        case 'n' => card(row, col - 1).getValue('s').equals(checkCard.getValue('n'))
-        case 's' => card(row, col + 1).getValue('n').equals(checkCard.getValue('s'))
-        case 'w' => card(row - 1, col).getValue('e').equals(checkCard.getValue('w'))
-        case 'e' => card(row + 1, col).getValue('w').equals(checkCard.getValue('e'))
-      }
-    } else {
-      true
-    }
-  }
-
-  def getDirEnv(row: Int, col: Int, dir:Char):Area = {
-    if(!checkEnvEmpty(row, col, dir)){
-      dir match{
-        case 'n' => card(row, col - 1).getAreaLookingFrom('s')
-        case 's' => card(row, col + 1).getAreaLookingFrom('n')
-        case 'w' => card(row - 1, col).getAreaLookingFrom('e')
-        case 'e' => card(row + 1, col).getAreaLookingFrom('w')
-      }
-    } else {
-      Area()
-    }
-  }
-
-  def hasNeighbor(row: Int, col: Int): Boolean = {
-    var check = false
-
-    for(x <- List('n', 's', 'w', 'e')){
-      check = check || !checkEnvEmpty(row, col, x)
-    }
-
-    check
-  }
-
-  def checkSet(row: Int, col: Int, checkCard:Card): Boolean = {
-
-    var check = true
-
-    for(x <- List('n', 's', 'w', 'e')){
-      check = check && checkEnv(row, col, x, checkCard)
-    }
-
-    check && card(row, col).isEmpty && hasNeighbor(row, col)
-  }
-
   def set(row: Int, col: Int, newCard:Card): Grid =
     copy(cells.replaceCell(row, col, newCard))
 
   def place(row: Int, col: Int, newCard:Card): Grid = {
-    if(!checkSet(row, col, newCard) && cells.getCount > 0){
+    if(!cells.checkSet(row, col, newCard) && cells.getCount > 0){
       copy()
     } else {
-      copy(cells.replaceCell(row, col, newCard), territories.addCard(this, row, col, newCard))
+      copy(cells.replaceCell(row, col, newCard), addCard(row, col, newCard))
     }
   }
 
-  def getTerritories:List[List[Area]] = territories.getTerritories
+  def addCard(row: Int, col: Int, newCard: Card):List[List[Area]] = {
 
-  def summonTerritories:Territories = territories
+    var tmpList:List[List[Area]] = territories
 
+    for(dir <- List('n', 's', 'w', 'e')){
+      tmpList = tmpTerriList(row:Int, col:Int, dir:Char, newCard, tmpList)
+    }
+
+    print(tmpList)
+    tmpList
+
+  }
+
+  private def tmpTerriList(row:Int, col:Int, dir:Char, newCard: Card, list:List[List[Area]]):List[List[Area]] = {
+
+    var tmpTerri = list
+    val currentArea = newCard.getAreaLookingFrom(dir)
+
+    var col_ind:List[Area] = List() // sammle angrenzende Areas
+
+    /* Schau in alle Richtungen der Area */
+    for (x <- currentArea.getCorners) {
+      val neighbor = cells.getDirEnv(row, col, x)
+      /* Schaue ob in der Richtung eine Karte ist */
+      if (neighbor != Area()) {
+        /* Speicher die Area in List col_ind */
+        col_ind = neighbor::col_ind
+      }
+    }
+
+    if(col_ind.nonEmpty){
+      var joinedTerri:List[Area] = Nil
+      for(x <- col_ind){
+        val id = tmpTerri.indexWhere(p => p.exists(b => b.eq(x)))
+        joinedTerri = joinedTerri:::tmpTerri.apply(id)
+      }
+      for(x <- col_ind){
+        val id = tmpTerri.indexWhere(p => p.exists(b => b.eq(x)))
+        if(id > 0) tmpTerri = tmpTerri.filter(_.ne(tmpTerri.apply(id)))
+      }
+      if(!joinedTerri.exists(p => p.eq(currentArea))){
+        joinedTerri = currentArea::joinedTerri
+      }
+      tmpTerri = joinedTerri::tmpTerri
+    } else {
+      if (!tmpTerri.exists(p => p.exists(p => p.eq(newCard.getAreaLookingFrom(dir))))) {
+        tmpTerri = List(newCard.getAreaLookingFrom(dir)) :: tmpTerri
+      }
+    }
+
+    tmpTerri
+  }
+
+  def getTerritories:List[List[Area]] = territories
 
 
 }
