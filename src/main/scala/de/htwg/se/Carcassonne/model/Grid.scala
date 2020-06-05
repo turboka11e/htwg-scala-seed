@@ -17,7 +17,7 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
     if(!cells.checkSet(row, col, newCard) && cells.getCount > 0){
       copy()
     } else {
-      copy(cells.replaceCell(row, col, newCard), addCardToTerri(row, col, newCard))
+      copy(cells = cells.replaceCell(row, col, newCard)).copy(territories = addCardToTerri(row, col, newCard))
     }
   }
 
@@ -29,6 +29,9 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
       tmpList = tmpTerriList(row:Int, col:Int, dir:Char, newCard, tmpList)
     }
 
+    tmpList.map(p => updateTerriEnv(p, (row, col)))
+
+    print(tmpList)
     tmpList
 
   }
@@ -75,6 +78,8 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
         joinedTerri = (openCorners, currentArea)::joinedTerri
       }
 
+      //joinedTerri = updateTerriEnv(joinedTerri)
+
       tmpTerri = joinedTerri::tmpTerri
     } else {
       if (!tmpTerri.exists(p => p.exists(p => p._2.equals(newCard.getAreaLookingFrom(dir))))) {
@@ -86,6 +91,30 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
   }
 
   def getTerritories:List[List[(Int, Area)]] = territories
+
+  def updateTerriEnv(terriEnv:List[(Int, Area)]):List[(Int, Area)] = {
+
+    var tmpTerriEnv = terriEnv
+
+    for ((y, i) <- terriEnv.zipWithIndex) {
+      var freeCorners = 0
+      for (x <- y._2.getCorners) {
+
+        val neighbor = cells.getDirEnv(y._2.xy._1, y._2.xy._2, x)
+
+          /* Schaue ob in der Richtung eine Karte ist */
+          if (neighbor.isEmpty) {
+            /*  */
+            freeCorners += 1
+          }
+
+      }
+      tmpTerriEnv = tmpTerriEnv.updated(i, elem = (freeCorners, tmpTerriEnv.apply(i)._2))
+    }
+    tmpTerriEnv
+  }
+
+
 
 
 }
