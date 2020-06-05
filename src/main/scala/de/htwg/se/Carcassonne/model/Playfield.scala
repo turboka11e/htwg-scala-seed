@@ -11,7 +11,7 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
 
   def fieldSize(size:Int):Playfield = copy(grid = new Grid(size), gameState = 1)                    // GameState 0
 
-  def addPlayer(name:String):Playfield = copy(players = Player(name)::players, gameState = 2)       // GameState 1
+  def addPlayer(name:String):Playfield = copy(players = players ::: List(Player(name)), gameState = 2)       // GameState 1
 
   def getFreshCard:Playfield = copy(freshCard = CardCreator(isOn).randCard)                // GameState 2
 
@@ -24,7 +24,7 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
   def placeCard(x: Int, y: Int): Playfield = { // Gamestate 5
     copy(success = true)
     val check = grid.getCount
-    val CardAdded = grid.place(x, y, freshCard.finalCard)
+    val CardAdded = grid.place(x, y, freshCard.finalCard(x, y))
     if (check == CardAdded.getCount){
       copy(success = false)
     }else{

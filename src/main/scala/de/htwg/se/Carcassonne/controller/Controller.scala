@@ -69,7 +69,6 @@ class Controller(var playfield: Playfield) extends Observable {
     playfield = playfield.placeCard(x, y)
     if(playfield.getSuccess) {
       playfield = playfield.nextPlayer.getFreshCard
-      
     }
     notifyObservers
   }

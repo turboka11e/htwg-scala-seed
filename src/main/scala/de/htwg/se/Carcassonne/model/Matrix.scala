@@ -1,7 +1,7 @@
 package de.htwg.se.Carcassonne.model
 
 case class Matrix[T] (rows:Vector[Vector[Card]], private val count:Int = 0) {
-  def this(size:Int, filling:Card) = this(Vector.tabulate(size, size){(row, col) => filling})
+  def this(size:Int) = this(Vector.tabulate(size, size){(row, col) => new Card(row, col)})
 
   val size:Int = rows.size
 

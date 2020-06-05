@@ -33,8 +33,8 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
   def playerLine: String = {
     var tmpString = ""
     val newList = players.map(p => p.name).zipWithIndex
-    for((x, i) <- newList){
-      tmpString += color(i) + x + Console.RESET + " (" + players(i).points + ") " +  "    "
+    for(i <- players.indices){
+      tmpString += color(i) + players(i).toString + Console.RESET + "    "
     }
     tmpString + "\n"
   }

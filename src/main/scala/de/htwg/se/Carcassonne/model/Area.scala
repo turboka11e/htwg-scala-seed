@@ -1,6 +1,6 @@
 package de.htwg.se.Carcassonne.model
 
-case class Area(value:Char = ' ', corners:List[Char] = List('n', 'w', 'e', 's'), player:Int = -1) {
+case class Area(value:Char = ' ', corners:List[Char] = List('n', 'w', 'e', 's'), player:Int = -1, xy:(Int, Int) = (-1, -1)) {
 
   def getValue:Char = value
 
