@@ -17,11 +17,12 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
     if(!cells.checkSet(row, col, newCard) && cells.getCount > 0){
       copy()
     } else {
-      copy(cells = cells.replaceCell(row, col, newCard)).copy(territories = addCardToTerri(row, col, newCard))
+      val tmp = copy(cells = cells.replaceCell(row, col, newCard))
+      tmp.copy(territories = addCardToTerri(row, col, newCard, tmp.cells))
     }
   }
 
-  def addCardToTerri(row: Int, col: Int, newCard: Card):List[List[(Int, Area)]] = {
+  def addCardToTerri(row: Int, col: Int, newCard: Card, newestCells:Matrix[Card]):List[List[(Int, Area)]] = {
 
     var tmpList:List[List[(Int, Area)]] = territories
 
@@ -29,7 +30,7 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
       tmpList = tmpTerriList(row:Int, col:Int, dir:Char, newCard, tmpList)
     }
 
-    tmpList.map(p => updateTerriEnv(p, (row, col)))
+    tmpList = tmpList.map(p => updateTerriEnv(p, newestCells))
 
     print(tmpList)
     tmpList
@@ -51,8 +52,6 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
       if (neighbor != Area()) {
         /* Speicher die Area in List col_ind */
         col_ind = neighbor::col_ind
-      } else {
-        openCorners += 1
       }
     }
 
@@ -92,7 +91,7 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
 
   def getTerritories:List[List[(Int, Area)]] = territories
 
-  def updateTerriEnv(terriEnv:List[(Int, Area)]):List[(Int, Area)] = {
+  def updateTerriEnv(terriEnv:List[(Int, Area)], newestCells:Matrix[Card]):List[(Int, Area)] = {
 
     var tmpTerriEnv = terriEnv
 
@@ -100,16 +99,17 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
       var freeCorners = 0
       for (x <- y._2.getCorners) {
 
-        val neighbor = cells.getDirEnv(y._2.xy._1, y._2.xy._2, x)
+        //val neighbor = cells.getDirEnv(y._2.xy._1, y._2.xy._2, x)
 
           /* Schaue ob in der Richtung eine Karte ist */
-          if (neighbor.isEmpty) {
+          if (newestCells.getDirEnv(y._2.xy._1, y._2.xy._2, x).getValue != y._2.getValue) {
             /*  */
+            //print(newestCells.getDirEnv(y._2.xy._1, y._2.xy._2, x).getValue + " " + y._2.getValue + " " + y._2.getCorners + " " + y._2.xy + "\n")
             freeCorners += 1
           }
 
       }
-      tmpTerriEnv = tmpTerriEnv.updated(i, elem = (freeCorners, tmpTerriEnv.apply(i)._2))
+      tmpTerriEnv = tmpTerriEnv.updated(i, (freeCorners, tmpTerriEnv.apply(i)._2))
     }
     tmpTerriEnv
   }
