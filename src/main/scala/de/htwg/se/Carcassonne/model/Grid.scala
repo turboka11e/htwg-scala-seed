@@ -32,7 +32,7 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
 
     tmpList = tmpList.map(p => updateTerriEnv(p, newestCells))
 
-    print(tmpList)
+    //print(tmpList)
     tmpList
 
   }
