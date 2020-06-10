@@ -1,31 +1,32 @@
 package de.htwg.se.Carcassonne.model
 
-case class Points() {
+case class Points(terriList:List[List[(Int, Area)]], players:List[Player]) {
 
-  def updatePoints(terriList:List[List[(Int, Area)]], players:List[Player]):List[Player] = {
+  def listOfFinishedTerris:List[List[Double]] =
+    terriList.map(l => l.map(a => a._1.toDouble)).map(l => l.distinct.sum :: Nil).map(p => p.map {case 0 => 1.0; case _ => 0.0})
 
-    val closList = terriList.map(l => l.map(a => a._1).map { case 0 => 1.0; case _ => 0.0})
-    val finishedList = closList.map(l => l.distinct)
+  def playersToList:List[List[Int]] = terriList.map(l => l.map(a => a._2.player).distinct.filter(a => a != -1))
+  
+  def typeToPointsList:List[List[Double]] = terriList.map(l => l.map(a => a._2.getValue).distinct.map { case 'c' => 2.0; case 'r' => 1.0; case _ => 0.0 })
 
-    val playList = terriList.map(l => l.map(a => a._2.player).distinct.filter(a => a != -1))
-    val typeList = terriList.map(l => l.map(a => a._2.getValue).distinct.map { case 'c' => 2.0; case 'r' => 1.0; case _ => 0.0 })
-    val poinList = terriList.map(l => l.size :: Nil)
+  def totalPointsOfTerris:List[List[Double]] = typeToPointsList.zip(terriList.map(l => l.size :: Nil)).map(l => l._1.sum * l._2.sum :: Nil)
 
-    val calcPoin = typeList.zip(poinList).map(l => l._1.sum * l._2.sum :: Nil)
+  def reducedPointsOfTerris:List[Double] = totalPointsOfTerris.zip(listOfFinishedTerris).filter(p => p._2.head == 1).map(l => l._1 ::: l._2).map(l => l.product)
 
-    val reducedCalcPoint = calcPoin.zip(finishedList).filter(p => p._2.head == 1).map(l => l._1 ::: l._2).map(l => l.product)
+  def reducedPlayersOnTerri:List[Double] =
+    playersToList.map(l => l.size.toDouble).zip(listOfFinishedTerris).filter(p => p._2.head == 1).map(l => l._1 :: Nil ::: l._2).map(l => l.product)
 
-    val sharedTerri = playList.map(l => l.size.toDouble)
-    val reducedTerri = sharedTerri.zip(finishedList).filter(p => p._2.head == 1).map(l => l._1 :: Nil ::: l._2).map(l => l.product)
-    val divideCalcPoint = reducedCalcPoint.zip(reducedTerri).map(l => l._1 / l._2)
+  def adjustedPointsForPlayers:List[Double] = reducedPointsOfTerris.zip(reducedPlayersOnTerri).map(l => l._1 / l._2)
 
-    val reducedPlayList = playList.zip(finishedList).filter(p => p._2.head == 1).map { a => a._1 }
+  def reducedPlayersList:List[List[Int]] = playersToList.zip(listOfFinishedTerris).filter(p => p._2.head == 1).map { a => a._1 }
 
-    val perTerriPlayerPointList = reducedPlayList.zip(divideCalcPoint)
+  def pointsForPlayersOnTerri: List[(List[Int], Double)] = reducedPlayersList.zip(adjustedPointsForPlayers)
+
+  def updatePoints():List[Player] = {
 
     var perPlayerPointsList: List[Double] = List.fill(players.size)(elem = 0)
 
-    for (terri <- perTerriPlayerPointList) {
+    for (terri <- pointsForPlayersOnTerri) {
       for (player <- terri._1) {
         perPlayerPointsList = perPlayerPointsList.updated(player, perPlayerPointsList.apply(player) + terri._2)
       }

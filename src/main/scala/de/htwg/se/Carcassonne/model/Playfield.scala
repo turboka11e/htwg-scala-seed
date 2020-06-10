@@ -22,13 +22,12 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
   def selectArea(nr:Int):Playfield = copy(freshCard = freshCard.setPlayerToArea(nr), gameState = 5)                // Gamestate 4
 
   def placeCard(x: Int, y: Int): Playfield = { // Gamestate 5
-    copy(success = true)
     val check = grid.getCount
     val CardAdded = grid.place(x, y, freshCard.finalCard(x, y))
     if (check == CardAdded.getCount){
       copy(success = false)
     }else{
-      copy(grid = CardAdded, gameState = 3, players = Points().updatePoints(CardAdded.getTerritories, players))
+      copy(grid = CardAdded, success = true, gameState = 3, players = Points(CardAdded.getTerritories, players).updatePoints())
     }
   }
 
