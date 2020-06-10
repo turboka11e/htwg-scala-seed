@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.com/turboka11e/de.htwg.se.Carcassonne.svg?branch=SE-06-CI-Travis)](https://travis-ci.com/turboka11e/de.htwg.se.Carcassonne)
+[![Build Status](https://travis-ci.com/turboka11e/de.htwg.se.Carcassonne.svg?branch=master)](https://travis-ci.com/turboka11e/de.htwg.se.Carcassonne)
 
-[![Coverage Status](https://coveralls.io/repos/github/turboka11e/de.htwg.se.Carcassonne/badge.svg?branch=SE-06-CI-Travis)](https://coveralls.io/github/turboka11e/de.htwg.se.Carcassonne?branch=SE-06-CI-Travis)
+[![Coverage Status](https://coveralls.io/repos/github/turboka11e/de.htwg.se.Carcassonne/badge.svg?branch=master)](https://coveralls.io/github/turboka11e/de.htwg.se.Carcassonne?branch=master)
 
 Htwg Scala Seed Project 
 =====================================================
