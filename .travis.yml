@@ -3,8 +3,7 @@ scala:
   - 2.12.7
 
 script:
-  #- sbt clean coverage test coverageReport
-  - sbt ++$TRAVIS_SCALA_VERSION test
+  - sbt clean coverage test coverageReport
 
 after_success:
   - sbt coverageReport coveralls
