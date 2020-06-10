@@ -1,7 +1,7 @@
 package de.htwg.se.Carcassonne.aview
 
 import de.htwg.se.Carcassonne.controller.Controller
-import de.htwg.se.Carcassonne.model.Playfield
+import de.htwg.se.Carcassonne.model.{CardCreator, Playfield}
 import org.scalatest._
 
 class TUISpec extends WordSpec with Matchers {
@@ -15,11 +15,11 @@ class TUISpec extends WordSpec with Matchers {
     }
     "decide on the gamestate when input 'y'" in {
       tui.processInputLine("y")
-      controller.decide(true) should be(Playfield())
+      controller.playfield should be(Playfield())
     }
     "decide on the gamestate when input 'n" in {
       tui.processInputLine("n")
-      controller.decide(false) should be(Playfield().changeGameState(2))
+      controller.playfield should be(Playfield())
     }
     "rotates the card right when input 'r'" in {
       tui.processInputLine("r")

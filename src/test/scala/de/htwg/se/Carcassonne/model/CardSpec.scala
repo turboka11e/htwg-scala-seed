@@ -8,10 +8,10 @@ class CardSpec extends WordSpec with Matchers {
     "not set to any value " should {
       val emptyCell = Card()
       "have List with ' '" in {
-        emptyCell.areas should be(List(Area(corners = List('n')), Area(corners = List('w')), Area(corners = List('e')), Area(corners = List('s'))))
+        emptyCell.areas should be(List(Area(corners = List('n', 'w', 'e', 's'), player = -1, xy = (-1, -1))))
       }
       "not be set" in {
-        emptyCell.isEmpty should be(true)
+        emptyCell.isEmpty should be(false)
       }
     }
     "set to a specific value" should {
