@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/turboka11e/de.htwg.se.Carcassonne.svg?branch=master)](https://travis-ci.com/turboka11e/de.htwg.se.Carcassonne)
 
 Carcassonne
 =====================================================
