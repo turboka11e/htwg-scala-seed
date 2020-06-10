@@ -2,9 +2,8 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/turboka11e/de.htwg.se.Carcassonne/badge.svg?branch=master)](https://coveralls.io/github/turboka11e/de.htwg.se.Carcassonne?branch=master)
 
-Htwg Scala Seed Project 
+Carcassonne
 =====================================================
-## the easiest way to start a project for the lecture SE
 
 
 This is a project created from the htwg-scala-seed-master. It is a basic scala project as used in the
