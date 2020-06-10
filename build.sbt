@@ -1,6 +1,6 @@
 name          := "Carcassonne"
 organization  := "de.htwg.se"
-version       := "0.0.1"
+version       := "0.6.0"
 scalaVersion  := "2.12.4"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.4" % "test"
