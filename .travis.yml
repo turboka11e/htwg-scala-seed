@@ -7,3 +7,7 @@ script:
 
 after_success:
   - sbt coverageReport coveralls
+
+service_name: travis-pro
+
+repo_token: sHpaupiNWFkc2P3f3t5YFYhnN0uTz2HPr
