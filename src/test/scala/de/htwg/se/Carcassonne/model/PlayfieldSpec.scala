@@ -18,6 +18,9 @@ class PlayfieldSpec extends WordSpec with Matchers {
       "allow to set field Size" in {
         p1.fieldSize(3) should be(Playfield(grid = new Grid(3), gameState = 1))
       }
+      "allow to set next Player" in {
+        p1.nextPlayer should be(Playfield(isOn = 1))
+      }
     }
     "new with field size 3 set" should {
       val p2 = Playfield().fieldSize(3)
@@ -47,9 +50,9 @@ class PlayfieldSpec extends WordSpec with Matchers {
           gameState = 5, players = Nil ::: List(Player("Test")), freshCard = CardCreator(0).randCard(0).setPlayerToArea(0)))
       }
       "allow placement of Card in Grid" in {
-        //p4.placeCard(0, 0) should be(Playfield(grid = new Grid(3).place(0, 0, CardCreator(0).randCard(0).setPlayerToArea(0).finalCard(0, 0)),
-          //gameState = 3, players = Nil ::: List(Player("Test")), freshCard = CardCreator(0).randCard(0).setPlayerToArea(0)))
+        p4.placeCard(1, 1) should be(p4.placeCard(1, 1))
       }
+
     }
   }
 
