@@ -16,7 +16,7 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
     }
   }
 
-  def g0:String = "Bitte Feldgröße angeben: "
+  def g0:String = "Welcome to Carcassonne\nNeues Spiel mit 'new' starten.\nBitte Feldgröße angeben: "
 
   def g1:String = "Name eingeben: "
 
@@ -32,7 +32,6 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
 
   def playerLine: String = {
     var tmpString = ""
-    val newList = players.map(p => p.name).zipWithIndex
     for(i <- players.indices){
       tmpString += color(i) + players(i).toString + Console.RESET + "    "
     }

@@ -10,15 +10,14 @@ object Carcassonne {
 
   val controller = new Controller(new Playfield)
   val tui = new TUI(controller)
-  //controller.notifyObservers
+  controller.notifyObservers
 
   def main(args: Array[String]): Unit = {
     var input: String = ""
+    if(args.length > 0) input = args(0)
 
-    print("Welcome to Carcassonne\nNeues Spiel mit 'new' starten.\n")
-    controller.notifyObservers
-
-    do {
+    if (!input.isEmpty) tui.processInputLine(input)
+    else do {
       input = readLine()
       tui.processInputLine(input)
     } while (input != "q")
