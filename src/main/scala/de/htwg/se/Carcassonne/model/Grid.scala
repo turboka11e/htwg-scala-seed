@@ -37,7 +37,7 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
 
   }
 
-  private def tmpTerriList(row:Int, col:Int, dir:Char, newCard: Card, list:List[List[(Int, Area)]]):List[List[(Int, Area)]] = {
+  def tmpTerriList(row:Int, col:Int, dir:Char, newCard: Card, list:List[List[(Int, Area)]]):List[List[(Int, Area)]] = {
 
     var tmpTerri = list
     val currentArea = newCard.getAreaLookingFrom(dir)
