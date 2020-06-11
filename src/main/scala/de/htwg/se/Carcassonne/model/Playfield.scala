@@ -15,6 +15,8 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
 
   def getFreshCard:Playfield = copy(freshCard = CardCreator(isOn).randCard())                // GameState 2
 
+  def getFreshCard(select:Int):Playfield = copy(freshCard = CardCreator(isOn).randCard(select)) // for Testing
+
   def rotateR:Playfield = copy(freshCard = freshCard.rotateRight)                                   // Gamestate 3
 
   def rotateL:Playfield = copy(freshCard = freshCard.rotateLeft)                                    // Gamestate 3
