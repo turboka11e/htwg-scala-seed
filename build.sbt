@@ -5,6 +5,7 @@ scalaVersion  := "2.12.7"
 
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.0.5"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % "test"
+
 //*******************************************************************************//
 //Libraries that we will use in later lectures compatible with this scala version
 // uncomment to use!!

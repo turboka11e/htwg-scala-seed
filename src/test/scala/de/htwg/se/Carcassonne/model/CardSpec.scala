@@ -8,10 +8,10 @@ class CardSpec extends WordSpec with Matchers {
     "not set to any value " should {
       val emptyCell = Card()
       "have List with ' '" in {
-        emptyCell.areas should be(List(Area(corners = List('n')), Area(corners = List('w')), Area(corners = List('e')), Area(corners = List('s'))))
+        emptyCell.areas should be(List(Area(corners = List('n', 'w', 'e', 's'), player = -1, xy = (-1, -1))))
       }
       "not be set" in {
-        emptyCell.isEmpty should be(true)
+        emptyCell.isEmpty should be(false)
       }
     }
     "set to a specific value" should {
@@ -24,6 +24,23 @@ class CardSpec extends WordSpec with Matchers {
       }
       "be set" in {
         nonEmptyCell.isEmpty should be(false)
+      }
+    }
+
+
+
+    "set to a specific value" should {
+      val nonEmptyCell = Card(List(Area('c', List('n', 's'), player = 0), Area('g', List('w', 'e'), player = 1)))
+      "change areas coordination" in {
+        nonEmptyCell.setAreasXY(1, 1) should be(Card(List(Area('c', List('n', 's'), xy = (1, 1), player = 0),
+          Area('g', List('w', 'e'), xy = (1, 1), player = 1))))
+      }
+      "get Value and Player from specific direction" in {
+        nonEmptyCell.getValue('n') should be('c')
+        nonEmptyCell.getValue('e') should be('g')
+
+        nonEmptyCell.getPlayer('n') should be(0)
+        nonEmptyCell.getPlayer('e') should be(1)
       }
     }
     "looking from a corner" should {
@@ -49,6 +66,14 @@ class CardSpec extends WordSpec with Matchers {
       }
       "not be valid" in {
         nonValidAreaCard.isValid should be(false)
+      }
+      "print out nicely" in {
+        val c = Console.BLUE + "c" + Console.RESET
+        val g = Console.RED + "g" + Console.RESET
+        validAreaCard.toString should be(" ┌ c ┐\n g c g\n └ c ┘\n")
+        validAreaCard.topString should be(s" ┌ $c ┐")
+        validAreaCard.midString should be(s" " + g + " " + c + " " + g)
+        validAreaCard.lowString should be(s" └ $c ┘")
       }
     }
   }
