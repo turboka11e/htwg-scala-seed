@@ -8,20 +8,20 @@ class PrettyPrintSpec extends WordSpec with Matchers {
     "is created it" should {
       val grid = new Grid(3)
       val pList = List(Player("Mark"))
-      val p0 = new PrettyPrint(0, grid, CardCreator(0).randCard(0), pList, 0, true)
-      val p1 = new PrettyPrint(1, grid, CardCreator(0).randCard(0), pList, 0, true)
-      val p2 = new PrettyPrint(2, grid, CardCreator(0).randCard(0), pList, 0, true)
-      val p3 = new PrettyPrint(3, grid, CardCreator(0).randCard(0), pList, 0, true)
-      val p4 = new PrettyPrint(4, grid, CardCreator(0).randCard(0), pList, 0, true)
-      val p5 = new PrettyPrint(5, grid, CardCreator(0).randCard(0), pList, 0, true)
+      val p0 = PrettyPrint(0, grid, CardCreator(0).randCard(0), pList, 0, success = true)
+      val p1 = PrettyPrint(1, grid, CardCreator(0).randCard(0), pList, 0, success = true)
+      val p2 = PrettyPrint(2, grid, CardCreator(0).randCard(0), pList, 0, success = true)
+      val p3 = PrettyPrint(3, grid, CardCreator(0).randCard(0), pList, 0, success = true)
+      val p4 = PrettyPrint(4, grid, CardCreator(0).randCard(0), pList, 0, success = true)
+      val p5 = PrettyPrint(5, grid, CardCreator(0).randCard(0), pList, 0, success = true)
       "print playfieldView" in {
         val r = Console.BLUE + "r" + Console.RESET
         val c = Console.RED + "c" + Console.RESET
         val g = Console.YELLOW + "g" + Console.RESET
         p0.playfieldView should be (
-          Console.BLUE + "Mark (0.00)" + Console.RESET + "   \n" +
-          s" ┌   ┐ ┌   ┐ ┌   ┐\t"+ Console.BLUE + "Mark" + Console.RESET + " ist an der Reihe\n " +
-          s"                \n" +
+          "\n" + Console.BLUE + "Mark (0.00)" + Console.RESET + "    \n" +
+          s" ┌   ┐ ┌   ┐ ┌   ┐\t"+ Console.BLUE + "Mark" + Console.RESET + " ist an der Reihe\n" +
+          s"                  \n" +
           s" └   ┘ └   ┘ └   ┘\tDeine neue Karte:\n" +
           s" ┌   ┐ ┌   ┐ ┌   ┐\t ┌ $c ┐\n" +
           s"                  \t $r $r $r\n" +
