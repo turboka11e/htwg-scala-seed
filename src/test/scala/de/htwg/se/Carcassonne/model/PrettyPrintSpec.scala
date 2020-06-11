@@ -20,15 +20,15 @@ class PrettyPrintSpec extends WordSpec with Matchers {
         val g = Console.YELLOW + "g" + Console.RESET
         p0.playfieldView should be (
           Console.BLUE + "Mark (0.00)" + Console.RESET + "   \n" +
-          s" ┌   ┐ ┌   ┐ ┌   ┐\t" + Console.BLUE + "Mark" + Console.RESET + " ist an der Reihe\n " +
-          s"                  \t \n" +
-          s" └   ┘ └   ┘ └   ┘\t Deine neue Karte: \n" +
-          s" ┌   ┐ ┌   ┐ ┌   ┐\t ┌ $c ┐ \n" +
-          s"                  \t $r $r $r \n" +
-          s" └   ┘ └   ┘ └   ┘\t └ $g ┘ \n" +
-          s" ┌   ┐ ┌   ┐ ┌   ┐\t \n" +
-          s"                  \t \n" +
-          s" └   ┘ └   ┘ └   ┘\t \n")
+          s" ┌   ┐ ┌   ┐ ┌   ┐\t"+ Console.BLUE + "Mark" + Console.RESET + " ist an der Reihe\n " +
+          s"                \n" +
+          s" └   ┘ └   ┘ └   ┘\tDeine neue Karte:\n" +
+          s" ┌   ┐ ┌   ┐ ┌   ┐\t ┌ $c ┐\n" +
+          s"                  \t $r $r $r\n" +
+          s" └   ┘ └   ┘ └   ┘\t └ $g ┘\n" +
+          s" ┌   ┐ ┌   ┐ ┌   ┐\n" +
+          s"                  \n" +
+          s" └   ┘ └   ┘ └   ┘\n")
       }
       "print g1" in {
         p1.g1 should be("Name eingeben: ")
