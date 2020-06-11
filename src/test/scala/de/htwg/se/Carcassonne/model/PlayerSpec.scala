@@ -10,7 +10,9 @@ class PlayerSpec extends WordSpec with Matchers {
         player.name should be("Your Name")
       }
       "have a nice String representation" in {
-        player.toString should be("Your Name (0,00)")
+        val name = "Your Name"
+        val points = 0.0
+        player.toString should be(f"$name ($points%.2f)")
       }
     }
   }
