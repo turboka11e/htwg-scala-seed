@@ -34,9 +34,9 @@ case class CardCreator(playerCard: Int, card: Card = new Card((0, 0))){
 
     Card(List(Area('r', List('n', 's')), Area('g', List('e')), Area('g', List('w')))),      // U
 
-    Card(List(Area('r', List('w', 's')), Area('g', List('n', 'e'))))                        // V
+    Card(List(Area('r', List('w', 's')), Area('g', List('n', 'e')))),                        // V
 
-    //Card(List(Area('c', List('n')), Area('c', List('w')), Area('c', List('e')), Area('c', List('s'))))  // all c
+    Card(List(Area('c', List('n')), Area('c', List('w')), Area('c', List('e')), Area('c', List('s'))))  // all c
 
   )
 

@@ -71,6 +71,32 @@ class MatrixSpec extends WordSpec with Matchers {
         matrix.checkSet(1,0,matrix.card(1,0)) should be (false)
       }
     }
+    "filled with nonEmpty Card" should {
+      val emptyMatrix = new Matrix(3)
+      val joinableCard = CardCreator(0).randCard(14).finalCard(1, 1)
+      var fullMatrix = emptyMatrix.replaceCell(0, 0, joinableCard)
+      fullMatrix = fullMatrix.replaceCell(0, 1, joinableCard)
+      fullMatrix = fullMatrix.replaceCell(0, 2, joinableCard)
+      fullMatrix = fullMatrix.replaceCell(1, 0, joinableCard)
+      fullMatrix = fullMatrix.replaceCell(1, 1, joinableCard)
+      fullMatrix = fullMatrix.replaceCell(1, 2, joinableCard)
+      fullMatrix = fullMatrix.replaceCell(2, 0, joinableCard)
+      fullMatrix = fullMatrix.replaceCell(2, 1, joinableCard)
+      fullMatrix = fullMatrix.replaceCell(2, 2, joinableCard)
+
+      "Check Env is empty" in {
+        fullMatrix.checkEnv(1, 1, 'w', joinableCard) should be(true)
+        fullMatrix.checkEnv(1, 1, 'e',joinableCard) should be(true)
+        fullMatrix.checkEnv(1, 1, 's',joinableCard) should be(true)
+        fullMatrix.checkEnv(1, 1, 'n',joinableCard) should be(true)
+      }
+      "Get directional Area" in {
+        fullMatrix.getDirEnv(1, 1, 'n') should be(Area('c', List('s'), -1, (1, 1)))
+        fullMatrix.getDirEnv(1, 1, 's') should be(Area('c', List('n'), -1, (1, 1)))
+        fullMatrix.getDirEnv(1, 1, 'w') should be(Area('c', List('e'), -1, (1, 1)))
+        fullMatrix.getDirEnv(1, 1, 'e') should be(Area('c', List('w'), -1, (1, 1)))
+      }
+    }
   }
 
 }
