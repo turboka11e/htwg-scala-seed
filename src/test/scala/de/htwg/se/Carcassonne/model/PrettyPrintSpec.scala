@@ -13,15 +13,15 @@ class PrettyPrintSpec extends WordSpec with Matchers {
       val p2 = new PrettyPrint(2, grid, CardCreator(0).randCard(0), pList, 0, true)
       val p3 = new PrettyPrint(3, grid, CardCreator(0).randCard(0), pList, 0, true)
       val p4 = new PrettyPrint(4, grid, CardCreator(0).randCard(0), pList, 0, true)
-      val p5 = new PrettyPrint(5, grid, CardCreator(0).randCard(0), pList, 0, true)
+      val p5 = new PrettyPrint(5, grid, CardCreator(0).randCard(0), pList, 0, false)
       "print playfieldView" in {
         val r = Console.BLUE + "r" + Console.RESET
         val c = Console.RED + "c" + Console.RESET
         val g = Console.YELLOW + "g" + Console.RESET
         p0.playfieldView should be (
-          Console.BLUE + "Mark (0.00)" + Console.RESET + "   \n" +
-          s" ┌   ┐ ┌   ┐ ┌   ┐\t"+ Console.BLUE + "Mark" + Console.RESET + " ist an der Reihe\n " +
-          s"                \n" +
+          Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n" +
+          s" ┌   ┐ ┌   ┐ ┌   ┐\t" + Console.BLUE + "Mark" + Console.RESET + " ist an der Reihe\n" +
+          s"                  \n" +
           s" └   ┘ └   ┘ └   ┘\tDeine neue Karte:\n" +
           s" ┌   ┐ ┌   ┐ ┌   ┐\t ┌ $c ┐\n" +
           s"                  \t $r $r $r\n" +
@@ -46,12 +46,12 @@ class PrettyPrintSpec extends WordSpec with Matchers {
         p5.g5 should be(p5.playfieldView + p5.illegalPlace + "Setze Karte in das Spielfeld! [x y]\nEingabe: ")
       }
       "print the player " in {
-        p0.playerLine should be(Console.BLUE + "Mark (0.00)" + Console.RESET + "    \n")
-        p1.playerLine should be(Console.BLUE + "Mark (0.00)" + Console.RESET + "    \n")
-        p2.playerLine should be(Console.BLUE + "Mark (0.00)" + Console.RESET + "    \n")
-        p3.playerLine should be(Console.BLUE + "Mark (0.00)" + Console.RESET + "    \n")
-        p4.playerLine should be(Console.BLUE + "Mark (0.00)" + Console.RESET + "    \n")
-        p5.playerLine should be(Console.BLUE + "Mark (0.00)" + Console.RESET + "    \n")
+        p0.playerLine should be(Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n")
+        p1.playerLine should be(Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n")
+        p2.playerLine should be(Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n")
+        p3.playerLine should be(Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n")
+        p4.playerLine should be(Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n")
+        p5.playerLine should be(Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n")
       }
       "print exception" in {
         p0.illegalPlace should be("")
@@ -59,7 +59,7 @@ class PrettyPrintSpec extends WordSpec with Matchers {
         p2.illegalPlace should be("")
         p3.illegalPlace should be("")
         p4.illegalPlace should be("")
-        p5.illegalPlace should be("")
+        p5.illegalPlace should be("Keine gültige Platzierung! ")
       }
       "print the nameLine" in {
         p0.nameLine should be(" ┌   ┐ ┌   ┐ ┌   ┐\t" + Console.BLUE + "Mark" + Console.RESET + " ist an der Reihe\n")
