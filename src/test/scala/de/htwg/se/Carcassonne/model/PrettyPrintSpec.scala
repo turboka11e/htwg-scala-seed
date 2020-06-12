@@ -18,8 +18,9 @@ class PrettyPrintSpec extends WordSpec with Matchers {
         val r = Console.BLUE + "r" + Console.RESET
         val c = Console.RED + "c" + Console.RESET
         val g = Console.YELLOW + "g" + Console.RESET
+        val points = 0.0
         p0.playfieldView should be (
-          "\n" + Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n" +
+          "\n" + Console.BLUE + f"Mark ($points%.2f)" + Console.RESET + "    \n" +
           s" ┌   ┐ ┌   ┐ ┌   ┐\t"+ Console.BLUE + "Mark" + Console.RESET + " ist an der Reihe\n" +
           s"                  \n" +
           s" └   ┘ └   ┘ └   ┘\tDeine neue Karte:\n" +
@@ -46,12 +47,13 @@ class PrettyPrintSpec extends WordSpec with Matchers {
         p5.g5 should be(p5.playfieldView + p5.illegalPlace + "Setze Karte in das Spielfeld! [x y]\nEingabe: ")
       }
       "print the player " in {
-        p0.playerLine should be(Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n")
-        p1.playerLine should be(Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n")
-        p2.playerLine should be(Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n")
-        p3.playerLine should be(Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n")
-        p4.playerLine should be(Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n")
-        p5.playerLine should be(Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n")
+        val points = 0.0
+        p0.playerLine should be(Console.BLUE + f"Mark ($points%.2f)" + Console.RESET + "    \n")
+        p1.playerLine should be(Console.BLUE + f"Mark ($points%.2f)" + Console.RESET + "    \n")
+        p2.playerLine should be(Console.BLUE + f"Mark ($points%.2f)" + Console.RESET + "    \n")
+        p3.playerLine should be(Console.BLUE + f"Mark ($points%.2f)" + Console.RESET + "    \n")
+        p4.playerLine should be(Console.BLUE + f"Mark ($points%.2f)" + Console.RESET + "    \n")
+        p5.playerLine should be(Console.BLUE + f"Mark ($points%.2f)" + Console.RESET + "    \n")
       }
       "print exception" in {
         p0.illegalPlace should be("")
