@@ -40,14 +40,9 @@ case class CardCreator(playerCard: Int, card: Card = new Card((0, 0))){
 
   )
 
-  def randCard:CardCreator = {
-    val r = Random
-    copy(card = randomCards(r.nextInt(randomCards.size)))
-  }
+  def randCard(select:Int = Random.nextInt(randomCards.size)):CardCreator = copy(card = randomCards(select))
 
-  def rotateRight:CardCreator = {
-    copy(card = card.rotateRight())
-  }
+  def rotateRight:CardCreator = copy(card = card.rotateRight())
 
   def rotateLeft:CardCreator = copy(card = card.rotateRight().rotateRight().rotateRight())
 

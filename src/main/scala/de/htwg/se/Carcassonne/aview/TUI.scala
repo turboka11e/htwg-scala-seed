@@ -42,6 +42,9 @@ class TUI(controller: Controller) extends Observer {
   }
 
 
-  override def update: Unit = print(controller.playFieldToString)
+  override def update: Boolean = {
+    print(controller.playFieldToString)
+    true
+  }
 
 }

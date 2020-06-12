@@ -1,7 +1,7 @@
 package de.htwg.se.Carcassonne.util
 
 trait Observer {
-  def update: Unit
+  def update: Boolean
 }
 
 class Observable {
