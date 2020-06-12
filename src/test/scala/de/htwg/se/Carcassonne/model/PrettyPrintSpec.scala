@@ -19,7 +19,7 @@ class PrettyPrintSpec extends WordSpec with Matchers {
         val c = Console.RED + "c" + Console.RESET
         val g = Console.YELLOW + "g" + Console.RESET
         p0.playfieldView should be (
-          "\n" + Console.BLUE + "Mark (0.00)" + Console.RESET + "    \n" +
+          "\n" + Console.BLUE + "Mark (0,00)" + Console.RESET + "    \n" +
           s" ┌   ┐ ┌   ┐ ┌   ┐\t"+ Console.BLUE + "Mark" + Console.RESET + " ist an der Reihe\n" +
           s"                  \n" +
           s" └   ┘ └   ┘ └   ┘\tDeine neue Karte:\n" +
