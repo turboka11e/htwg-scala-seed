@@ -1,7 +1,7 @@
 package de.htwg.se.Carcassonne.model
 
 case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new Grid(1),
-                     freshCard:CardCreator = new CardCreator(), gameState:Int =  0, success:Boolean = true) {
+                     freshCard:CardManipulator = new CardManipulator(), gameState:Int =  0, success:Boolean = true) {
 
   def changeGameState(gs:Int):Playfield = copy(gameState = gs)
 
@@ -13,9 +13,11 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
 
   def addPlayer(name:String):Playfield = copy(players = players ::: List(Player(name)), gameState = 2)       // GameState 1
 
-  def getFreshCard:Playfield = copy(freshCard = CardCreator(isOn).randCard())                // GameState 2
+  def getFreshCard:Playfield = copy(freshCard = RawCardFactory("randomCard", isOn).drawCard())            // GameState 2
 
-  def getFreshCard(select:Int):Playfield = copy(freshCard = CardCreator(isOn).randCard(select)) // for Testing
+  def getFreshCard(select:Int):Playfield = {
+    copy(freshCard = RawCardFactory.apply("selectCard", isOn, select).drawCard())
+  } // for Testing
 
   def rotateR:Playfield = copy(freshCard = freshCard.rotateRight)                                   // Gamestate 3
 
@@ -44,8 +46,4 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
   def playFieldToString:String = {
     PrettyPrint(grid, freshCard, players, isOn, success).printo(gameState)
   }
-
-
-
-
 }

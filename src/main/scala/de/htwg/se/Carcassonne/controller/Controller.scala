@@ -26,8 +26,12 @@ class Controller(var playfield: Playfield) extends Observable {
   }
 
   def firstCard():Unit = {
-    playfield = playfield.changeGameState(3)
-    playfield = playfield.getFreshCard
+    playfield = playfield.changeGameState(3).getFreshCard
+    notifyObservers
+  }
+
+  def firstCard(select: Int):Unit = {
+    playfield = playfield.changeGameState(3).getFreshCard(select)
     notifyObservers
   }
 

@@ -1,7 +1,7 @@
 package de.htwg.se.Carcassonne.aview
 
 import de.htwg.se.Carcassonne.controller.Controller
-import de.htwg.se.Carcassonne.model.{CardCreator, Playfield}
+import de.htwg.se.Carcassonne.model.{CardManipulator, Playfield}
 import org.scalatest._
 
 class TUISpec extends WordSpec with Matchers {
@@ -10,6 +10,9 @@ class TUISpec extends WordSpec with Matchers {
     val controller = new Controller(Playfield())
     val notChangedController = new Controller(Playfield())
     val playfield = Playfield().fieldSize(3)
+    val g1 = playfield.changeGameState(1)
+    val g4 = playfield.changeGameState(4)
+    val g5 = playfield.changeGameState(5)
     val tui = new TUI(controller)
     "create a new game on input 'new'" in {
       tui.processInputLine("new")
@@ -38,6 +41,29 @@ class TUISpec extends WordSpec with Matchers {
     "validates the input '_'" in {
       tui.processInputLine("_")
       tui.validateLongString("")
+    }
+    "decideds at Gamestate 2" in {
+      controller.changeGameState(2)
+      tui.processInputLine("y")
+      controller.playfield.gameState should be(1)
+      tui.processInputLine("n")
+      controller.playfield.gameState should be(1)
+      controller.changeGameState(3)
+      tui.processInputLine("y")
+      controller.playfield.gameState should be(4)
+      controller.changeGameState(4)
+      tui.processInputLine("n")
+      controller.playfield.gameState should be(5)
+      controller.changeGameState(1)
+    }
+    "validate long String" in {
+      tui.processInputLine("0 1")
+      controller.playfield.gameState should be(3)
+      controller.changeGameState(3)
+      tui.processInputLine("0")
+      controller.playfield.changeGameState(4)
+      tui.processInputLine("0")
+      controller.playfield.gameState should be(3)
     }
 
   }

@@ -1,11 +1,11 @@
 package de.htwg.se.Carcassonne.controller
 
-import de.htwg.se.Carcassonne.model.{CardCreator, Playfield}
+import de.htwg.se.Carcassonne.model.{CardManipulator, Playfield}
 import de.htwg.se.Carcassonne.util.Command
 
 class PlaceCommand(x:Int, y:Int, oldPlayfield:Playfield, controller: Controller) extends Command {
 
-  var oldFreshCard:CardCreator = _
+  var oldFreshCard:CardManipulator = _
 
   override def doStep():Unit = {
     controller.playfield = controller.playfield.placeCard(x, y)

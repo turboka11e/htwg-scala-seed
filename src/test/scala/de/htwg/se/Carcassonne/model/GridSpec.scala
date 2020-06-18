@@ -19,7 +19,7 @@ class GridSpec extends WordSpec with Matchers {
     "created properly but empty" should {
       val tinygrid = new Grid(1)
       val smallGrid = new Grid(4)
-      val freshCard = CardCreator(0).randCard(0).finalCard(0, 0)
+      val freshCard = RawCardFactory("selectCard", 0, 0).drawCard().finalCard(0, 0)
       val validGrid = smallGrid.place(0, 0, freshCard)
       val matrix = new Matrix[Card](4)
 

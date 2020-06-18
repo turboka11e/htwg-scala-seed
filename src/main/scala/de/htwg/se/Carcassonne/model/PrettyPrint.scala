@@ -1,6 +1,6 @@
 package de.htwg.se.Carcassonne.model
 
-case class PrettyPrint(grid: Grid, freshCard:CardCreator, players:List[Player], isOn: Int, success: Boolean) {
+case class PrettyPrint(grid: Grid, freshCard:CardManipulator, players:List[Player], isOn: Int, success: Boolean) {
 
   private val color = List(Console.BLUE, Console.RED, Console.YELLOW, Console.GREEN)
 

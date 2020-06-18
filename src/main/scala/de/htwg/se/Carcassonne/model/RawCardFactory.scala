@@ -2,10 +2,8 @@ package de.htwg.se.Carcassonne.model
 
 import scala.util.Random
 
-case class CardCreator(playerCard: Int, card: Card = new Card((0, 0))){
-
-  def this() = this(playerCard = -1)
-
+trait RawCardFactory {
+  def drawCard(): CardManipulator
   val randomCards: List[Card] = List(
 
     Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s')))),       // D
@@ -39,23 +37,27 @@ case class CardCreator(playerCard: Int, card: Card = new Card((0, 0))){
     Card(List(Area('c', List('n')), Area('c', List('w')), Area('c', List('e')), Area('c', List('s'))))  // all c
 
   )
-
-  def randCard(select:Int = Random.nextInt(randomCards.size)):CardCreator = copy(card = randomCards(select))
-
-  def rotateRight:CardCreator = copy(card = card.rotateRight())
-
-  def rotateLeft:CardCreator = copy(card = card.rotateRight().rotateRight().rotateRight())
-
-  def setPlayerToArea(index:Int):CardCreator = {
-    if(index < card.areas.size){
-      val replacedPlayer = card.areas.apply(index).copy(player = playerCard)
-      val replacedCard = card.areas.updated(index, replacedPlayer)
-      this.copy(card = Card(replacedCard))
-    } else {
-      copy()
-    }
-  }
-
-  def finalCard(x:Int, y:Int):Card = this.card.setAreasXY(x, y)
-
 }
+
+private class EmptyCard() extends RawCardFactory {
+  override def drawCard():CardManipulator = new CardManipulator()
+}
+
+private class RandomCard(isOn: Int) extends RawCardFactory {
+  override def drawCard(): CardManipulator = CardManipulator(isOn, randomCards(Random.nextInt(randomCards.size)))
+}
+
+private class SelectCard(isOn: Int, select:Int) extends RawCardFactory {
+  override def drawCard(): CardManipulator = CardManipulator(isOn, randomCards(select))
+}
+
+object RawCardFactory {
+  def apply(kind: String, isOn:Int = -1, select:Int = 0): RawCardFactory = kind match {
+    case "emptyCard" => new EmptyCard()
+    case "randomCard" => new RandomCard(isOn)
+    case "selectCard" => new SelectCard(isOn, select)
+  }
+}
+
+
+
