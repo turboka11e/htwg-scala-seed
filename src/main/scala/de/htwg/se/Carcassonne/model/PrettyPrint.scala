@@ -1,19 +1,22 @@
 package de.htwg.se.Carcassonne.model
 
-case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, players:List[Player], isOn: Int, success: Boolean) {
+case class PrettyPrint(grid: Grid, freshCard:CardCreator, players:List[Player], isOn: Int, success: Boolean) {
 
   private val color = List(Console.BLUE, Console.RED, Console.YELLOW, Console.GREEN)
 
-  override def toString:String = {
+  var printable: String = g0
+
+  def printo(gameState: Int):String = {
 
     gameState match {
-      case 0 => g0
-      case 1 => g1
-      case 2 => g2
-      case 3 => g3
-      case 4 => g4
-      case 5 => g5
+      case 0 => printable = g0
+      case 1 => printable = g1
+      case 2 => printable = g2
+      case 3 => printable = g3
+      case 4 => printable = g4
+      case 5 => printable = g5
     }
+    printable
   }
 
   def g0:String = "Welcome to Carcassonne\nNeues Spiel mit 'new' starten.\nBitte Feldgröße angeben: "
@@ -131,7 +134,5 @@ case class PrettyPrint(gameState: Int, grid: Grid, freshCard:CardCreator, player
     }
     tmpString
   }
-
-  def curPla():String = ""
 
 }

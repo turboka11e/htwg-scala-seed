@@ -8,12 +8,15 @@ class PrettyPrintSpec extends WordSpec with Matchers {
     "is created it" should {
       val grid = new Grid(3)
       val pList = List(Player("Mark"))
-      val p0 = PrettyPrint(0, grid, CardCreator(0).randCard(0), pList, 0, success = true)
-      val p1 = PrettyPrint(1, grid, CardCreator(0).randCard(0), pList, 0, success = true)
-      val p2 = PrettyPrint(2, grid, CardCreator(0).randCard(0), pList, 0, success = true)
-      val p3 = PrettyPrint(3, grid, CardCreator(0).randCard(0), pList, 0, success = true)
-      val p4 = PrettyPrint(4, grid, CardCreator(0).randCard(0), pList, 0, success = true)
-      val p5 = PrettyPrint(5, grid, CardCreator(0).randCard(0), pList, 0, success = false)
+      val pList2 = List(Player("Mark"), Player("Lukas"))
+      val p0 = PrettyPrint(grid, CardCreator(0).randCard(0), pList, 0, success = true)
+      val p1 = PrettyPrint(grid, CardCreator(0).randCard(0), pList, 0, success = true)
+      val p2 = PrettyPrint(grid, CardCreator(0).randCard(0), pList, 0, success = true)
+      val p3 = PrettyPrint(grid, CardCreator(0).randCard(0), pList, 0, success = true)
+      val p4 = PrettyPrint(grid, CardCreator(0).randCard(0), pList, 0, success = true)
+      val p5 = PrettyPrint(grid, CardCreator(0).randCard(0), pList, 0, success = false)
+      val ccp6 = PrettyPrint(grid.place(0, 0, CardCreator(0).randCard(0).setPlayerToArea(0).finalCard(0, 0)),
+        CardCreator(0).randCard(0), pList, 0, success = false)
       "print playfieldView" in {
         val r = Console.BLUE + "r" + Console.RESET
         val c = Console.RED + "c" + Console.RESET
@@ -32,19 +35,19 @@ class PrettyPrintSpec extends WordSpec with Matchers {
           s" └   ┘ └   ┘ └   ┘\n")
       }
       "print g1" in {
-        p1.g1 should be("Name eingeben: ")
+        p1.printo(1) should be("Name eingeben: ")
       }
       "print g2" in  {
-        p2.g2 should be("Weitere Spieler hinzufügen? [y],[n]\nEingabe: ")
+        p2.printo(2) should be("Weitere Spieler hinzufügen? [y],[n]\nEingabe: ")
       }
       "print g3" in {
-        p3.g3 should be(p3.playfieldView + "Karte drehen: Rechts [r], Links [l]\nFertig: [y]\nEingabe: ")
+        p3.printo(3) should be(p3.playfieldView + "Karte drehen: Rechts [r], Links [l]\nFertig: [y]\nEingabe: ")
       }
       "print g4" in {
-        p4.g4 should be(p4.playfieldView + "Männchen auf Gebiet setzen! Blau [0], Rot [1], Gelb [2], Grün [3]\nEingabe: ")
+        p4.printo(4) should be(p4.playfieldView + "Männchen auf Gebiet setzen! Blau [0], Rot [1], Gelb [2], Grün [3]\nEingabe: ")
       }
       "print g5" in {
-        p5.g5 should be(p5.playfieldView + p5.illegalPlace + "Setze Karte in das Spielfeld! [x y]\nEingabe: ")
+        p5.printo(5) should be(p5.playfieldView + p5.illegalPlace + "Setze Karte in das Spielfeld! [x y]\nEingabe: ")
       }
       "print the player " in {
         val points = 0.0
@@ -141,6 +144,8 @@ class PrettyPrintSpec extends WordSpec with Matchers {
         p3.getColoredCorner(0,0, 's') should be (" ")
         p4.getColoredCorner(0,0, 'n') should be (" ")
         p5.getColoredCorner(0,0, 'n') should be (" ")
+        val r = Console.BLUE + "r" + Console.RESET
+        ccp6.getColoredCorner(0, 0, 'w') should be(r)
       }
     }
   }

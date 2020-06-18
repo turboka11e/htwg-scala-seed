@@ -41,7 +41,9 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
     }
   }
 
-  def playFieldToString:String = PrettyPrint(gameState, grid, freshCard, players, isOn, success).toString
+  def playFieldToString:String = {
+    PrettyPrint(grid, freshCard, players, isOn, success).printo(gameState)
+  }
 
 
 

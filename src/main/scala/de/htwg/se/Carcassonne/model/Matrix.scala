@@ -48,16 +48,16 @@ case class Matrix[T] (rows:Vector[Vector[Card]], private val count:Int = 0) {
     }
   }
 
-  def getDirEnv(row: Int, col: Int, dir:Char):Area = {
+  def getDirEnv(row: Int, col: Int, dir:Char):Option[Area] = {
     if(!checkEnvEmpty(row, col, dir)){
       dir match{
-        case 'n' => card(row, col - 1).getAreaLookingFrom('s')
-        case 's' => card(row, col + 1).getAreaLookingFrom('n')
-        case 'w' => card(row - 1, col).getAreaLookingFrom('e')
-        case 'e' => card(row + 1, col).getAreaLookingFrom('w')
+        case 'n' => Some(card(row, col - 1).getAreaLookingFrom('s'))
+        case 's' => Some(card(row, col + 1).getAreaLookingFrom('n'))
+        case 'w' => Some(card(row - 1, col).getAreaLookingFrom('e'))
+        case 'e' => Some(card(row + 1, col).getAreaLookingFrom('w'))
       }
     } else {
-      Area()
+      None
     }
   }
 

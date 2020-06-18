@@ -1,9 +1,11 @@
 package de.htwg.se.Carcassonne.controller
 
 import de.htwg.se.Carcassonne.model.Playfield
-import de.htwg.se.Carcassonne.util.Observable
+import de.htwg.se.Carcassonne.util.{Observable, UndoManager}
 
 class Controller(var playfield: Playfield) extends Observable {
+
+  private val undoManager = new UndoManager
 
   def newGame():Unit = {
     playfield = Playfield()
@@ -21,24 +23,16 @@ class Controller(var playfield: Playfield) extends Observable {
         notifyObservers
       case _ =>
     }
-
   }
 
-  def decide(dc:Boolean):Unit = {
-    playfield.gameState match {
-      case 2 =>
-        if(!dc){
-          playfield = playfield.changeGameState(3)
-          playfield = playfield.getFreshCard
-        } else {
-          playfield = playfield.changeGameState(1)
-        }
-      case 3 => if(dc) playfield = playfield.changeGameState(4)
+  def firstCard():Unit = {
+    playfield = playfield.changeGameState(3)
+    playfield = playfield.getFreshCard
+    notifyObservers
+  }
 
-      case 4 => if(!dc) playfield = playfield.changeGameState(5)
-
-      case _ =>
-    }
+  def changeGameState(gs: Int):Unit = {
+    playfield = playfield.changeGameState(gs)
     notifyObservers
   }
 
@@ -60,12 +54,20 @@ class Controller(var playfield: Playfield) extends Observable {
   }
 
   def placeCard(x:Int, y:Int):Unit = {
-    playfield = playfield.placeCard(x, y)
-    if(playfield.getSuccess) {
-      playfield = playfield.nextPlayer.getFreshCard
-    }
+    undoManager.doStep(new PlaceCommand(x, y, playfield, this))
     notifyObservers
   }
+
+  def undo(): Unit = {
+    undoManager.undoStep()
+    notifyObservers
+  }
+
+  def redo(): Unit = {
+    undoManager.redoStep()
+    notifyObservers
+  }
+
 
   def playFieldToString: String = playfield.playFieldToString
 
