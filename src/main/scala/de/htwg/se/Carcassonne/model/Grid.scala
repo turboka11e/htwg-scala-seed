@@ -49,9 +49,9 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
     for (x <- currentArea.getCorners) {
       val neighbor = cells.getDirEnv(row, col, x)
       /* Schaue ob in der Richtung eine Karte ist */
-      if (neighbor != Area()) {
+      if (neighbor.isDefined) {
         /* Speicher die Area in List col_ind */
-        col_ind = neighbor::col_ind
+        col_ind = neighbor.get::col_ind
       }
     }
 
@@ -102,7 +102,7 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
         //val neighbor = cells.getDirEnv(y._2.xy._1, y._2.xy._2, x)
 
           /* Schaue ob in der Richtung eine Karte ist */
-          if (newestCells.getDirEnv(y._2.xy._1, y._2.xy._2, x).getValue != y._2.getValue) {
+          if (newestCells.getDirEnv(y._2.xy._1, y._2.xy._2, x).isEmpty) {
             /*  */
             //print(newestCells.getDirEnv(y._2.xy._1, y._2.xy._2, x).getValue + " " + y._2.getValue + " " + y._2.getCorners + " " + y._2.xy + "\n")
             freeCorners += 1
