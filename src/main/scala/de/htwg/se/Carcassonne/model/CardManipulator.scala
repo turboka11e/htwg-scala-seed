@@ -14,7 +14,7 @@ case class CardManipulator(playerCard: Int, card: Card = new Card((0, 0))){
       val replacedCard = card.areas.updated(index, replacedPlayer)
       this.copy(card = Card(replacedCard))
     } else {
-      copy()
+      this
     }
   }
 

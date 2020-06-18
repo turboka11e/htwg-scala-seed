@@ -25,7 +25,9 @@ class CardManipulatorSpec extends WordSpec with Matchers {
       }
       "set Player to Areas" in {
         val freshCard = r1
-        freshCard.setPlayerToArea(0) should be(CardManipulator(playerCard = 0, card = setCard))
+        val cardmani = CardManipulator(playerCard = 0, card = setCard)
+        freshCard.setPlayerToArea(0) should be(cardmani)
+        freshCard.setPlayerToArea(5) should be(freshCard)
       }
       "return finished adjusted FreshCard" in {
         val finishedFreshCard = r1
