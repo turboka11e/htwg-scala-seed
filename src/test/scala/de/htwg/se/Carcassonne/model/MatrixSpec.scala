@@ -73,7 +73,7 @@ class MatrixSpec extends WordSpec with Matchers {
     }
     "filled with nonEmpty Card" should {
       val emptyMatrix = new Matrix(3)
-      val joinableCard = CardCreator(0).randCard(14).finalCard(1, 1)
+      val joinableCard = RawCardFactory("selectCard", 0, 14).drawCard().finalCard(1, 1)
       var fullMatrix = emptyMatrix.replaceCell(0, 0, joinableCard)
       fullMatrix = fullMatrix.replaceCell(0, 1, joinableCard)
       fullMatrix = fullMatrix.replaceCell(0, 2, joinableCard)
