@@ -16,6 +16,8 @@ class TUI(controller: Controller) extends Observer {
       case "n" => controller.decide(false)
       case "r" => controller.rotateRight()
       case "l" => controller.rotateLeft()
+      case "redo" => controller.redo()
+      case "undo" => controller.undo()
       case _ => validateLongString(input)
     }
   }
