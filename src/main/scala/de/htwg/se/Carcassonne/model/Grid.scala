@@ -39,16 +39,16 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
 
   def lookNeighbours(row:Int, col:Int, dir:Char, newCard: Card):Option[List[Area]] = {
     val currentArea = newCard.getAreaLookingFrom(dir)
-    var col_ind:Option[List[Area]] = None
+    var col_ind:List[Area] = Nil
     for (x <- currentArea.getCorners) {
       val neighbor = cells.getDirEnv(row, col, x)
       /* Schaue ob in der Richtung eine Karte ist */
-      if (neighbor.isDefined) {
+      if (neighbor.nonEmpty) {
         /* Speicher die Area in List col_ind */
-        col_ind = Some(neighbor.get::col_ind.get)
+        col_ind = neighbor.get::col_ind
       }
     }
-    col_ind
+    if(col_ind.isEmpty) None else Some(col_ind)
   }
 
   def tmpTerriList(row:Int, col:Int, dir:Char, newCard: Card, list:List[List[(Int, Area)]]):List[List[(Int, Area)]] = {

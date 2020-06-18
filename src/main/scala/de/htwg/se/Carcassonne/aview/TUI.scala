@@ -12,8 +12,8 @@ class TUI(controller: Controller) extends Observer {
     input match {
       case "q" =>
       case "new" => controller.newGame()
-      case "y" => controller.decide(true)
-      case "n" => controller.decide(false)
+      case "y" => decide(true)
+      case "n" => decide(false)
       case "r" => controller.rotateRight()
       case "l" => controller.rotateLeft()
       case "redo" => controller.redo()
@@ -21,6 +21,23 @@ class TUI(controller: Controller) extends Observer {
       case _ => validateLongString(input)
     }
   }
+
+  def decide(dc:Boolean):Unit = {
+    controller.getGameState match {
+      case 2 =>
+        if(!dc){
+          controller.firstCard()
+        } else {
+          controller.changeGameState(1)
+        }
+      case 3 => if(dc) controller.changeGameState(4)
+
+      case 4 => if(!dc) controller.changeGameState(5)
+
+      case _ =>
+    }
+  }
+
 
   def validateLongString(input: String): Unit = {
     if (input.forall(p => p.isDigit || p == ' ') && input.nonEmpty) {

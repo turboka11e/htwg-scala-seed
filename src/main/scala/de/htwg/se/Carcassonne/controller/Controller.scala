@@ -25,22 +25,15 @@ class Controller(var playfield: Playfield) extends Observable {
     }
 
   }
+  
+  def firstCard():Unit = {
+    playfield = playfield.changeGameState(3)
+    playfield = playfield.getFreshCard
+    notifyObservers
+  }
 
-  def decide(dc:Boolean):Unit = {
-    playfield.gameState match {
-      case 2 =>
-        if(!dc){
-          playfield = playfield.changeGameState(3)
-          playfield = playfield.getFreshCard
-        } else {
-          playfield = playfield.changeGameState(1)
-        }
-      case 3 => if(dc) playfield = playfield.changeGameState(4)
-
-      case 4 => if(!dc) playfield = playfield.changeGameState(5)
-
-      case _ =>
-    }
+  def changeGameState(gs: Int):Unit = {
+    playfield = playfield.changeGameState(gs)
     notifyObservers
   }
 
