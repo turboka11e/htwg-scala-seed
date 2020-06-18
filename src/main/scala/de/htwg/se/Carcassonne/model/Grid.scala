@@ -37,29 +37,33 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
 
   }
 
+  def lookNeighbours(row:Int, col:Int, dir:Char, newCard: Card):Option[List[Area]] = {
+    val currentArea = newCard.getAreaLookingFrom(dir)
+    var col_ind:Option[List[Area]] = None
+    for (x <- currentArea.getCorners) {
+      val neighbor = cells.getDirEnv(row, col, x)
+      /* Schaue ob in der Richtung eine Karte ist */
+      if (neighbor.isDefined) {
+        /* Speicher die Area in List col_ind */
+        col_ind = Some(neighbor.get::col_ind.get)
+      }
+    }
+    col_ind
+  }
+
   def tmpTerriList(row:Int, col:Int, dir:Char, newCard: Card, list:List[List[(Int, Area)]]):List[List[(Int, Area)]] = {
 
     var tmpTerri = list
     val currentArea = newCard.getAreaLookingFrom(dir)
     var openCorners = 0
 
-    var col_ind:List[Area] = List() // sammle angrenzende Areas
+    val col_ind:Option[List[Area]] = lookNeighbours(row, col, dir, newCard)
 
-    /* Schau in alle Richtungen der Area */
-    for (x <- currentArea.getCorners) {
-      val neighbor = cells.getDirEnv(row, col, x)
-      /* Schaue ob in der Richtung eine Karte ist */
-      if (neighbor.isDefined) {
-        /* Speicher die Area in List col_ind */
-        col_ind = neighbor.get::col_ind
-      }
-    }
-
-    if(col_ind.nonEmpty){
+    if(col_ind.isDefined){
       var joinedTerri:List[(Int, Area)] = Nil
 
       /* Füge die Umgebende Area List in neue List joined Terri hinein */
-      for(x <- col_ind){
+      for(x <- col_ind.get){
         if(!joinedTerri.exists(p => p._2.equals(x))){
           val id = tmpTerri.indexWhere(p => p.exists(b => b._2.equals(x)))
           joinedTerri = joinedTerri:::tmpTerri.apply(id)
@@ -67,7 +71,7 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
       }
 
       /* Lösche die alten Territorien in der Hauptliste */
-      for(x <- col_ind){
+      for(x <- col_ind.get){
         val id = tmpTerri.indexWhere(p => p.exists(b => b._2.equals(x)))
         if(id >= 0) tmpTerri = tmpTerri.filter(_.ne(tmpTerri.apply(id)))
       }

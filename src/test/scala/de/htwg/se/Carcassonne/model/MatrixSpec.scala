@@ -55,10 +55,10 @@ class MatrixSpec extends WordSpec with Matchers {
         matrix.checkEnv(0,0,'e',matrix.card(0,0)) should be (true)
       }
        "get Directon on Env" in {
-         matrix.getDirEnv(0,0,'n') should be (Area(' ' ,List('n', 'w', 'e', 's'),-1,(-1,-1)))
-         matrix.getDirEnv(0,0,'s') should be (Area(' ' ,List('n', 'w', 'e', 's'),-1,(-1,-1)))
-         matrix.getDirEnv(1,0,'w') should be (Area(' ' ,List('n', 'w', 'e', 's'),-1,(-1,-1)))
-         matrix.getDirEnv(0,0,'e') should be (Area(' ' ,List('n', 'w', 'e', 's'),-1,(-1,-1)))
+         matrix.getDirEnv(0,0,'n') should be (None)
+         matrix.getDirEnv(0,0,'s') should be (None)
+         matrix.getDirEnv(1,0,'w') should be (None)
+         matrix.getDirEnv(0,0,'e') should be (None)
 
        }
       "get Neighbor" in {
@@ -91,10 +91,10 @@ class MatrixSpec extends WordSpec with Matchers {
         fullMatrix.checkEnv(1, 1, 'n',joinableCard) should be(true)
       }
       "Get directional Area" in {
-        fullMatrix.getDirEnv(1, 1, 'n') should be(Area('c', List('s'), -1, (1, 1)))
-        fullMatrix.getDirEnv(1, 1, 's') should be(Area('c', List('n'), -1, (1, 1)))
-        fullMatrix.getDirEnv(1, 1, 'w') should be(Area('c', List('e'), -1, (1, 1)))
-        fullMatrix.getDirEnv(1, 1, 'e') should be(Area('c', List('w'), -1, (1, 1)))
+        fullMatrix.getDirEnv(1, 1, 'n') should be(Some(Area('c', List('s'), -1, (1, 1))))
+        fullMatrix.getDirEnv(1, 1, 's') should be(Some(Area('c', List('n'), -1, (1, 1))))
+        fullMatrix.getDirEnv(1, 1, 'w') should be(Some(Area('c', List('e'), -1, (1, 1))))
+        fullMatrix.getDirEnv(1, 1, 'e') should be(Some(Area('c', List('w'), -1, (1, 1))))
       }
     }
   }
