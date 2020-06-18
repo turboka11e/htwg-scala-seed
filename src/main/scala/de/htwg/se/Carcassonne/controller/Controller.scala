@@ -23,9 +23,8 @@ class Controller(var playfield: Playfield) extends Observable {
         notifyObservers
       case _ =>
     }
-
   }
-  
+
   def firstCard():Unit = {
     playfield = playfield.changeGameState(3)
     playfield = playfield.getFreshCard
