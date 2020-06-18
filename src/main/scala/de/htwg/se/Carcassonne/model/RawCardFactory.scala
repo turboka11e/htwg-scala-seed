@@ -3,7 +3,7 @@ package de.htwg.se.Carcassonne.model
 import scala.util.Random
 
 trait RawCardFactory {
-  def drawCard(): CardCreator
+  def drawCard(): CardManipulator
   val randomCards: List[Card] = List(
 
     Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s')))),       // D
@@ -40,15 +40,15 @@ trait RawCardFactory {
 }
 
 private class EmptyCard() extends RawCardFactory {
-  override def drawCard():CardCreator = new CardCreator()
+  override def drawCard():CardManipulator = new CardManipulator()
 }
 
 private class RandomCard(isOn: Int) extends RawCardFactory {
-  override def drawCard(): CardCreator = CardCreator(isOn, randomCards(Random.nextInt(randomCards.size)))
+  override def drawCard(): CardManipulator = CardManipulator(isOn, randomCards(Random.nextInt(randomCards.size)))
 }
 
 private class SelectCard(isOn: Int, select:Int) extends RawCardFactory {
-  override def drawCard(): CardCreator = CardCreator(isOn, randomCards(select))
+  override def drawCard(): CardManipulator = CardManipulator(isOn, randomCards(select))
 }
 
 object RawCardFactory {

@@ -1,7 +1,7 @@
 package de.htwg.se.Carcassonne.model
 
 case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new Grid(1),
-                     freshCard:CardCreator = new CardCreator(), gameState:Int =  0, success:Boolean = true) {
+                     freshCard:CardManipulator = new CardManipulator(), gameState:Int =  0, success:Boolean = true) {
 
   def changeGameState(gs:Int):Playfield = copy(gameState = gs)
 

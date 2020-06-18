@@ -2,12 +2,12 @@ package de.htwg.se.Carcassonne.model
 
 import org.scalatest._
 
-class CardCreatorSpec extends WordSpec with Matchers {
+class CardManipulatorSpec extends WordSpec with Matchers {
   "An CardCreator " when {
     "called " should {
-      val f1 = CardCreator(0)
+      val f1 = CardManipulator(0)
       "create a Card with " in {
-      f1 should be(CardCreator(playerCard = 0, card = new Card(0, 0)))
+      f1 should be(CardManipulator(playerCard = 0, card = new Card(0, 0)))
       }
     }
     "called for a fresh Card" should {
@@ -20,12 +20,12 @@ class CardCreatorSpec extends WordSpec with Matchers {
       }
       "rotate fresh Card" in {
         val r2 = r1
-        r2.rotateRight should be(CardCreator(playerCard = 0, card = randomCard.rotateRight()))
-        r2.rotateLeft should be(CardCreator(playerCard = 0, card = randomCard.rotateRight().rotateRight().rotateRight()))
+        r2.rotateRight should be(CardManipulator(playerCard = 0, card = randomCard.rotateRight()))
+        r2.rotateLeft should be(CardManipulator(playerCard = 0, card = randomCard.rotateRight().rotateRight().rotateRight()))
       }
       "set Player to Areas" in {
         val freshCard = r1
-        freshCard.setPlayerToArea(0) should be(CardCreator(playerCard = 0, card = setCard))
+        freshCard.setPlayerToArea(0) should be(CardManipulator(playerCard = 0, card = setCard))
       }
       "return finished adjusted FreshCard" in {
         val finishedFreshCard = r1
