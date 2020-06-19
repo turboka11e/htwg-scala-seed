@@ -1,7 +1,7 @@
 package de.htwg.se.Carcassonne.aview
 
 import de.htwg.se.Carcassonne.controller.Controller
-import de.htwg.se.Carcassonne.model.{Area, Card, CardManipulator, Grid, Matrix, Player, Points}
+
 import de.htwg.se.Carcassonne.util.Observer
 
 class TUI(controller: Controller) extends Observer {
