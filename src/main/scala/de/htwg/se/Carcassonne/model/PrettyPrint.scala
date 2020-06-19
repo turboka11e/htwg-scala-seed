@@ -1,12 +1,12 @@
 package de.htwg.se.Carcassonne.model
 
-case class PrettyPrint(grid: Grid, freshCard:CardManipulator, players:List[Player], isOn: Int, success: Boolean) {
+class PrettyPrint(grid: Grid, freshCard:CardManipulator, players:List[Player], isOn: Int, success: Boolean) extends PrettyPrintStrategyTemplate {
 
   private val color = List(Console.BLUE, Console.RED, Console.YELLOW, Console.GREEN)
 
   var printable: String = g0
 
-  def printo(gameState: Int):String = {
+  override def printo(gameState: Int):String = {
 
     gameState match {
       case 0 => printable = g0

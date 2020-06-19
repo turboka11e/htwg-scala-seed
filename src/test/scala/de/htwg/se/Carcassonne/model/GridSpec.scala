@@ -54,6 +54,19 @@ class GridSpec extends WordSpec with Matchers {
       "return count of placed Cards" in {
         smallGrid.getCount should be(0)
       }
+      "return joinedTerri" in {
+        val tmpTerri:List[List[(Int, Area)]] = List(List((0, Area(0, xy= (1, 1)))))
+          val col_ind = List(Area(0, xy= (1, 1)))
+        smallGrid.insertNeighbourTerrisInJoinedTerri(tmpTerri, col_ind) should be(List((0, Area(0, xy= (1, 1)))))
+      }
+    }
+    "created with Cards placed" in {
+      val card = RawCardFactory("selectCard", 0, 14).drawCard()
+      val filledGrid = new Grid(3).place(1, 1,card.finalCard(1, 1)).place(0, 1, card.finalCard(0, 1))
+      filledGrid.tmpTerriList(1, 1, 'w', card.finalCard(1, 1), filledGrid.getTerritories) should be(
+        List(List((0,Area('c',List('e'),-1,(0,1))), (0,Area('c',List('w'),-1,(1,1)))), List((1,Area('c',List('w'),-1,(0,1)))),
+          List((1,Area('c',List('s'),-1,(0,1)))), List((1,Area('c',List('n'),-1,(0,1)))), List((1,Area('c',List('e'),-1,(1,1)))),
+          List((1,Area('c',List('s'),-1,(1,1)))), List((1,Area('c',List('n'),-1,(1,1))))))
     }
   }
 }
