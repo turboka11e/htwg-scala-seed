@@ -9,13 +9,13 @@ class PrettyPrintSpec extends WordSpec with Matchers {
       val grid = new Grid(3)
       val pList = List(Player("Mark"))
       val pList2 = List(Player("Mark"), Player("Lukas"))
-      val p0 = PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
-      val p1 = PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
-      val p2 = PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
-      val p3 = PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
-      val p4 = PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
-      val p5 = PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = false)
-      val ccp6 = PrettyPrint(grid.place(0, 0, RawCardFactory("selectCard", 0, 0).drawCard().setPlayerToArea(0).finalCard(0, 0)),
+      val p0 = new PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
+      val p1 = new PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
+      val p2 = new PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
+      val p3 = new PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
+      val p4 = new PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
+      val p5 = new PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = false)
+      val ccp6 = new PrettyPrint(grid.place(0, 0, RawCardFactory("selectCard", 0, 0).drawCard().setPlayerToArea(0).finalCard(0, 0)),
         RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = false)
       "print playfieldView" in {
         val r = Console.BLUE + "r" + Console.RESET

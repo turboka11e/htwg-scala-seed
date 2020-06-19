@@ -51,6 +51,17 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
     if(col_ind.isEmpty) None else Some(col_ind)
   }
 
+  def insertNeighbourTerrisInJoinedTerri(tmpTerri:List[List[(Int, Area)]], col_ind:List[Area]):List[(Int, Area)] = {
+    var joinedTerri:List[(Int, Area)] = Nil
+    for(x <- col_ind){
+      if(!joinedTerri.exists(p => p._2.equals(x))){
+        val id = tmpTerri.indexWhere(p => p.exists(b => b._2.equals(x)))
+        joinedTerri = joinedTerri:::tmpTerri.apply(id)
+      }
+    }
+    joinedTerri
+  }
+
   def tmpTerriList(row:Int, col:Int, dir:Char, newCard: Card, list:List[List[(Int, Area)]]):List[List[(Int, Area)]] = {
 
     var tmpTerri = list
@@ -60,15 +71,8 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
     val col_ind:Option[List[Area]] = lookNeighbours(row, col, dir, newCard)
 
     if(col_ind.isDefined){
-      var joinedTerri:List[(Int, Area)] = Nil
-
       /* Füge die Umgebende Area List in neue List joined Terri hinein */
-      for(x <- col_ind.get){
-        if(!joinedTerri.exists(p => p._2.equals(x))){
-          val id = tmpTerri.indexWhere(p => p.exists(b => b._2.equals(x)))
-          joinedTerri = joinedTerri:::tmpTerri.apply(id)
-        }
-      }
+      var joinedTerri = insertNeighbourTerrisInJoinedTerri(tmpTerri, col_ind.get)
 
       /* Lösche die alten Territorien in der Hauptliste */
       for(x <- col_ind.get){

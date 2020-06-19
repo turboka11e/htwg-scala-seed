@@ -15,9 +15,7 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
 
   def getFreshCard:Playfield = copy(freshCard = RawCardFactory("randomCard", isOn).drawCard())            // GameState 2
 
-  def getFreshCard(select:Int):Playfield = {
-    copy(freshCard = RawCardFactory.apply("selectCard", isOn, select).drawCard())
-  } // for Testing
+  def getFreshCard(select:Int):Playfield = copy(freshCard = RawCardFactory.apply("selectCard", isOn, select).drawCard()) // for Testing
 
   def rotateR:Playfield = copy(freshCard = freshCard.rotateRight)                                   // Gamestate 3
 
@@ -44,6 +42,6 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
   }
 
   def playFieldToString:String = {
-    PrettyPrint(grid, freshCard, players, isOn, success).printo(gameState)
+    new PrettyPrint(grid, freshCard, players, isOn, success).printo(gameState)
   }
 }
