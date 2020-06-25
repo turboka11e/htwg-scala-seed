@@ -2,20 +2,16 @@ package de.htwg.se.Carcassonne.aview.gui
 
 import java.io.File
 
-import de.htwg.se.Carcassonne.controller.{Controller, PlayfieldChanged}
+import de.htwg.se.Carcassonne.model.{Area, Card, CardManipulator}
 import javax.imageio.ImageIO
-import java.awt.{Graphics2D, GridLayout}
+import java.awt.Graphics2D
 import java.awt.image.BufferedImage
 
-import de.htwg.se.Carcassonne.model.Grid
+import de.htwg.se.Carcassonne.controller.RotateR
 
-import scala.swing.event.MouseClicked
-import scala.swing.{Dimension, GridBagPanel, GridPanel, Label}
+import scala.swing.{GridPanel, Label, Panel}
 
-class GuiCard(controller: Controller, row:Int, col:Int) extends GridPanel(1, 1) {
-
-  preferredSize = new Dimension(80, 80)
-  listenTo(controller)
+class FreshCardGUI(card:CardManipulator) extends Panel {
 
   var img: BufferedImage = findImage()
 
@@ -31,7 +27,7 @@ class GuiCard(controller: Controller, row:Int, col:Int) extends GridPanel(1, 1) 
   def findImage(): BufferedImage = {
     val numToCharImage = List("D", "E", "G", "H", "I", "J", "K", "L", "N", "O", "R", "T", "U", "V", "W")
 
-    val index = controller.playfield.grid.card(row, col).getID
+    val index = card.card.getID
 
     var dataImg: String = ""
     if (index == -1) {
@@ -44,13 +40,11 @@ class GuiCard(controller: Controller, row:Int, col:Int) extends GridPanel(1, 1) 
   }
 
   def rotateCardR(): Unit = {
-
+    img.createGraphics().rotate(Math.PI / 2)
     repaint()
   }
 
   reactions += {
-    case event: PlayfieldChanged => setCard()
+    case event: RotateR => rotateCardR()
   }
-
-
 }

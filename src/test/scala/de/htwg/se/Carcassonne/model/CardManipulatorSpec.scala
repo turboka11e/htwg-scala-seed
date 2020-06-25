@@ -7,7 +7,7 @@ class CardManipulatorSpec extends WordSpec with Matchers {
     "called " should {
       val f1 = CardManipulator(0)
       "create a Card with " in {
-      f1 should be(CardManipulator(playerCard = 0, card = new Card(0, 0)))
+      f1 should be(CardManipulator(playerCard = 0, card = new Card((0, 0))))
       }
     }
     "called for a fresh Card" should {

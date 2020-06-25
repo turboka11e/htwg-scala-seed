@@ -24,16 +24,16 @@ class GridSpec extends WordSpec with Matchers {
       val matrix = new Matrix[Card](4)
 
       "give access to its Cells" in {
-        tinygrid.card(0, 0) should be(new Card(0, 0))
-        smallGrid.card(0, 0) should be(new Card(0,0))
-        smallGrid.card(0, 1) should be(new Card(0, 1))
-        smallGrid.card(1, 0) should be(new Card(1, 0))
-        smallGrid.card(1, 1) should be(new Card(1, 1))
+        tinygrid.card(0, 0) should be(new Card((0, 0)))
+        smallGrid.card(0, 0) should be(new Card((0,0)))
+        smallGrid.card(0, 1) should be(new Card((0, 1)))
+        smallGrid.card(1, 0) should be(new Card((1, 0)))
+        smallGrid.card(1, 1) should be(new Card((1, 1)))
       }
       "allow to set individual Cells and remain immutable" in {
         val changedGrid = smallGrid.set(0, 0, Card(List(Area('c', List('n', 'w', 'e', 's'), xy = (0, 0)))))
         changedGrid.card(0, 0) should be(Card(List(Area('c', List('n', 'w', 'e', 's'), xy = (0, 0)))))
-        smallGrid.card(0, 0) should be(new Card(0, 0))
+        smallGrid.card(0, 0) should be(new Card((0, 0)))
       }
       "place Card in Matrix and update Territories" in {
         smallGrid.place(0, 0, freshCard) should be(validGrid)

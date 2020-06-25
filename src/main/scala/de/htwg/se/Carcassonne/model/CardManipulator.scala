@@ -12,7 +12,7 @@ case class CardManipulator(playerCard: Int, card: Card = new Card((0, 0))){
     if(index < card.areas.size){
       val replacedPlayer = card.areas.apply(index).copy(player = playerCard)
       val replacedCard = card.areas.updated(index, replacedPlayer)
-      this.copy(card = Card(replacedCard))
+      this.copy(card = Card(replacedCard, card.getID))
     } else {
       this
     }

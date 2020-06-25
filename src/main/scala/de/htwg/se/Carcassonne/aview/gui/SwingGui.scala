@@ -26,32 +26,53 @@ class SwingGui(controller: Controller) extends Frame {
     icon = new ImageIcon(logo)
   }
 
-  var gridPanel: GridPanel = new GridPanel(gsize, gsize) {
+  var freshCard:Panel = new FreshCardGUI(controller.playfield.freshCard) {
+    preferredSize = new Dimension(90, 90)
+  }
+
+  var gridPanel: GridBagPanel = new GridBagPanel() {
+    background = java.awt.Color.BLACK
+    def constraints(x: Int, y: Int,
+                    gridwidth: Int = 1, gridheight: Int = 1,
+                    weightx: Double = 0.0, weighty: Double = 0.0,
+                    fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None)
+    : Constraints = {
+      val c = new Constraints
+      c.gridx = x
+      c.gridy = y
+      c.gridwidth = gridwidth
+      c.gridheight = gridheight
+      c.weightx = weightx
+      c.weighty = weighty
+      c.fill = fill
+      c
+    }
 
     for {
-      line <- cells.indices
+      col <- cells.indices
       row <- cells.indices
     } {
-      val tmpCard = new GuiCard(controller, line, row)
-      cells(line)(row) = tmpCard
+      val tmpCard = new GuiCard(controller, row, col)
+      cells(row)(col) = tmpCard
       listenTo(tmpCard)
-      contents += tmpCard
+      add(tmpCard, constraints(row, col))
     }
+
   }
 
   def playfieldUpdate(): Unit = {
-    gridPanel = new GridPanel(gsize, gsize){
+    gridPanel = new GridBagPanel{
       for {
-        line <- cells.indices
+        col <- cells.indices
         row <- cells.indices
-      } cells(line)(row).setCard()
+      } cells(row)(col).setCard()
     }
   }
-
 
   contents = new BorderPanel {
     add(banner, BorderPanel.Position.North)
     add(gridPanel, BorderPanel.Position.Center)
+    add(freshCard, BorderPanel.Position.East)
   }
 
   centerOnScreen()
