@@ -23,6 +23,7 @@ case class Matrix[T] (rows:Vector[Vector[Card]], private val count:Int = 0) {
   }
 
   def checkEnvEmpty(row: Int, col: Int, dir:Char):Boolean = {
+
     if(checkEdge(row, col, dir)) {
       dir match {
         case 'n' => card(row, col - 1).isEmpty
@@ -33,6 +34,7 @@ case class Matrix[T] (rows:Vector[Vector[Card]], private val count:Int = 0) {
     } else {
       true
     }
+
   }
 
   def checkEnv(row: Int, col: Int, dir: Char, checkCard: Card):Boolean = {

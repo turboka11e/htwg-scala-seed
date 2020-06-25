@@ -122,7 +122,4 @@ case class Grid(private val cells:Matrix[Card], private val territories: List[Li
     tmpTerriEnv
   }
 
-
-
-
 }
