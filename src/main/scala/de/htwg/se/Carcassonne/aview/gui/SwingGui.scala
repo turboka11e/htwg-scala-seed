@@ -6,7 +6,6 @@ import de.htwg.se.Carcassonne.controller._
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 
-import scala.swing.BorderPanel.Position
 import scala.swing._
 
 class SwingGui(controller: Controller) extends Frame {
@@ -27,44 +26,38 @@ class SwingGui(controller: Controller) extends Frame {
     icon = new ImageIcon(logo)
   }
 
-  val addPlayersPanel: FlowPanel = new FlowPanel {
-    visible = true
-    contents += new Button("Hier könnte dein Name stehen")
+  var gridPanel: GridPanel = new GridPanel(gsize, gsize) {
+
+    for {
+      line <- cells.indices
+      row <- cells.indices
+    } {
+      val tmpCard = new GuiCard(controller, line, row)
+      cells(line)(row) = tmpCard
+      listenTo(tmpCard)
+      contents += tmpCard
+    }
   }
 
-  val gridPanel: GridPanel = new GridPanel(gsize, gsize) {
-    visible = false
+  def playfieldUpdate(): Unit = {
+    gridPanel = new GridPanel(gsize, gsize){
+      for {
+        line <- cells.indices
+        row <- cells.indices
+      } cells(line)(row).setCard()
+    }
   }
-
-  def welcomeScreenAction(): Unit = {
-
-  }
-
-  def gridSizeSelectAction(): Unit = {
-
-  }
-
-  def addPlayersAction(): Unit = {
-
-  }
-
-
-
-
-  def playfieldAction(): Unit = gridPanel.visible = true
 
 
   contents = new BorderPanel {
     add(banner, BorderPanel.Position.North)
+    add(gridPanel, BorderPanel.Position.Center)
   }
 
   centerOnScreen()
 
   reactions += {
-    case event: NewGame => welcomeScreenAction()
-    case event: SetGrid => gridSizeSelectAction()
-    case event: AddPlayers => addPlayersAction()
-    case event: InitPlayfield => playfieldAction()
+    case event: PlayfieldChanged => playfieldUpdate()
   }
 
 

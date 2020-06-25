@@ -86,6 +86,7 @@ class StartGUI(controller: Controller) extends Frame {
   }
 
   def addPlayersAction(): Unit = {
+    controller.changeGameState(1)
     playerLabel.visible = true
     playerLabel.text = controller.playfield.players.toString()
     selectGrid.visible = false

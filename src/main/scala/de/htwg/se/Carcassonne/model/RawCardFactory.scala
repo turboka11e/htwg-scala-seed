@@ -10,7 +10,7 @@ trait RawCardFactory {
 
     Card(List(Area('c', List('n')), Area('g', List('s', 'w', 'e')))),                        // E
 
-    Card(List(Area('c', List('w', 'e')), Area('g', List('s')), Area('g', List('n')))),       // F
+    Card(List(Area('c', List('w', 'e')), Area('g', List('s')), Area('g', List('n')))),       // G
 
     Card(List(Area('c', List('w')), Area('c', List('e')), Area('g', List('n', 's')))),       // H
 
@@ -22,7 +22,7 @@ trait RawCardFactory {
 
     Card(List(Area('c', List('n')), Area('r', List('s', 'w', 'e')))),                        // L
 
-    Card(List(Area('c', List('n', 'w')), Area('g', List('s', 'e')))),                        // M
+    Card(List(Area('c', List('n', 'w')), Area('g', List('s', 'e')))),                        // N
 
     Card(List(Area('c', List('n', 'w')), Area('r', List('s', 'e')))),                        // O
 
