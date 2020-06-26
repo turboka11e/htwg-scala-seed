@@ -14,19 +14,17 @@ class SwingGui(controller: Controller) extends Frame {
   listenTo(controller)
 
   title = "Carcassone"
-  background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
-  //resizable = false
 
-  visible = true
+  /* Cells is Array for GuiCard Classes */
   val gsize: Int = controller.playfield.grid.size
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
 
+  /* Components for main GUI */
   val banner: Label = new Label() {
     private val logo = ImageIO.read(new File("./src/main/scala/de/htwg/se/Carcassonne/aview/media/CarcassonneText.png"))
     icon = new ImageIcon(logo)
   }
-
   var playerInfos:GridBagPanel = new GridBagPanel() {
     background = java.awt.Color.BLACK
 
@@ -63,10 +61,7 @@ class SwingGui(controller: Controller) extends Frame {
     }
 
   }
-
-
   var freshCard:GridBagPanel = new FreshCardGUI(controller)
-
   var gridPanel: GridBagPanel = new GridBagPanel() {
     background = java.awt.Color.BLACK
     def constraints(x: Int, y: Int,
@@ -97,14 +92,6 @@ class SwingGui(controller: Controller) extends Frame {
 
   }
 
-  def playfieldUpdate(): Unit = {
-    gridPanel = new GridBagPanel{
-      for {
-        col <- cells.indices
-        row <- cells.indices
-      } cells(row)(col).setCard()
-    }
-  }
 
   contents = new BorderPanel {
     add(banner, BorderPanel.Position.North)
@@ -114,10 +101,6 @@ class SwingGui(controller: Controller) extends Frame {
   }
 
   centerOnScreen()
-
-  reactions += {
-    case event: PlayfieldChanged => playfieldUpdate()
-  }
-
+  visible = true
 
 }

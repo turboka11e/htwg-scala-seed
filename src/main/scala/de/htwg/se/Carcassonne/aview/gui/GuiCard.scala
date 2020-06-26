@@ -5,15 +5,13 @@ import java.io.File
 
 import de.htwg.se.Carcassonne.controller.{Controller, PlayfieldChanged}
 import javax.imageio.ImageIO
-import java.awt.{Graphics2D, GridLayout}
+import java.awt.{Graphics2D, Image}
 import java.awt.image.{AffineTransformOp, BufferedImage}
 
-import de.htwg.se.Carcassonne.model.Grid
-
 import scala.swing.event.MouseClicked
-import scala.swing.{Dimension, GridBagPanel, GridPanel, Label}
+import scala.swing.{Dimension, FlowPanel, GridBagPanel}
 
-class GuiCard(controller: Controller, row:Int, col:Int) extends GridBagPanel {
+class GuiCard(controller: Controller, row:Int, col:Int) extends FlowPanel {
 
   preferredSize = new Dimension(80, 80)
   listenTo(controller, mouse.clicks)
@@ -50,16 +48,13 @@ class GuiCard(controller: Controller, row:Int, col:Int) extends GridBagPanel {
     val transform = new AffineTransform
     transform.rotate(1.5708, image.getWidth / 2, image.getHeight / 2)
     val op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR)
-
     img = op.filter(image, null)
 
   }
 
   reactions += {
     case event: PlayfieldChanged => setCard()
-    case event: MouseClicked => {
-      controller.placeCard(row, col)
-    }
+    case event: MouseClicked => controller.placeCard(row, col)
   }
 
 

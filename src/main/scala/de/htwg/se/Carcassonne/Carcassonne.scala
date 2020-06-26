@@ -13,7 +13,7 @@ object Carcassonne {
   val tui = new TUI(controller)
   val gui = new StartGUI(controller)
 
-  controller.publish(new NewGame)
+  //controller.publish(new NewGame)
 
   def main(args: Array[String]): Unit = {
     var input: String = ""
