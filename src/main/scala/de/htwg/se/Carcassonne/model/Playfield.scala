@@ -21,7 +21,13 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
 
   def rotateL:Playfield = copy(freshCard = freshCard.rotateLeft)                                    // Gamestate 3
 
-  def selectArea(nr:Int):Playfield = copy(freshCard = freshCard.setPlayerToArea(nr), gameState = 5)                // Gamestate 4
+  def selectArea(nr:Int):Playfield = {
+    if(!freshCard.card.areas.exists(p => p.getPlayer != -1) && freshCard.card.areas.apply(nr).getValue != 'g') {
+      copy(freshCard = freshCard.setPlayerToArea(nr), gameState = 5)
+    } else {
+      this
+    }
+  }                // Gamestate 4
 
   def placeCard(x: Int, y: Int): Playfield = { // Gamestate 5
     val check = grid.getCount

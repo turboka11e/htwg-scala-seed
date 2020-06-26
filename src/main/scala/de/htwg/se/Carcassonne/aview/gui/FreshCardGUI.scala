@@ -39,14 +39,49 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
 
     var img: BufferedImage = findImage()
 
-    override def paint(g:Graphics2D):Unit = {
-      val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican.png"
+    override def paint(g: Graphics2D): Unit = {
       g.drawImage(img, 0, 0, null)
-      g.drawImage(ImageIO.read(new File(manican)), 27, 2, null) // oben
-      g.drawImage(ImageIO.read(new File(manican)), 25, 52, null) // unten
-      g.drawImage(ImageIO.read(new File(manican)), 2, 27, null) // links
-      g.drawImage(ImageIO.read(new File(manican)), 52, 27, null) // rechts
+      val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican.png"
+
+      val dirCombi = List(('n', 27, 0), ('s', 25, 55), ('w', 0, 27), ('e', 55, 27))
+
+      if (!controller.playfield.freshCard.card.areas.exists(p => p.getPlayer != -1)) {
+        for (x <- dirCombi) {
+          controller.playfield.freshCard.card.getAreaLookingFrom(x._1).getValue match {
+            case 'c' => g.drawImage(ImageIO.read(new File(manican)), x._2, x._3, null)
+            case 'r' => g.drawImage(ImageIO.read(new File(manican)), x._2, x._3, null)
+            case 'g' =>
+          }
+        }
+      } else {
+        val dir = controller.playfield.freshCard.card.areas.find(p => p.getPlayer != -1).get.getCorners.head
+        val combi = dirCombi.find(p => p._1.equals(dir)).get
+        g.drawImage(ImageIO.read(new File(manican)), combi._2, combi._3, null)
+      }
     }
+
+    def mouseClick(x: Int, y: Int): Unit = {
+      if (validateCoord(0, 20, 20, 60)) {
+        selectArea('w')
+      } else if (validateCoord(20, 60, 0, 20)) {
+        selectArea('n')
+      } else if (validateCoord(60, 80, 20, 60)) {
+        selectArea('e')
+      } else if (validateCoord(20, 60, 60, 80)) {
+        selectArea('s')
+      }
+
+      repaint()
+
+      def validateCoord(xMin: Int, xMax: Int, yMin: Int, yMax: Int): Boolean = xMin < x && x < xMax && yMin < y && y < yMax
+
+      def selectArea(dir: Char): Unit = {
+        val area = controller.playfield.freshCard.card.getAreaLookingFrom(dir)
+        val index = controller.playfield.freshCard.card.areas.indexWhere(p => p.eq(area))
+        controller.selectArea(index)
+      }
+    }
+
 
     def setCard(): Unit = {
       img = findImage()
@@ -82,6 +117,7 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
 
     reactions += {
       case event: PlayfieldChanged => setCard()
+      case MouseClicked(_, p, _, _, _) => mouseClick(p.x, p.y)
     }
   }
   val rotateR_Button = new Button("Rechts")
@@ -95,10 +131,10 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
 
   reactions += {
     case ButtonClicked(b) => {
-      if(b == rotateL_Button) {
+      if (b == rotateL_Button) {
         controller.rotateLeft()
       }
-      else if(b == rotateR_Button) {
+      else if (b == rotateR_Button) {
         controller.rotateRight()
       }
     }
