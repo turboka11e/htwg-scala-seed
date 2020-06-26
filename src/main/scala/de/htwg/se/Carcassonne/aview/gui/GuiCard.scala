@@ -1,21 +1,22 @@
 package de.htwg.se.Carcassonne.aview.gui
 
+import java.awt.geom.AffineTransform
 import java.io.File
 
 import de.htwg.se.Carcassonne.controller.{Controller, PlayfieldChanged}
 import javax.imageio.ImageIO
 import java.awt.{Graphics2D, GridLayout}
-import java.awt.image.BufferedImage
+import java.awt.image.{AffineTransformOp, BufferedImage}
 
 import de.htwg.se.Carcassonne.model.Grid
 
 import scala.swing.event.MouseClicked
 import scala.swing.{Dimension, GridBagPanel, GridPanel, Label}
 
-class GuiCard(controller: Controller, row:Int, col:Int) extends GridPanel(1, 1) {
+class GuiCard(controller: Controller, row:Int, col:Int) extends GridBagPanel {
 
   preferredSize = new Dimension(80, 80)
-  listenTo(controller)
+  listenTo(controller, mouse.clicks)
 
   var img: BufferedImage = findImage()
 
@@ -25,13 +26,14 @@ class GuiCard(controller: Controller, row:Int, col:Int) extends GridPanel(1, 1) 
 
   def setCard(): Unit = {
     img = findImage()
+    for (x <- 0 until controller.playfield.grid.card(row, col).getID._2) rotateCardR()
     repaint()
   }
 
   def findImage(): BufferedImage = {
-    val numToCharImage = List("D", "E", "G", "H", "I", "J", "K", "L", "N", "O", "R", "T", "U", "V", "W")
+    val numToCharImage = List("D", "E", "G", "H", "I", "J", "K", "L", "N", "O", "R", "T", "U", "V", "C", "W")
 
-    val index = controller.playfield.grid.card(row, col).getID
+    val index = controller.playfield.grid.card(row, col).getID._1
 
     var dataImg: String = ""
     if (index == -1) {
@@ -44,12 +46,20 @@ class GuiCard(controller: Controller, row:Int, col:Int) extends GridPanel(1, 1) 
   }
 
   def rotateCardR(): Unit = {
+    val image = img
+    val transform = new AffineTransform
+    transform.rotate(1.5708, image.getWidth / 2, image.getHeight / 2)
+    val op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR)
 
-    repaint()
+    img = op.filter(image, null)
+
   }
 
   reactions += {
     case event: PlayfieldChanged => setCard()
+    case event: MouseClicked => {
+      controller.placeCard(row, col)
+    }
   }
 
 

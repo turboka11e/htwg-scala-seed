@@ -1,18 +1,18 @@
 package de.htwg.se.Carcassonne.model
 
-case class Card(areas:List[Area] = List(Area()), private val id:Int = -1){
+case class Card(areas:List[Area] = List(Area()), private val id:(Int, Int) = (-1, 0)){
 
   def this(xy:(Int, Int)) = this(areas = List(Area(corners = List('n'), xy = (xy._1, xy._2)),
     Area(corners = List('w'), xy = (xy._1, xy._2)), Area(corners = List('e'), xy = (xy._1, xy._2)),
-    Area(corners = List('s'), xy = (xy._1, xy._2))), id = -1)
+    Area(corners = List('s'), xy = (xy._1, xy._2))), id = (-1, 0))
 
-  def this(xy:(Int, Int), idx:Int) = this(areas = List(Area(corners = List('n'), xy = (xy._1, xy._2)),
+  def this(xy:(Int, Int), idx:(Int, Int)) = this(areas = List(Area(corners = List('n'), xy = (xy._1, xy._2)),
     Area(corners = List('w'), xy = (xy._1, xy._2)), Area(corners = List('e'), xy = (xy._1, xy._2)),
     Area(corners = List('s'), xy = (xy._1, xy._2))), id = idx)
 
   def isEmpty: Boolean = areas.head.getValue == ' ' && areas.size == 4
 
-  def getID: Int = id
+  def getID: (Int, Int) = id
 
   def setAreasXY(x:Int, y:Int):Card = copy(areas = areas.map(areas => areas.copy(xy = (x, y))))
 
@@ -38,7 +38,11 @@ case class Card(areas:List[Area] = List(Area()), private val id:Int = -1){
 
   def rotateRight():Card = {
     val rotatedAreas:List[Area] = areas.map { x => x.rotateRight() }
-    Card(rotatedAreas, id)
+    var rotations = id._2 + 1
+    if(rotations == 4){
+     rotations = 0
+    }
+    Card(rotatedAreas, id = (id._1, rotations))
   }
 
   override def toString:String = {

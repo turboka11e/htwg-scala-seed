@@ -46,7 +46,7 @@ class Controller(var playfield: Playfield) extends Publisher {
 
   def rotateRight():Unit = {
     playfield = playfield.rotateR
-    publish(new RotateR)
+    publish(new PlayfieldChanged)
   }
 
   def rotateLeft():Unit = {
