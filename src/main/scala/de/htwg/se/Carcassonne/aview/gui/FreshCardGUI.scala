@@ -2,19 +2,20 @@ package de.htwg.se.Carcassonne.aview.gui
 
 import java.io.File
 
-import de.htwg.se.Carcassonne.model.{Area, Card, CardManipulator}
 import javax.imageio.ImageIO
-import java.awt.{BorderLayout, Graphics2D}
+import java.awt.{Graphics2D}
 import java.awt.image.{AffineTransformOp, BufferedImage}
 import java.awt.geom.AffineTransform
 import java.awt.image.BufferedImage
 
-import de.htwg.se.Carcassonne.controller.{Controller, PlayfieldChanged, RotateR}
+import de.htwg.se.Carcassonne.controller.{Controller, PlayfieldChanged}
 
 import scala.swing.event.ButtonClicked
-import scala.swing.{Button, GridBagPanel}
+import scala.swing.{Button, GridBagPanel, Label}
 
 class FreshCardGUI(controller: Controller) extends GridBagPanel {
+
+  background = java.awt.Color.BLACK
 
   def constraints(x: Int, y: Int,
                   gridwidth: Int = 1, gridheight: Int = 1,
@@ -46,7 +47,6 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
 
   override def paint(g:Graphics2D):Unit = {
     g.drawImage(img, 0, 0, null)
-    constraints(0, 0)
   }
 
   def setCard(): Unit = {
@@ -59,13 +59,13 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
   def findImage(): BufferedImage = {
     val numToCharImage = List("D", "E", "G", "H", "I", "J", "K", "L", "N", "O", "R", "T", "U", "V", "C", "W")
 
-    val index = controller.playfield.freshCard.card.getID
+    val index = controller.playfield.freshCard.card.getID._1
 
     var dataImg: String = ""
     if (index == -1) {
       dataImg = "Empty"
     } else {
-      dataImg = numToCharImage(index._1)
+      dataImg = numToCharImage(index)
     }
     val src = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/" + dataImg + ".png"
     ImageIO.read(new File(src))

@@ -62,7 +62,7 @@ class CardSpec extends WordSpec with Matchers {
         validAreaCard.isValid should be(true)
       }
       "valid containing areas could rotate" in{
-        validAreaCard.rotateRight() should be (Card(List(Area('c', List('e' , 'w')), Area('g', List('n', 's')))))
+        validAreaCard.rotateRight() should be (Card(List(Area('c', List('e' , 'w')), Area('g', List('n', 's'))), id = (-1, 1)))
       }
       "not be valid" in {
         nonValidAreaCard.isValid should be(false)

@@ -12,9 +12,9 @@ class CardManipulatorSpec extends WordSpec with Matchers {
     }
     "called for a fresh Card" should {
       val r1 = RawCardFactory("selectCard", 0, 0).drawCard()
-      val randomCard = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s'))))
-      val setCard = Card(List(Area('r', List('w', 'e'), player = 0), Area('c', List('n')), Area('g', List('s'))))
-      val finalCard = Card(List(Area('r', List('w', 'e'), xy = (1, 1)), Area('c', List('n'), xy = (1, 1)), Area('g', List('s'), xy = (1, 1))))
+      val randomCard = Card(List(Area('r', List('w', 'e')), Area('c', List('n')), Area('g', List('s'))), (0, 0))
+      val setCard = Card(List(Area('r', List('w', 'e'), player = 0), Area('c', List('n')), Area('g', List('s'))), (0, 0))
+      val finalCard = Card(List(Area('r', List('w', 'e'), xy = (1, 1)), Area('c', List('n'), xy = (1, 1)), Area('g', List('s'), xy = (1, 1))), id = (0, 0))
       "pick a random card" in {
         RawCardFactory("selectCard", 0, 0).drawCard() should be(RawCardFactory("selectCard", 0, 0).drawCard())
       }

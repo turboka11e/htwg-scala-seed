@@ -37,7 +37,8 @@ class SwingGui(controller: Controller) extends Frame {
     add(playerPoints, constraints(0, 0))
 
     def updatepoints(): Unit = {
-      playerPoints.text = controller.playfield.players.toString()
+      playerPoints.text = controller.playfield.players.head.toString
+      playerPoints.foreground = java.awt.Color.GREEN
     }
 
     def constraints(x: Int, y: Int,
@@ -57,15 +58,14 @@ class SwingGui(controller: Controller) extends Frame {
     }
 
     reactions += {
+      case event: InitPlayfield => updatepoints()
       case event: PlayfieldChanged => updatepoints()
     }
 
   }
 
 
-  var freshCard:GridBagPanel = new FreshCardGUI(controller) {
-    background = java.awt.Color.BLACK
-  }
+  var freshCard:GridBagPanel = new FreshCardGUI(controller)
 
   var gridPanel: GridBagPanel = new GridBagPanel() {
     background = java.awt.Color.BLACK
