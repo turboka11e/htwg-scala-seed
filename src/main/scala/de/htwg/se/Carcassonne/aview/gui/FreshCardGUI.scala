@@ -4,13 +4,12 @@ import java.io.File
 
 import javax.imageio.ImageIO
 import java.awt.{Dimension, Graphics2D}
-import java.awt.image.{AffineTransformOp, BufferedImage}
+import java.awt.image.{AffineTransformOp, BufferedImage, ImageObserver}
 import java.awt.geom.AffineTransform
-import java.awt.image.BufferedImage
 
 import de.htwg.se.Carcassonne.controller.{Controller, PlayfieldChanged}
 
-import scala.swing.event.ButtonClicked
+import scala.swing.event.{ButtonClicked, MouseClicked}
 import scala.swing.{Button, FlowPanel, GridBagPanel}
 
 class FreshCardGUI(controller: Controller) extends GridBagPanel {
@@ -36,12 +35,17 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
   val freshCardImage: FlowPanel = new FlowPanel {
     preferredSize = new Dimension(80, 80)
 
-    listenTo(controller)
+    listenTo(controller, mouse.clicks)
 
     var img: BufferedImage = findImage()
 
     override def paint(g:Graphics2D):Unit = {
+      val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican.png"
       g.drawImage(img, 0, 0, null)
+      g.drawImage(ImageIO.read(new File(manican)), 27, 2, null) // oben
+      g.drawImage(ImageIO.read(new File(manican)), 25, 52, null) // unten
+      g.drawImage(ImageIO.read(new File(manican)), 2, 27, null) // links
+      g.drawImage(ImageIO.read(new File(manican)), 52, 27, null) // rechts
     }
 
     def setCard(): Unit = {
