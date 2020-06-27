@@ -7,7 +7,6 @@ import javax.imageio.ImageIO
 import javax.swing.ImageIcon
 
 import scala.swing._
-import scala.swing.event.MouseClicked
 
 class SwingGui(controller: Controller) extends Frame {
 
@@ -25,45 +24,72 @@ class SwingGui(controller: Controller) extends Frame {
     private val logo = ImageIO.read(new File("./src/main/scala/de/htwg/se/Carcassonne/aview/media/CarcassonneText.png"))
     icon = new ImageIcon(logo)
   }
-  var playerInfos:GridBagPanel = new GridBagPanel() {
-    background = java.awt.Color.BLACK
+  val controlPanel: BorderPanel = new BorderPanel {
 
-    listenTo(controller)
+    val playerInfos: GridBagPanel = new GridBagPanel() {
 
-    val playerPoints = new Label()
+      def constraints(x: Int, y: Int,
+                      gridwidth: Int = 1, gridheight: Int = 1,
+                      weightx: Double = 0.0, weighty: Double = 0.0,
+                      fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
+                      insets: Insets = new Insets(0, 0, 0, 0))
+      : Constraints = {
+        val c = new Constraints
+        c.gridx = x
+        c.gridy = y
+        c.gridwidth = gridwidth
+        c.gridheight = gridheight
+        c.weightx = weightx
+        c.weighty = weighty
+        c.fill = fill
+        c.insets = insets
+        c
+      }
 
-    add(playerPoints, constraints(0, 0))
+      background = java.awt.Color.LIGHT_GRAY
 
-    def updatepoints(): Unit = {
-      playerPoints.text = controller.playfield.players.head.toString
-      playerPoints.foreground = java.awt.Color.GREEN
+      listenTo(controller)
+
+      val playerLables: List[Label] = {
+        var tmpLables: List[Label] = Nil
+        for {
+          p <- controller.playfield.players
+        } {
+          val tmpPlayer = new Label() {
+            text = p.toString
+            font = new Font("Verdana", 1, 30)
+          }
+          tmpLables = tmpPlayer :: tmpLables
+        }
+        tmpLables.reverse
+      }
+
+      for {
+        i <- controller.playfield.players.indices
+      } {
+        add(playerLables(i), constraints(0, i, insets = new Insets(5, 0, 5, 0)))
+      }
+
+      def updatepoints(): Unit = {
+        for {
+          i <- controller.playfield.players.indices
+        } {
+          playerLables(i).text = controller.playfield.players(i).toString
+        }
+      }
+
+      reactions += {
+        case event: PlayfieldChanged => updatepoints()
+      }
+
     }
 
-    def constraints(x: Int, y: Int,
-                    gridwidth: Int = 1, gridheight: Int = 1,
-                    weightx: Double = 0.0, weighty: Double = 0.0,
-                    fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None)
-    : Constraints = {
-      val c = new Constraints
-      c.gridx = x
-      c.gridy = y
-      c.gridwidth = gridwidth
-      c.gridheight = gridheight
-      c.weightx = weightx
-      c.weighty = weighty
-      c.fill = fill
-      c
-    }
-
-    reactions += {
-      case event: InitPlayfield => updatepoints()
-      case event: PlayfieldChanged => updatepoints()
-    }
-
+    add(playerInfos, BorderPanel.Position.North)
+    add(new FreshCardGUI(controller), BorderPanel.Position.Center)
   }
-  var freshCard:GridBagPanel = new FreshCardGUI(controller)
-  var gridPanel: GridBagPanel = new GridBagPanel() {
+  val gridPanel: GridBagPanel = new GridBagPanel() {
     background = java.awt.Color.BLACK
+
     def constraints(x: Int, y: Int,
                     gridwidth: Int = 1, gridheight: Int = 1,
                     weightx: Double = 0.0, weighty: Double = 0.0,
@@ -92,15 +118,11 @@ class SwingGui(controller: Controller) extends Frame {
 
   }
 
-
   contents = new BorderPanel {
     add(banner, BorderPanel.Position.North)
     add(gridPanel, BorderPanel.Position.Center)
-    add(freshCard, BorderPanel.Position.East)
-    add(playerInfos, BorderPanel.Position.West)
+    add(controlPanel, BorderPanel.Position.East)
   }
-
   centerOnScreen()
   visible = true
-
 }

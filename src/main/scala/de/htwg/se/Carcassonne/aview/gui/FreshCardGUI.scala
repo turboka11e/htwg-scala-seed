@@ -3,21 +3,24 @@ package de.htwg.se.Carcassonne.aview.gui
 import java.io.File
 
 import javax.imageio.ImageIO
-import java.awt.{Dimension, Graphics2D}
+import java.awt.{BorderLayout, Dimension, Graphics2D, Insets}
 import java.awt.image.{AffineTransformOp, BufferedImage, ImageObserver}
 import java.awt.geom.AffineTransform
 
 import de.htwg.se.Carcassonne.controller.{Controller, PlayfieldChanged}
+import de.htwg.se.Carcassonne.model.Grid
+import javax.swing.{ImageIcon, JSeparator, SwingConstants}
 
 import scala.swing.event.{ButtonClicked, MouseClicked}
-import scala.swing.{Button, FlowPanel, GridBagPanel}
+import scala.swing.{Button, FlowPanel, GridBagPanel, Insets, Label}
 
 class FreshCardGUI(controller: Controller) extends GridBagPanel {
 
   def constraints(x: Int, y: Int,
                   gridwidth: Int = 1, gridheight: Int = 1,
                   weightx: Double = 0.0, weighty: Double = 0.0,
-                  fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None)
+                  fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
+                  insets: Insets = new Insets(0, 0, 0, 0))
   : Constraints = {
     val c = new Constraints
     c.gridx = x
@@ -27,14 +30,14 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
     c.weightx = weightx
     c.weighty = weighty
     c.fill = fill
+    c.insets = insets
     c
   }
 
-  background = java.awt.Color.BLACK
+  background = java.awt.Color.DARK_GRAY
 
   val freshCardImage: FlowPanel = new FlowPanel {
     preferredSize = new Dimension(80, 80)
-
     listenTo(controller, mouse.clicks)
 
     var img: BufferedImage = findImage()
@@ -120,23 +123,26 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
       case MouseClicked(_, p, _, _, _) => mouseClick(p.x, p.y)
     }
   }
-  val rotateR_Button = new Button("Rechts")
-  val rotateL_Button = new Button("Links")
-
-  add(freshCardImage, constraints(0, 0, weighty = 2))
-  add(rotateR_Button, constraints(1, 1))
-  add(rotateL_Button, constraints(0, 1))
-
-  listenTo(controller, rotateR_Button, rotateL_Button)
-
-  reactions += {
-    case ButtonClicked(b) => {
-      if (b == rotateL_Button) {
-        controller.rotateLeft()
-      }
-      else if (b == rotateR_Button) {
-        controller.rotateRight()
-      }
+  val rotateRightImage: Label = new Label() {
+    listenTo(controller, mouse.clicks)
+    icon = new ImageIcon(ImageIO.read(new File("./src/main/scala/de/htwg/se/Carcassonne/aview/media/rotateRight.png")))
+    reactions += {
+      case event:MouseClicked => controller.rotateRight()
     }
   }
+  val rotateLeftImage: Label = new Label() {
+    xLayoutAlignment = 10
+    listenTo(controller, mouse.clicks)
+    icon = new ImageIcon(ImageIO.read(new File("./src/main/scala/de/htwg/se/Carcassonne/aview/media/rotateLeft.png")))
+    reactions += {
+      case event:MouseClicked => controller.rotateLeft()
+    }
+  }
+
+  add(freshCardImage, constraints(1, 0, insets = new Insets(0, 10, 0, 10)))
+  add(rotateRightImage, constraints(2, 0, insets = new Insets(0, 0, 0, 20)))
+  add(rotateLeftImage, constraints(0, 0, insets = new Insets(0, 20, 0, 0)))
+
+  listenTo(controller)
+
 }

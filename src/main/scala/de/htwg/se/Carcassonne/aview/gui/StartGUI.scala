@@ -1,14 +1,15 @@
 package de.htwg.se.Carcassonne.aview.gui
 
+import java.awt.event.KeyEvent
 import java.io.File
 
 import de.htwg.se.Carcassonne.controller._
 import javax.imageio.ImageIO
 import javax.swing.ImageIcon
+import sun.security.rsa.RSAUtil.KeyType
 
-import scala.swing.BorderPanel.Position
 import scala.swing._
-import scala.swing.event.ButtonClicked
+import scala.swing.event.{ButtonClicked, KeyPressed, KeyTyped}
 
 class StartGUI(controller: Controller) extends Frame {
 
@@ -17,7 +18,6 @@ class StartGUI(controller: Controller) extends Frame {
   title = "Carcassone"
   background = java.awt.Color.WHITE
   preferredSize = new Dimension(1000, 700)
-  //resizable = false
 
   visible = true
   val gsize: Int = controller.playfield.grid.size
@@ -27,7 +27,16 @@ class StartGUI(controller: Controller) extends Frame {
   val selectGrid = new ComboBox(sizes)
   val playerLabel = new Label("")
   val textInput: TextField = new TextField("") {
-    columns = 10
+    columns = 10;
+    listenTo(keys)
+    reactions += {
+      case KeyTyped(_, c, _, _) => {
+        controller.getGameState match {
+          case 1 => if (c == KeyEvent.VK_ENTER && text != "") controller.addPlayer(textInput.text)
+          case _ =>
+        }
+      }
+    }
   }
   val confirmButton = new Button("")
   val declineButton = new Button("")
@@ -100,8 +109,8 @@ class StartGUI(controller: Controller) extends Frame {
 
   def startGame(): Unit = {
     controller.firstCard()
-    val gui = new SwingGui(controller)
-    this.visible = false
+    new SwingGui(controller)
+    this.close()
   }
 
   reactions += {
@@ -109,7 +118,7 @@ class StartGUI(controller: Controller) extends Frame {
       if (b == confirmButton) {
         controller.getGameState match {
           case 0 => controller.createGrid(selectGrid.selection.index + 2)
-          case 1 => controller.addPlayer(textInput.text)
+          case 1 => if(textInput.text != "") controller.addPlayer(textInput.text)
         }
       } else if (b == startButton) {
         controller.newGame()
