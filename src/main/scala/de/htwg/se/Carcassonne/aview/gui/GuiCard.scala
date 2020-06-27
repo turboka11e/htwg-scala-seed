@@ -20,7 +20,7 @@ class GuiCard(controller: Controller, row:Int, col:Int) extends FlowPanel {
 
   override def paint(g:Graphics2D):Unit = {
     g.drawImage(img, 0, 0, null)
-    val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican.png"
+    val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican"
     val dirCombi = List(('n', 27, 0), ('s', 25, 55), ('w', 0, 27), ('e', 55, 27))
 
     for {
@@ -29,7 +29,8 @@ class GuiCard(controller: Controller, row:Int, col:Int) extends FlowPanel {
       if(x.getPlayer != -1) {
         val dir = x.getCorners.head
         val combi = dirCombi.find(p => p._1.equals(dir)).get
-        g.drawImage(ImageIO.read(new File(manican)), combi._2, combi._3, null)
+        val manicanPlayer = manican + x.getPlayer + ".png"
+        g.drawImage(ImageIO.read(new File(manicanPlayer)), combi._2, combi._3, null)
       }
     }
 

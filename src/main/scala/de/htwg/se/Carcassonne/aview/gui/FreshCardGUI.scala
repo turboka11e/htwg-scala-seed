@@ -44,22 +44,24 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
 
     override def paint(g: Graphics2D): Unit = {
       g.drawImage(img, 0, 0, null)
-      val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican.png"
+      val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican"
 
       val dirCombi = List(('n', 27, 0), ('s', 25, 55), ('w', 0, 27), ('e', 55, 27))
 
       if (!controller.playfield.freshCard.card.areas.exists(p => p.getPlayer != -1)) {
+        val emptyManican = manican + "Empty.png"
         for (x <- dirCombi) {
           controller.playfield.freshCard.card.getAreaLookingFrom(x._1).getValue match {
-            case 'c' => g.drawImage(ImageIO.read(new File(manican)), x._2, x._3, null)
-            case 'r' => g.drawImage(ImageIO.read(new File(manican)), x._2, x._3, null)
+            case 'c' => g.drawImage(ImageIO.read(new File(emptyManican)), x._2, x._3, null)
+            case 'r' => g.drawImage(ImageIO.read(new File(emptyManican)), x._2, x._3, null)
             case 'g' =>
           }
         }
       } else {
         val dir = controller.playfield.freshCard.card.areas.find(p => p.getPlayer != -1).get.getCorners.head
         val combi = dirCombi.find(p => p._1.equals(dir)).get
-        g.drawImage(ImageIO.read(new File(manican)), combi._2, combi._3, null)
+        val playerManican = manican + controller.playfield.isOn + ".png"
+        g.drawImage(ImageIO.read(new File(playerManican)), combi._2, combi._3, null)
       }
     }
 
@@ -88,7 +90,7 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
 
     def setCard(): Unit = {
       img = findImage()
-      print(controller.playfield.freshCard.card.getID._2)
+      //print(controller.playfield.freshCard.card.getID._2)
       for (x <- 0 until controller.playfield.freshCard.card.getID._2) rotateCardR()
       repaint()
     }
