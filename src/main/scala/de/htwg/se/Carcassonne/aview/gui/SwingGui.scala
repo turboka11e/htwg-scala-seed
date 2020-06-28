@@ -133,8 +133,8 @@ class SwingGui(controller: Controller) extends Frame {
           selected = false
           reactions += {
             case event: ButtonClicked => {
-              val controllerNew = new Controller(new Playfield)
-              new StartGUI(controllerNew)
+              new StartGUI(controller)
+              controller.newGame()
               close()
             }
           }
