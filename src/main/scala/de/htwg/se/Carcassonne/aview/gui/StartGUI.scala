@@ -5,9 +5,10 @@ import java.io.File
 
 import de.htwg.se.Carcassonne.controller._
 import javax.imageio.ImageIO
-import javax.swing.ImageIcon
+import javax.swing.{BorderFactory, ImageIcon}
 import sun.security.rsa.RSAUtil.KeyType
 
+import scala.swing.GridBagPanel.Anchor
 import scala.swing._
 import scala.swing.event.{ButtonClicked, KeyPressed, KeyTyped}
 
@@ -22,10 +23,17 @@ class StartGUI(controller: Controller) extends Frame {
   visible = true
   val gsize: Int = controller.playfield.grid.size
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
-  val infoLabel = new Label("")
+  val infoLabel: Label = new Label("") {
+    font = new Font("Verdana", 1, 20)
+  }
+  val infoMidLabel: Label = new Label("Choose Player Name:") {
+    font = new Font("Verdana", 1, 20)
+  }
   val sizes = List("2", "3", "4", "5", "6", "7", "8", "9", "10")
   val selectGrid = new ComboBox(sizes)
-  val playerLabel = new Label("")
+  val playerLabel: Label = new Label("") {
+    font = new Font("Verdana", 1, 20)
+  }
   val textInput: TextField = new TextField("") {
     columns = 10;
     listenTo(keys)
@@ -38,9 +46,38 @@ class StartGUI(controller: Controller) extends Frame {
       }
     }
   }
-  val confirmButton = new Button("")
-  val declineButton = new Button("")
-  val startButton = new Button("Los gehts!")
+  val confirmButton: Button = new Button("") {
+    //preferredSize = new Dimension(140, 45)
+    background = java.awt.Color.DARK_GRAY.brighter().brighter()
+    foreground = java.awt.Color.BLACK
+    focusable = false
+    border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+    font = new Font("Verdana", 1, 20)
+  }
+  val declineButton: Button = new Button(""){
+    //preferredSize = new Dimension(140, 45)
+    background = java.awt.Color.DARK_GRAY.brighter().brighter()
+    foreground = java.awt.Color.BLACK
+    focusable = false
+    border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+    font = new Font("Verdana", 1, 20)
+  }
+  val startButton: Button = new Button("Los gehts!") {
+    //preferredSize = new Dimension(140, 45)
+    background = java.awt.Color.DARK_GRAY.brighter().brighter()
+    foreground = java.awt.Color.BLACK
+    focusable = false
+    border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+    font = new Font("Verdana", 1, 20)
+  }
+  val addButton: Button = new Button("Add Player") {
+    //preferredSize = new Dimension(140, 45)
+    background = java.awt.Color.DARK_GRAY.brighter().brighter()
+    foreground = java.awt.Color.BLACK
+    focusable = false
+    border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+    font = new Font("Verdana", 1, 20)
+  }
 
   val banner: Label = new Label() {
     private val logo = ImageIO.read(new File("./src/main/scala/de/htwg/se/Carcassonne/aview/media/CarcassonneText.png"))
@@ -51,7 +88,8 @@ class StartGUI(controller: Controller) extends Frame {
     def constraints(x: Int, y: Int,
                     gridwidth: Int = 1, gridheight: Int = 1,
                     weightx: Double = 0.0, weighty: Double = 0.0,
-                    fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None)
+                    fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
+                    insets:Insets = new Insets(0, 0, 0, 0))
     : Constraints = {
       val c = new Constraints
       c.gridx = x
@@ -61,6 +99,7 @@ class StartGUI(controller: Controller) extends Frame {
       c.weightx = weightx
       c.weighty = weighty
       c.fill = fill
+      c.insets = insets
       c
     }
 
@@ -70,40 +109,60 @@ class StartGUI(controller: Controller) extends Frame {
     confirmButton.visible = false
     declineButton.visible = false
     playerLabel.visible = false
-    add(infoLabel, constraints(0, 0))
-    add(selectGrid, constraints(0, 1))
-    add(textInput, constraints(0, 2))
-    add(confirmButton, constraints(0, 3))
-    add(startButton, constraints(0, 4))
-    add(playerLabel, constraints(0, 5))
-    add(declineButton, constraints(0, 6))
+    infoMidLabel.visible = false
+    addButton.visible = false
 
+    val twoButton: FlowPanel = new FlowPanel {
+      contents += addButton
+      contents += declineButton
+    }
+
+    add(startButton, constraints(1, 0))
+
+    add(infoLabel, constraints(1, 0, insets = new Insets(0, 0, 20, 0)))
+    add(selectGrid, constraints(0, 1, gridwidth = 2, insets = new Insets(0, 0, 20, 0)))
+    add(confirmButton, constraints(0, 5, gridwidth = 2, insets = new Insets(0, 0, 0, 0)))
+    add(infoMidLabel, constraints(0, 0, insets = new Insets(0, 0, 20, 0)))
+    add(textInput, constraints(0, 1, insets = new Insets(0, 0, 20, 0)))
+    add(playerLabel, constraints(0, 2, insets = new Insets(0, 0, 20, 0)))
+    add(twoButton, constraints(0, 3))
   }
 
   listenTo(confirmButton, startButton, declineButton)
 
   def welcomeScreenAction(): Unit = {
-    infoLabel.text = "Neues Spiel?"
+    infoLabel.text = "New Game"
   }
 
   def gridSizeSelectAction(): Unit = {
     startButton.visible = false
     confirmButton.visible = true
-    infoLabel.text = "Wähle Feldgröße!"
+    infoLabel.text = "Choose Field Size"
     selectGrid.visible = true
-    confirmButton.text = "Jawoll! Perfekt."
+    confirmButton.text = "Accept"
   }
 
   def addPlayersAction(): Unit = {
+    infoLabel.visible = false
+    confirmButton.visible = false
+    addButton.visible = true
+    infoMidLabel.visible = true
     controller.changeGameState(1)
     playerLabel.visible = true
-    playerLabel.text = controller.playfield.players.toString()
+    playerLabel.text = {
+      var tmpString = ""
+      for {
+        (p, i) <- controller.playfield.players.zipWithIndex
+      } {
+        tmpString += p.name + "  "
+      }
+      tmpString.trim
+    }
     selectGrid.visible = false
     declineButton.visible = true
-    infoLabel.text = "Spielername eingeben:"
+    infoLabel.text = "Insert Player Name:"
     textInput.text = ""
-    confirmButton.text = "Spieler hinzügen!"
-    declineButton.text = "Spiel Anfangen!"
+    declineButton.text = "Start Game"
     textInput.visible = true
   }
 
@@ -118,13 +177,16 @@ class StartGUI(controller: Controller) extends Frame {
       if (b == confirmButton) {
         controller.getGameState match {
           case 0 => controller.createGrid(selectGrid.selection.index + 2)
-          case 1 => if(textInput.text != "") controller.addPlayer(textInput.text)
         }
       } else if (b == startButton) {
         controller.newGame()
       }
       else if (b == declineButton) {
         startGame()
+      } else if (b == addButton) {
+        controller.getGameState match {
+          case 1 => if (textInput.text != "") controller.addPlayer(textInput.text)
+        }
       }
   }
 
