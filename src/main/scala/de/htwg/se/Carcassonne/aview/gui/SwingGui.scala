@@ -1,5 +1,6 @@
 package de.htwg.se.Carcassonne.aview.gui
 
+import java.awt.Color
 import java.io.File
 
 import de.htwg.se.Carcassonne.controller._
@@ -64,12 +65,15 @@ class SwingGui(controller: Controller) extends Frame {
         } {
           val tmpPlayer = new Label() {
             icon = new ImageIcon(ImageIO.read(new File(manican + i + ".png")))
+            foreground = java.awt.Color.BLACK
             text = p.name
             font = new Font("Verdana", 1, 30)
           }
           tmpLables = tmpPlayer :: tmpLables
         }
-        tmpLables.reverse
+        tmpLables = tmpLables.reverse
+        tmpLables.head.foreground = Color.BLUE
+        tmpLables
       }
 
       val pointsLables: List[Label] = {
@@ -99,6 +103,12 @@ class SwingGui(controller: Controller) extends Frame {
         } {
           val points = controller.playfield.players(i).points
           pointsLables(i).text = f"$points%.2f"
+          val colors:List[java.awt.Color] = List(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN)
+          if(i == controller.playfield.isOn) {
+            playerLables(i).foreground = colors(i)
+          } else {
+            playerLables(i).foreground = java.awt.Color.BLACK
+          }
         }
       }
 
@@ -183,7 +193,6 @@ class SwingGui(controller: Controller) extends Frame {
     add(playerInfos, BorderPanel.Position.North)
     add(gameControl, BorderPanel.Position.Center)
   }
-
   val gridPanel: GridBagPanel = new GridBagPanel() {
     background = java.awt.Color.BLACK
 
