@@ -3,16 +3,15 @@ package de.htwg.se.Carcassonne.aview.gui
 import java.io.File
 
 import javax.imageio.ImageIO
-import java.awt.{BorderLayout, Dimension, Graphics2D, Insets}
-import java.awt.image.{AffineTransformOp, BufferedImage, ImageObserver}
+import java.awt.{Dimension, Graphics2D}
+import java.awt.image.{AffineTransformOp, BufferedImage}
 import java.awt.geom.AffineTransform
 
 import de.htwg.se.Carcassonne.controller.{Controller, PlayfieldChanged}
-import de.htwg.se.Carcassonne.model.Grid
-import javax.swing.{ImageIcon, JSeparator, SwingConstants}
+import javax.swing.ImageIcon
 
-import scala.swing.event.{ButtonClicked, MouseClicked}
-import scala.swing.{Button, FlowPanel, GridBagPanel, Insets, Label}
+import scala.swing.event.MouseClicked
+import scala.swing.{FlowPanel, GridBagPanel, Insets, Label}
 
 class FreshCardGUI(controller: Controller) extends GridBagPanel {
 
@@ -45,15 +44,18 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
     override def paint(g: Graphics2D): Unit = {
       g.drawImage(img, 0, 0, null)
       val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican"
+      val freshCardAreas = controller.playfield.freshCard.card.areas
 
       val dirCombi = List(('n', 27, 0), ('s', 25, 55), ('w', 0, 27), ('e', 55, 27))
 
-      if (!controller.playfield.freshCard.card.areas.exists(p => p.getPlayer != -1)) {
+      if (!freshCardAreas.exists(p => p.getPlayer != -1)) {
         val emptyManican = manican + "Empty.png"
-        for (x <- dirCombi) {
-          controller.playfield.freshCard.card.getAreaLookingFrom(x._1).getValue match {
-            case 'c' => g.drawImage(ImageIO.read(new File(emptyManican)), x._2, x._3, null)
-            case 'r' => g.drawImage(ImageIO.read(new File(emptyManican)), x._2, x._3, null)
+        for (x <- freshCardAreas.indices) {
+            val selectDir = dirCombi.indexWhere(p => p._1 == freshCardAreas(x).getCorners.head)
+          //controller.playfield.freshCard.card.getAreaLookingFrom(x._1).getValue
+            freshCardAreas(x).getValue match {
+            case 'c' => g.drawImage(ImageIO.read(new File(emptyManican)), dirCombi(selectDir)._2, dirCombi(selectDir)._3, null)
+            case 'r' => g.drawImage(ImageIO.read(new File(emptyManican)), dirCombi(selectDir)._2, dirCombi(selectDir)._3, null)
             case 'g' =>
           }
         }
@@ -90,7 +92,6 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
 
     def setCard(): Unit = {
       img = findImage()
-      //print(controller.playfield.freshCard.card.getID._2)
       for (x <- 0 until controller.playfield.freshCard.card.getID._2) rotateCardR()
       repaint()
     }

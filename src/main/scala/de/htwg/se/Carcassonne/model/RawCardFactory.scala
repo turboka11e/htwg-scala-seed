@@ -14,13 +14,13 @@ trait RawCardFactory {
 
     Card(List(Area('c', List('w')), Area('c', List('e')), Area('g', List('n', 's'))), (3, 0)),       // H
 
-    Card(List(Area('c', List('n', 'e')), Area('g', List('s', 'w'))), (4, 0)),                        // I
+    Card(List(Area('c', List('n')), Area('c', List('e')), Area('g', List('s', 'w'))), (4, 0)),       // I
 
     Card(List(Area('c', List('n')), Area('g', List('w')), Area('r', List('s', 'e'))), (5, 0)),       // J
 
     Card(List(Area('c', List('n')), Area('g', List('e')), Area('r', List('s', 'w'))), (6, 0)),       // K
 
-    Card(List(Area('c', List('n')), Area('r', List('s', 'w', 'e'))), (7, 0)),                        // L
+    Card(List(Area('c', List('n')), Area('r', List('s')), Area('r', List('w')), Area('r', List('e'))), (7, 0)),   // L
 
     Card(List(Area('c', List('n', 'w')), Area('g', List('s', 'e'))), (8, 0)),                        // N
 
