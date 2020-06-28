@@ -62,7 +62,7 @@ class StartGUI(controller: Controller) extends Frame {
     border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
     font = new Font("Verdana", 1, 20)
   }
-  val startButton: Button = new Button("Los gehts!") {
+  val startButton: Button = new Button("New Game") {
     //preferredSize = new Dimension(140, 45)
     background = java.awt.Color.DARK_GRAY.brighter().brighter()
     foreground = java.awt.Color.BLACK
@@ -128,7 +128,7 @@ class StartGUI(controller: Controller) extends Frame {
     add(twoButton, constraints(0, 3))
   }
 
-  listenTo(confirmButton, startButton, declineButton)
+  listenTo(confirmButton, startButton, declineButton, addButton)
 
   def welcomeScreenAction(): Unit = {
     infoLabel.text = "New Game"
