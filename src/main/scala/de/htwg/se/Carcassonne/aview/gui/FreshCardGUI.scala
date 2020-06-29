@@ -114,7 +114,7 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
     def rotateCardR(): Unit = {
       val image = img
       val transform = new AffineTransform
-      transform.rotate(1.5708, image.getWidth / 2, image.getHeight / 2)
+      transform.rotate(Math.PI / 2, image.getWidth / 2, image.getHeight / 2)
       val op = new AffineTransformOp(transform, AffineTransformOp.TYPE_BILINEAR)
 
       img = op.filter(image, null)

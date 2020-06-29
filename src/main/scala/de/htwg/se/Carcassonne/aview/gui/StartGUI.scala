@@ -122,6 +122,7 @@ class StartGUI(controller: Controller) extends Frame {
     add(infoLabel, constraints(1, 0, insets = new Insets(0, 0, 20, 0)))
     add(selectGrid, constraints(0, 1, gridwidth = 2, insets = new Insets(0, 0, 20, 0)))
     add(confirmButton, constraints(0, 5, gridwidth = 2, insets = new Insets(0, 0, 0, 0)))
+
     add(infoMidLabel, constraints(0, 0, insets = new Insets(0, 0, 20, 0)))
     add(textInput, constraints(0, 1, insets = new Insets(0, 0, 20, 0)))
     add(playerLabel, constraints(0, 2, insets = new Insets(0, 0, 20, 0)))
@@ -182,7 +183,7 @@ class StartGUI(controller: Controller) extends Frame {
         controller.newGame()
       }
       else if (b == declineButton) {
-        startGame()
+        if (controller.playfield.players.nonEmpty){ startGame() }
       } else if (b == addButton) {
         controller.getGameState match {
           case 1 => if (textInput.text != "") controller.addPlayer(textInput.text)
