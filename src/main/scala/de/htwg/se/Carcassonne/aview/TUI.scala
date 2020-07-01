@@ -1,12 +1,14 @@
 package de.htwg.se.Carcassonne.aview
 
-import de.htwg.se.Carcassonne.controller.Controller
-
+import de.htwg.se.Carcassonne.controller.{AddPlayers, Controller, NewGame, PlayfieldChanged, RotateR, SetGrid}
+import de.htwg.se.Carcassonne.model.{Area, Card, CardManipulator, Grid, Matrix, Player, Points}
 import de.htwg.se.Carcassonne.util.Observer
 
-class TUI(controller: Controller) extends Observer {
+import scala.swing.Reactor
 
-  controller.add(this)
+class TUI(controller: Controller) extends Reactor {
+
+  listenTo(controller)
 
   def processInputLine(input: String): Unit = {
     input match {
@@ -60,10 +62,12 @@ class TUI(controller: Controller) extends Observer {
     }
   }
 
-
-  override def update: Boolean = {
-    print(controller.playFieldToString)
-    true
+  reactions += {
+    case event: NewGame => print(controller.playFieldToString)
+    case event: SetGrid => print(controller.playFieldToString)
+    case event: AddPlayers => print(controller.playFieldToString)
+    case event: PlayfieldChanged => print(controller.playFieldToString)
+    case event: RotateR => print(controller.playFieldToString)
   }
 
 }
