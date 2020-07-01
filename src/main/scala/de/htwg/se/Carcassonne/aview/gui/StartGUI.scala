@@ -6,11 +6,9 @@ import java.io.File
 import de.htwg.se.Carcassonne.controller._
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, ImageIcon}
-import sun.security.rsa.RSAUtil.KeyType
 
-import scala.swing.GridBagPanel.Anchor
 import scala.swing._
-import scala.swing.event.{ButtonClicked, KeyPressed, KeyTyped}
+import scala.swing.event.{ButtonClicked, KeyTyped}
 
 class StartGUI(controller: Controller) extends Frame {
 
@@ -35,27 +33,24 @@ class StartGUI(controller: Controller) extends Frame {
     font = new Font("Verdana", 1, 20)
   }
   val textInput: TextField = new TextField("") {
-    columns = 10;
+    columns = 10
     listenTo(keys)
     reactions += {
-      case KeyTyped(_, c, _, _) => {
+      case KeyTyped(_, c, _, _) =>
         controller.getGameState match {
           case 1 => if (c == KeyEvent.VK_ENTER && text != "") controller.addPlayer(textInput.text)
           case _ =>
         }
-      }
     }
   }
   val confirmButton: Button = new Button("") {
-    //preferredSize = new Dimension(140, 45)
     background = java.awt.Color.DARK_GRAY.brighter().brighter()
     foreground = java.awt.Color.BLACK
     focusable = false
     border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
     font = new Font("Verdana", 1, 20)
   }
-  val declineButton: Button = new Button(""){
-    //preferredSize = new Dimension(140, 45)
+  val declineButton: Button = new Button("") {
     background = java.awt.Color.DARK_GRAY.brighter().brighter()
     foreground = java.awt.Color.BLACK
     focusable = false
@@ -63,7 +58,6 @@ class StartGUI(controller: Controller) extends Frame {
     font = new Font("Verdana", 1, 20)
   }
   val startButton: Button = new Button("New Game") {
-    //preferredSize = new Dimension(140, 45)
     background = java.awt.Color.DARK_GRAY.brighter().brighter()
     foreground = java.awt.Color.BLACK
     focusable = false
@@ -71,7 +65,6 @@ class StartGUI(controller: Controller) extends Frame {
     font = new Font("Verdana", 1, 20)
   }
   val addButton: Button = new Button("Add Player") {
-    //preferredSize = new Dimension(140, 45)
     background = java.awt.Color.DARK_GRAY.brighter().brighter()
     foreground = java.awt.Color.BLACK
     focusable = false
@@ -89,7 +82,7 @@ class StartGUI(controller: Controller) extends Frame {
                     gridwidth: Int = 1, gridheight: Int = 1,
                     weightx: Double = 0.0, weighty: Double = 0.0,
                     fill: GridBagPanel.Fill.Value = GridBagPanel.Fill.None,
-                    insets:Insets = new Insets(0, 0, 0, 0))
+                    insets: Insets = new Insets(0, 0, 0, 0))
     : Constraints = {
       val c = new Constraints
       c.gridx = x
@@ -183,7 +176,9 @@ class StartGUI(controller: Controller) extends Frame {
         controller.newGame()
       }
       else if (b == declineButton) {
-        if (controller.playfield.players.nonEmpty){ startGame() }
+        if (controller.playfield.players.nonEmpty) {
+          startGame()
+        }
       } else if (b == addButton) {
         controller.getGameState match {
           case 1 => if (textInput.text != "") controller.addPlayer(textInput.text)

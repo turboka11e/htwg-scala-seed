@@ -39,7 +39,6 @@ class Controller(var playfield: Playfield) extends Publisher {
 
   def changeGameState(gs: Int):Unit = {
     playfield = playfield.changeGameState(gs)
-    //publish(new PlayfieldChanged)
   }
 
   def getGameState:Int = playfield.getGameState
