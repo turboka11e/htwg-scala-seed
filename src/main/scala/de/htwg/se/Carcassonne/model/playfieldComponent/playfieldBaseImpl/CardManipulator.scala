@@ -2,10 +2,13 @@ package de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
 
 import de.htwg.se.Carcassonne.model.gridComponent.CardInterface
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Card
+import de.htwg.se.Carcassonne.model.playfieldComponent.CardManipulatorInterface
 
-case class CardManipulator(playerCard: Int, card: CardInterface = new Card((0, 0))){
+case class CardManipulator(playerCard: Int, card: CardInterface = new Card((0, 0))) extends CardManipulatorInterface {
 
   def this() = this(playerCard = -1)
+
+  def getCard:CardInterface = card
 
   def rotateRight:CardManipulator = copy(card = card.rotateRight())
 

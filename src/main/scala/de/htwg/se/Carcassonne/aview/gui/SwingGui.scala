@@ -3,18 +3,15 @@ package de.htwg.se.Carcassonne.aview.gui
 import java.awt.Color
 import java.io.File
 
-import de.htwg.se.Carcassonne.controller._
-import de.htwg.se.Carcassonne.controller.controllerComponent.{Controller, PlayfieldChanged}
-import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
+import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{Controller, PlayfieldChanged}
 import javax.imageio.ImageIO
-import javax.swing.border.BevelBorder
 import javax.swing.{BorderFactory, ImageIcon}
 
-import scala.swing.GridBagPanel.Anchor
 import scala.swing._
 import scala.swing.event.ButtonClicked
 
-class SwingGui(controller: Controller) extends Frame {
+class SwingGui(controller: ControllerInterface) extends Frame {
 
   listenTo(controller)
 
@@ -22,7 +19,7 @@ class SwingGui(controller: Controller) extends Frame {
   preferredSize = new Dimension(1200, 900)
 
   /* Cells is Array for GuiCard Classes */
-  val gsize: Int = controller.playfield.grid.getSize
+  val gsize: Int = controller.getPlayfield.getGrid.getSize
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
 
   /* Components for main GUI */
@@ -62,7 +59,7 @@ class SwingGui(controller: Controller) extends Frame {
         val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican"
         var tmpLables: List[Label] = Nil
         for {
-          (p, i) <- controller.playfield.players.zipWithIndex
+          (p, i) <- controller.getPlayfield.getPlayers.zipWithIndex
         } {
           val tmpPlayer = new Label() {
             icon = new ImageIcon(ImageIO.read(new File(manican + i + ".png")))
@@ -80,7 +77,7 @@ class SwingGui(controller: Controller) extends Frame {
       val pointsLables: List[Label] = {
         var tmpLables: List[Label] = Nil
         for {
-          p <- controller.playfield.players
+          p <- controller.getPlayfield.getPlayers
         } {
           val tmpPlayer = new Label() {
             text = f"${p.points}%.2f"
@@ -92,7 +89,7 @@ class SwingGui(controller: Controller) extends Frame {
       }
 
       for {
-        i <- controller.playfield.players.indices
+        i <- controller.getPlayfield.getPlayers.indices
       } {
         add(playerLables(i), constraints(0, i, gridwidth = 2, insets = new Insets(5, 5, 5, 5), anchor = GridBagPanel.Anchor.West))
         add(pointsLables(i), constraints(2, i, insets = new Insets(5, 5, 5, 5), anchor = GridBagPanel.Anchor.East))
@@ -100,12 +97,12 @@ class SwingGui(controller: Controller) extends Frame {
 
       def updatepoints(): Unit = {
         for {
-          i <- controller.playfield.players.indices
+          i <- controller.getPlayfield.getPlayers.indices
         } {
-          val points = controller.playfield.players(i).points
+          val points = controller.getPlayfield.getPlayers(i).points
           pointsLables(i).text = f"$points%.2f"
           val colors:List[java.awt.Color] = List(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN)
-          if(i == controller.playfield.isOn) {
+          if(i == controller.getPlayfield.getIsOn) {
             playerLables(i).foreground = colors(i)
           } else {
             playerLables(i).foreground = java.awt.Color.BLACK

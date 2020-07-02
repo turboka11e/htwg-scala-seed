@@ -2,9 +2,11 @@ package de.htwg.se.Carcassonne.aview.tui
 
 import de.htwg.se.Carcassonne.model.gridComponent.GridInterface
 import de.htwg.se.Carcassonne.model.playerComponent.Player
+import de.htwg.se.Carcassonne.model.playfieldComponent.CardManipulatorInterface
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.CardManipulator
 
-class PrettyPrint(grid: GridInterface, freshCard:CardManipulator, players:List[Player], isOn: Int, success: Boolean) extends PrettyPrintStrategyTemplate {
+class PrettyPrint(grid: GridInterface, freshCard:CardManipulatorInterface, players:List[Player], isOn: Int, success: Boolean)
+  extends PrettyPrintStrategyTemplate {
 
   private val color = List(Console.BLUE, Console.RED, Console.YELLOW, Console.GREEN)
 
@@ -62,9 +64,9 @@ class PrettyPrint(grid: GridInterface, freshCard:CardManipulator, players:List[P
   def freshCardPart: String = {
     var tmpString = ""
     tmpString = lowRow(0) + "\tDeine neue Karte:\n" +
-      topRow(1) + "\t" + freshCard.card.topString + "\n" +
-      midRow(1) + "\t" + freshCard.card.midString + "\n" +
-      lowRow(1) + "\t" + freshCard.card.lowString + "\n"
+      topRow(1) + "\t" + freshCard.getCard.topString + "\n" +
+      midRow(1) + "\t" + freshCard.getCard.midString + "\n" +
+      lowRow(1) + "\t" + freshCard.getCard.lowString + "\n"
     tmpString
   }
 

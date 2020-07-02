@@ -3,15 +3,15 @@ package de.htwg.se.Carcassonne.aview.gui
 import java.awt.event.KeyEvent
 import java.io.File
 
-import de.htwg.se.Carcassonne.controller._
-import de.htwg.se.Carcassonne.controller.controllerComponent.{AddPlayers, Controller, NewGame, SetGrid}
+import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, Controller, NewGame, SetGrid}
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, ImageIcon}
 
 import scala.swing._
 import scala.swing.event.{ButtonClicked, KeyTyped}
 
-class StartGUI(controller: Controller) extends Frame {
+class StartGUI(controller: ControllerInterface) extends Frame {
 
   listenTo(controller)
 
@@ -20,7 +20,7 @@ class StartGUI(controller: Controller) extends Frame {
   preferredSize = new Dimension(1000, 700)
 
   visible = true
-  val gsize: Int = controller.playfield.grid.getSize
+  val gsize: Int = controller.getPlayfield.getGrid.getSize
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
   val infoLabel: Label = new Label("") {
     font = new Font("Verdana", 1, 20)
@@ -147,7 +147,7 @@ class StartGUI(controller: Controller) extends Frame {
     playerLabel.text = {
       var tmpString = ""
       for {
-        (p, i) <- controller.playfield.players.zipWithIndex
+        (p, i) <- controller.getPlayfield.getPlayers.zipWithIndex
       } {
         tmpString += p.name + "  "
       }
@@ -177,7 +177,7 @@ class StartGUI(controller: Controller) extends Frame {
         controller.newGame()
       }
       else if (b == declineButton) {
-        if (controller.playfield.players.nonEmpty) {
+        if (controller.getPlayfield.getPlayers.nonEmpty) {
           startGame()
         }
       } else if (b == addButton) {

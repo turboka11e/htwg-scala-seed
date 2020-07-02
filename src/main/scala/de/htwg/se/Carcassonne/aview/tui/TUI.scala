@@ -1,11 +1,11 @@
 package de.htwg.se.Carcassonne.aview.tui
 
-import de.htwg.se.Carcassonne.controller._
-import de.htwg.se.Carcassonne.controller.controllerComponent.{AddPlayers, Controller, NewGame, PlayfieldChanged, RotateR, SetGrid}
+import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, Controller, NewGame, PlayfieldChanged, RotateR, SetGrid}
 
 import scala.swing.Reactor
 
-class TUI(controller: Controller) extends Reactor {
+class TUI(controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
 

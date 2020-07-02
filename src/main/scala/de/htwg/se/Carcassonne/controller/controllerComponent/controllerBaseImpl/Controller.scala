@@ -1,17 +1,24 @@
-package de.htwg.se.Carcassonne.controller.controllerComponent
+package de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
+import com.google.inject.{Guice, Inject, Injector}
+import net.codingwell.scalaguice.InjectorExtensions._
+import de.htwg.se.Carcassonne.CarcassonneModule
+import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
+import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
 import de.htwg.se.Carcassonne.util.UndoManager
 
 
-class Controller(var playfield: Playfield) extends ControllerInterface {
+class Controller @Inject() (var playfield: PlayfieldInterface) extends ControllerInterface {
 
   private val undoManager = new UndoManager
+  val injector: Injector = Guice.createInjector(new CarcassonneModule)
 
   def newGame():Unit = {
-    playfield = Playfield()
+    playfield = injector.instance[PlayfieldInterface]
     publish(new SetGrid)
   }
+
+  def getPlayfield: PlayfieldInterface = playfield
 
   def createGrid(size: Int):Unit = {
     playfield = playfield.fieldSize(size)

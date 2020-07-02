@@ -1,7 +1,7 @@
 package de.htwg.se.Carcassonne.aview
 
 import de.htwg.se.Carcassonne.aview.tui.TUI
-import de.htwg.se.Carcassonne.controller.controllerComponent.Controller
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
 import org.scalatest._
 
@@ -46,25 +46,25 @@ class TUISpec extends WordSpec with Matchers {
     "decideds at Gamestate 2" in {
       controller.changeGameState(2)
       tui.processInputLine("y")
-      controller.playfield.gameState should be(1)
+      controller.playfield.getGameState should be(1)
       tui.processInputLine("n")
-      controller.playfield.gameState should be(1)
+      controller.playfield.getGameState should be(1)
       controller.changeGameState(3)
       tui.processInputLine("y")
-      controller.playfield.gameState should be(4)
+      controller.playfield.getGameState should be(4)
       controller.changeGameState(4)
       tui.processInputLine("n")
-      controller.playfield.gameState should be(5)
+      controller.playfield.getGameState should be(5)
       controller.changeGameState(1)
     }
     "validate long String" in {
       tui.processInputLine("0 1")
-      controller.playfield.gameState should be(3)
+      controller.playfield.getGameState should be(3)
       controller.changeGameState(3)
       tui.processInputLine("0")
       controller.playfield.changeGameState(4)
       tui.processInputLine("0")
-      controller.playfield.gameState should be(3)
+      controller.playfield.getGameState should be(3)
     }
 
   }

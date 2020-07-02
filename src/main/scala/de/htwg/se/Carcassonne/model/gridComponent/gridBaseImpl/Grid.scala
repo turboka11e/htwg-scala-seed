@@ -1,5 +1,6 @@
 package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
+import com.google.inject.Inject
 import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface, GridInterface, MatrixInterface}
 
 case class Grid(private val cells:Matrix[CardInterface], private val territories: List[List[(Int, AreaInterface)]] = Nil) extends GridInterface {
