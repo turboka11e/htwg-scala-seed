@@ -3,10 +3,11 @@ package de.htwg.se.Carcassonne.aview.gui
 import java.awt.geom.AffineTransform
 import java.io.File
 
-import de.htwg.se.Carcassonne.controller.{Controller, PlayfieldChanged}
 import javax.imageio.ImageIO
 import java.awt.{Graphics2D, Image}
 import java.awt.image.{AffineTransformOp, BufferedImage}
+
+import de.htwg.se.Carcassonne.controller.controllerComponent.{Controller, PlayfieldChanged}
 
 import scala.swing.event.MouseClicked
 import scala.swing.{Dimension, FlowPanel, GridBagPanel}
@@ -23,7 +24,7 @@ class GuiCard(controller: Controller, row:Int, col:Int) extends FlowPanel {
     val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican"
     val dirCombi = List(('n', 27, 0), ('s', 25, 55), ('w', 0, 27), ('e', 55, 27))
     for {
-      x <- controller.playfield.grid.card(row, col).areas
+      x <- controller.playfield.grid.card(row, col).getAreas
     } {
       if(x.getPlayer != -1) {
         val dir = x.getCorners.head

@@ -1,8 +1,7 @@
-package de.htwg.se.Carcassonne.aview
+package de.htwg.se.Carcassonne.aview.tui
 
-import de.htwg.se.Carcassonne.controller.{AddPlayers, Controller, NewGame, PlayfieldChanged, RotateR, SetGrid}
-import de.htwg.se.Carcassonne.model.{Area, Card, CardManipulator, Grid, Matrix, Player, Points}
-import de.htwg.se.Carcassonne.util.Observer
+import de.htwg.se.Carcassonne.controller._
+import de.htwg.se.Carcassonne.controller.controllerComponent.{AddPlayers, Controller, NewGame, PlayfieldChanged, RotateR, SetGrid}
 
 import scala.swing.Reactor
 

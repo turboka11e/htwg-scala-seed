@@ -1,12 +1,15 @@
-package de.htwg.se.Carcassonne.model
+package de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
 
-case class Points(terriList:List[List[(Int, Area)]], players:List[Player]) {
+import de.htwg.se.Carcassonne.model.gridComponent.AreaInterface
+import de.htwg.se.Carcassonne.model.playerComponent.Player
+
+case class Points(terriList:List[List[(Int, AreaInterface)]], players:List[Player]) {
 
   def listOfFinishedTerris:List[List[Double]] =
     terriList.map(l => l.map(a => a._1.toDouble)).map(l => l.distinct.sum :: Nil).map(p => p.map {case 0 => 1.0; case _ => 0.0})
 
-  def playersToList:List[List[Int]] = terriList.map(l => l.map(a => a._2.player).distinct.filter(a => a != -1))
-  
+  def playersToList:List[List[Int]] = terriList.map(l => l.map(a => a._2.getPlayer).distinct.filter(a => a != -1))
+
   def typeToPointsList:List[List[Double]] = terriList.map(l => l.map(a => a._2.getValue).distinct.map { case 'c' => 2.0; case 'r' => 1.0; case _ => 0.0 })
 
   def totalPointsOfTerris:List[List[Double]] = typeToPointsList.zip(terriList.map(l => l.size :: Nil)).map(l => l._1.sum * l._2.sum :: Nil)

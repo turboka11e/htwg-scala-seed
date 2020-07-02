@@ -4,7 +4,8 @@ import java.awt.Color
 import java.io.File
 
 import de.htwg.se.Carcassonne.controller._
-import de.htwg.se.Carcassonne.model.Playfield
+import de.htwg.se.Carcassonne.controller.controllerComponent.{Controller, PlayfieldChanged}
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
 import javax.imageio.ImageIO
 import javax.swing.border.BevelBorder
 import javax.swing.{BorderFactory, ImageIcon}
@@ -21,7 +22,7 @@ class SwingGui(controller: Controller) extends Frame {
   preferredSize = new Dimension(1200, 900)
 
   /* Cells is Array for GuiCard Classes */
-  val gsize: Int = controller.playfield.grid.size
+  val gsize: Int = controller.playfield.grid.getSize
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
 
   /* Components for main GUI */
@@ -132,11 +133,10 @@ class SwingGui(controller: Controller) extends Frame {
 
           selected = false
           reactions += {
-            case event: ButtonClicked => {
+            case event: ButtonClicked =>
               new StartGUI(controller)
               controller.newGame()
               close()
-            }
           }
         }
         val exitButton: Button = new Button("Exit Game") {

@@ -1,7 +1,8 @@
 package de.htwg.se.Carcassonne.aview
 
-import de.htwg.se.Carcassonne.controller.Controller
-import de.htwg.se.Carcassonne.model.{CardManipulator, Playfield}
+import de.htwg.se.Carcassonne.aview.tui.TUI
+import de.htwg.se.Carcassonne.controller.controllerComponent.Controller
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
 import org.scalatest._
 
 class TUISpec extends WordSpec with Matchers {

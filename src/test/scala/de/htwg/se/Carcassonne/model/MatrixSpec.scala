@@ -1,5 +1,7 @@
 package de.htwg.se.Carcassonne.model
 
+import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.{Area, Card, Matrix}
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.RawCardFactory
 import org.scalatest._
 
 class MatrixSpec extends WordSpec with Matchers {

@@ -1,4 +1,4 @@
-package de.htwg.se.Carcassonne.controller
+package de.htwg.se.Carcassonne.controller.controllerComponent
 
 import scala.swing.event.Event
 

@@ -1,7 +1,9 @@
 package de.htwg.se.Carcassonne.controller
 
 
+import de.htwg.se.Carcassonne.controller.controllerComponent.Controller
 import de.htwg.se.Carcassonne.model._
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
 import org.scalatest.{Matchers, WordSpec}
 
 class ControllerSpec extends WordSpec with Matchers {

@@ -1,15 +1,17 @@
-package de.htwg.se.Carcassonne.model
+package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
-case class Matrix[T] (rows:Vector[Vector[Card]], private val count:Int = 0) {
+import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface, GridInterface, MatrixInterface}
+
+case class Matrix[T] (rows:Vector[Vector[CardInterface]], private val count:Int = 0) extends MatrixInterface[T] {
   def this(size:Int) = this(Vector.tabulate(size, size){(row, col) => new Card((row, col))})
 
   val size:Int = rows.size
 
   def getCount:Int = count
 
-  def card(row:Int, col:Int):Card = rows (row)(col)
+  def card(row:Int, col:Int):CardInterface = rows (row)(col)
 
-  def replaceCell(row:Int, col:Int, cell:Card):Matrix[Card] = {
+  def replaceCell(row:Int, col:Int, cell:CardInterface):Matrix[CardInterface] = {
     copy(rows.updated(row, rows(row).updated(col, cell)), count + 1)
   }
 
@@ -37,7 +39,7 @@ case class Matrix[T] (rows:Vector[Vector[Card]], private val count:Int = 0) {
 
   }
 
-  def checkEnv(row: Int, col: Int, dir: Char, checkCard: Card):Boolean = {
+  def checkEnv(row: Int, col: Int, dir: Char, checkCard: CardInterface):Boolean = {
     if(!checkEnvEmpty(row, col, dir)){
       dir match{
         case 'n' => card(row, col - 1).getValue('s').equals(checkCard.getValue('n'))
@@ -50,7 +52,7 @@ case class Matrix[T] (rows:Vector[Vector[Card]], private val count:Int = 0) {
     }
   }
 
-  def getDirEnv(row: Int, col: Int, dir:Char):Option[Area] = {
+  def getDirEnv(row: Int, col: Int, dir:Char):Option[AreaInterface] = {
     if(!checkEnvEmpty(row, col, dir)){
       dir match{
         case 'n' => Some(card(row, col - 1).getAreaLookingFrom('s'))
@@ -73,7 +75,7 @@ case class Matrix[T] (rows:Vector[Vector[Card]], private val count:Int = 0) {
     check
   }
 
-  def checkSet(row: Int, col: Int, checkCard:Card): Boolean = {
+  def checkSet(row: Int, col: Int, checkCard:CardInterface): Boolean = {
 
     var check = true
 

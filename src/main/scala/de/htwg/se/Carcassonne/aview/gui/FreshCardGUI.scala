@@ -7,7 +7,7 @@ import java.awt.{Dimension, Graphics2D}
 import java.awt.image.{AffineTransformOp, BufferedImage}
 import java.awt.geom.AffineTransform
 
-import de.htwg.se.Carcassonne.controller.{Controller, PlayfieldChanged}
+import de.htwg.se.Carcassonne.controller.controllerComponent.{Controller, PlayfieldChanged}
 import javax.swing.ImageIcon
 
 import scala.swing.event.MouseClicked
@@ -44,7 +44,7 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
     override def paint(g: Graphics2D): Unit = {
       g.drawImage(img, 0, 0, null)
       val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican"
-      val freshCardAreas = controller.playfield.freshCard.card.areas
+      val freshCardAreas = controller.playfield.freshCard.card.getAreas
 
       val dirCombi = List(('n', 27, 0), ('s', 25, 55), ('w', 0, 27), ('e', 55, 27))
 
@@ -60,7 +60,7 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
           }
         }
       } else {
-        val dir = controller.playfield.freshCard.card.areas.find(p => p.getPlayer != -1).get.getCorners.head
+        val dir = controller.playfield.freshCard.card.getAreas.find(p => p.getPlayer != -1).get.getCorners.head
         val combi = dirCombi.find(p => p._1.equals(dir)).get
         val playerManican = manican + controller.playfield.isOn + ".png"
         g.drawImage(ImageIO.read(new File(playerManican)), combi._2, combi._3, null)
@@ -84,7 +84,7 @@ class FreshCardGUI(controller: Controller) extends GridBagPanel {
 
       def selectArea(dir: Char): Unit = {
         val area = controller.playfield.freshCard.card.getAreaLookingFrom(dir)
-        val index = controller.playfield.freshCard.card.areas.indexWhere(p => p.eq(area))
+        val index = controller.playfield.freshCard.card.getAreas.indexWhere(p => p.eq(area))
         controller.selectArea(index)
       }
     }

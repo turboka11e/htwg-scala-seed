@@ -1,5 +1,8 @@
 package de.htwg.se.Carcassonne.model
 
+import de.htwg.se.Carcassonne.model.gridComponent.{CardInterface, gridBaseImpl}
+import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.{Area, Card, Grid, Matrix}
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.RawCardFactory
 import org.scalatest._
 
 class GridSpec extends WordSpec with Matchers {
@@ -12,8 +15,8 @@ class GridSpec extends WordSpec with Matchers {
         val biggerGrid = new Grid(7)
       }
       "for test purposes only created with a Matrix of Card" in {
-        val awkwardGrid = Grid(cells = Matrix[Card](Vector(Vector(Card(), Card()), Vector(Card(), Card()))))
-        val testGrid = Grid(Matrix[Card](Vector(Vector(Card(), Card()), Vector(Card(), Card()))))
+        val awkwardGrid = gridBaseImpl.Grid(cells = Matrix[CardInterface](Vector(Vector(Card(), Card()), Vector(Card(), Card()))))
+        val testGrid = gridBaseImpl.Grid(Matrix[CardInterface](Vector(Vector(Card(), Card()), Vector(Card(), Card()))))
       }
     }
     "created properly but empty" should {
@@ -21,7 +24,7 @@ class GridSpec extends WordSpec with Matchers {
       val smallGrid = new Grid(4)
       val freshCard = RawCardFactory("selectCard", 0, 0).drawCard().finalCard(0, 0)
       val validGrid = smallGrid.place(0, 0, freshCard)
-      val matrix = new Matrix[Card](4)
+      val matrix = new Matrix[CardInterface](4)
 
       "give access to its Cells" in {
         tinygrid.card(0, 0) should be(new Card((0, 0)))

@@ -1,5 +1,9 @@
 package de.htwg.se.Carcassonne.model
 
+import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.{Area, Card}
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.{CardManipulator, RawCardFactory}
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
+
 import org.scalatest._
 
 class CardManipulatorSpec extends WordSpec with Matchers {
@@ -20,12 +24,12 @@ class CardManipulatorSpec extends WordSpec with Matchers {
       }
       "rotate fresh Card" in {
         val r2 = r1
-        r2.rotateRight should be(CardManipulator(playerCard = 0, card = randomCard.rotateRight()))
-        r2.rotateLeft should be(CardManipulator(playerCard = 0, card = randomCard.rotateRight().rotateRight().rotateRight()))
+        r2.rotateRight should be(playfieldBaseImpl.CardManipulator(playerCard = 0, card = randomCard.rotateRight()))
+        r2.rotateLeft should be(playfieldBaseImpl.CardManipulator(playerCard = 0, card = randomCard.rotateRight().rotateRight().rotateRight()))
       }
       "set Player to Areas" in {
         val freshCard = r1
-        val cardmani = CardManipulator(playerCard = 0, card = setCard)
+        val cardmani = playfieldBaseImpl.CardManipulator(playerCard = 0, card = setCard)
         freshCard.setPlayerToArea(0) should be(cardmani)
         freshCard.setPlayerToArea(5) should be(freshCard)
       }

@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent
 import java.io.File
 
 import de.htwg.se.Carcassonne.controller._
+import de.htwg.se.Carcassonne.controller.controllerComponent.{AddPlayers, Controller, NewGame, SetGrid}
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, ImageIcon}
 
@@ -19,7 +20,7 @@ class StartGUI(controller: Controller) extends Frame {
   preferredSize = new Dimension(1000, 700)
 
   visible = true
-  val gsize: Int = controller.playfield.grid.size
+  val gsize: Int = controller.playfield.grid.getSize
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
   val infoLabel: Label = new Label("") {
     font = new Font("Verdana", 1, 20)

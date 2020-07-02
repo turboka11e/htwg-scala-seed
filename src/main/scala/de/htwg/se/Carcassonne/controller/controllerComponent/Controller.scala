@@ -1,11 +1,10 @@
-package de.htwg.se.Carcassonne.controller
+package de.htwg.se.Carcassonne.controller.controllerComponent
 
-import de.htwg.se.Carcassonne.model.Playfield
-import de.htwg.se.Carcassonne.util.{Observable, UndoManager}
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
+import de.htwg.se.Carcassonne.util.UndoManager
 
-import scala.swing.Publisher
 
-class Controller(var playfield: Playfield) extends Publisher {
+class Controller(var playfield: Playfield) extends ControllerInterface {
 
   private val undoManager = new UndoManager
 

@@ -1,6 +1,6 @@
-package de.htwg.se.Carcassonne.controller
+package de.htwg.se.Carcassonne.controller.controllerComponent
 
-import de.htwg.se.Carcassonne.model.{CardManipulator, Playfield}
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.{CardManipulator, Playfield}
 import de.htwg.se.Carcassonne.util.Command
 
 class PlaceCommand(x:Int, y:Int, oldPlayfield:Playfield, controller: Controller) extends Command {

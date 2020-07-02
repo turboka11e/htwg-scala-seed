@@ -1,9 +1,9 @@
 package de.htwg.se.Carcassonne
 
-import de.htwg.se.Carcassonne.aview.TUI
 import de.htwg.se.Carcassonne.aview.gui.{StartGUI, SwingGui}
-import de.htwg.se.Carcassonne.controller.{Controller, NewGame}
-import de.htwg.se.Carcassonne.model.{Area, Card, CardManipulator, Grid, Player, Playfield}
+import de.htwg.se.Carcassonne.aview.tui.TUI
+import de.htwg.se.Carcassonne.controller.controllerComponent.{Controller, NewGame}
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
 
 import scala.io.StdIn._
 

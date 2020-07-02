@@ -1,7 +1,13 @@
-package de.htwg.se.Carcassonne.model
+package de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
 
-case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new Grid(1),
-                     freshCard:CardManipulator = new CardManipulator(), gameState:Int =  0, success:Boolean = true) {
+import de.htwg.se.Carcassonne.aview.tui.PrettyPrint
+import de.htwg.se.Carcassonne.model.gridComponent.GridInterface
+import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
+import de.htwg.se.Carcassonne.model.playerComponent.Player
+import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
+
+case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: GridInterface = new Grid(1),
+                     freshCard:CardManipulator = new CardManipulator(), gameState:Int =  0, success:Boolean = true) extends PlayfieldInterface {
 
   def changeGameState(gs:Int):Playfield = copy(gameState = gs)
 
@@ -22,7 +28,7 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: Grid = new
   def rotateL:Playfield = copy(freshCard = freshCard.rotateLeft)                                    // Gamestate 3
 
   def selectArea(nr:Int):Playfield = {
-    if(!freshCard.card.areas.exists(p => p.getPlayer != -1) && freshCard.card.areas.apply(nr).getValue != 'g') {
+    if(!freshCard.card.getAreas.exists(p => p.getPlayer != -1) && freshCard.card.getAreas.apply(nr).getValue != 'g') {
       copy(freshCard = freshCard.setPlayerToArea(nr), gameState = 5)
     } else {
       this

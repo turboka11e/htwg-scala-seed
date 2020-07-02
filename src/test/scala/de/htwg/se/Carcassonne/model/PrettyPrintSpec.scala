@@ -1,6 +1,10 @@
 package de.htwg.se.Carcassonne.model
 
+import de.htwg.se.Carcassonne.aview.tui.PrettyPrint
 import de.htwg.se.Carcassonne.model
+import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
+import de.htwg.se.Carcassonne.model.playerComponent.Player
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.RawCardFactory
 import org.scalatest._
 
 class PrettyPrintSpec extends WordSpec with Matchers {
