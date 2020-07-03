@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent
 import java.io.File
 
 import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
-import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, Controller, NewGame, SetGrid}
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, NewGame, SetGrid}
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, ImageIcon}
 

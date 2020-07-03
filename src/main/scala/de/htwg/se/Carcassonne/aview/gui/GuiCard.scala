@@ -4,7 +4,7 @@ import java.awt.geom.AffineTransform
 import java.io.File
 
 import javax.imageio.ImageIO
-import java.awt.Graphics2D
+import java.awt.{Color, Graphics2D}
 import java.awt.image.{AffineTransformOp, BufferedImage}
 
 import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
@@ -21,6 +21,7 @@ class GuiCard(controller: ControllerInterface, row:Int, col:Int) extends FlowPan
   var img: BufferedImage = findImage()
 
   override def paint(g:Graphics2D):Unit = {
+    background = Color.BLACK
     g.drawImage(img, 0, 0, null)
     val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican"
     val dirCombi = List(('n', 27, 0), ('s', 25, 55), ('w', 0, 27), ('e', 55, 27))
