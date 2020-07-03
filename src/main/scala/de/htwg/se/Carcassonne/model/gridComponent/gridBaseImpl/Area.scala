@@ -2,25 +2,18 @@ package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
 import de.htwg.se.Carcassonne.model.gridComponent.AreaInterface
 
-case class Area(value:Char = ' ', corners:List[Char] = List('n', 'w', 'e', 's'), player:Int = -1, xy:(Int, Int) = (-1, -1)) extends AreaInterface {
+case class Area(value:String, edges:List[String], player:Option[Int] = None, areaID:(Int, Int)) extends AreaInterface {
 
-  def isEmpty:Boolean = xy.equals(-1, -1)
+  def getValue:String = value
 
-  def getValue:Char = value
+  def getCorners:List[String] = edges
 
-  def getCorners:List[Char] = corners
+  def getPlayer:Option[Int] = player
 
-  def getPlayer:Int = player
+  def setPlayer(p:Option[Int]):AreaInterface = copy(player = p)
 
-  def setPlayer(p:Int):AreaInterface = copy(player = p)
+  def getCoord:(Int, Int) = areaID
 
-  def getCoord:(Int, Int) = xy
-
-  def setCoord(x:Int, y:Int):AreaInterface = copy(xy = (x, y))
-
-  def rotateRight():AreaInterface = {
-    val rotatedcorners = corners.map {case 'w' => 'n'; case 'n' => 'e'; case 'e' => 's'; case 's' => 'w'}
-    Area(getValue, rotatedcorners, player)
-  }
+  def rotateRight():AreaInterface = copy(edges = edges.map {case "w" => "n"; case "n" => "e"; case "e" => "s"; case "s" => "w"})
 
 }

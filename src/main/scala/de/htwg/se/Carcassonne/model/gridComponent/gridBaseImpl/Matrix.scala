@@ -3,7 +3,7 @@ package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface, GridInterface, MatrixInterface}
 
 case class Matrix[T] (rows:Vector[Vector[CardInterface]], private val count:Int = 0) extends MatrixInterface[T] {
-  def this(size:Int) = this(Vector.tabulate(size, size){(row, col) => new Card((row, col))})
+  def this(size:Int) = this(Vector.tabulate(size, size){(row, col) => CardFactory.apply("emptyCard").drawCard()})
 
   val size:Int = rows.size
 
@@ -55,10 +55,10 @@ case class Matrix[T] (rows:Vector[Vector[CardInterface]], private val count:Int 
   def getDirEnv(row: Int, col: Int, dir:Char):Option[AreaInterface] = {
     if(!checkEnvEmpty(row, col, dir)){
       dir match{
-        case 'n' => Some(card(row, col - 1).getAreaLookingFrom('s'))
-        case 's' => Some(card(row, col + 1).getAreaLookingFrom('n'))
-        case 'w' => Some(card(row - 1, col).getAreaLookingFrom('e'))
-        case 'e' => Some(card(row + 1, col).getAreaLookingFrom('w'))
+        case 'n' => Some(card(row, col - 1).getAreaLookingFrom("s"))
+        case 's' => Some(card(row, col + 1).getAreaLookingFrom("n"))
+        case 'w' => Some(card(row - 1, col).getAreaLookingFrom("e"))
+        case 'e' => Some(card(row + 1, col).getAreaLookingFrom("w"))
       }
     } else {
       None

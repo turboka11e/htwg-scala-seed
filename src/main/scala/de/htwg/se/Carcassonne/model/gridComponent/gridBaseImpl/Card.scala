@@ -2,114 +2,106 @@ package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
 import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface}
 
-case class Card(areas:List[AreaInterface] = List(Area()), private val id:(Int, Int) = (-1, 0)) extends CardInterface {
 
-  def this(xy:(Int, Int)) = this(areas = List(Area(corners = List('n'), xy = (xy._1, xy._2)),
-    Area(corners = List('w'), xy = (xy._1, xy._2)), Area(corners = List('e'), xy = (xy._1, xy._2)),
-    Area(corners = List('s'), xy = (xy._1, xy._2))), id = (-1, 0))
+case class Card(private val areas:Option[List[AreaInterface]] = None, private val id_rotation:Option[(String, Int)] = None) extends CardInterface {
 
-  def this(xy:(Int, Int), idx:(Int, Int)) = this(areas = List(Area(corners = List('n'), xy = (xy._1, xy._2)),
-    Area(corners = List('w'), xy = (xy._1, xy._2)), Area(corners = List('e'), xy = (xy._1, xy._2)),
-    Area(corners = List('s'), xy = (xy._1, xy._2))), id = idx)
+  def isEmpty: Boolean = areas.isEmpty
 
-  def isEmpty: Boolean = areas.head.getValue == ' ' && areas.size == 4
+  def getIDRot: Option[(String, Int)] = id_rotation
 
-  def getID: (Int, Int) = id
+  def getValue(dir:String): Option[String] = if(!isEmpty) Option(areas.get.find(_.getCorners.contains(dir)).get.getValue) else None
 
-  def setAreasXY(x:Int, y:Int):CardInterface = copy(areas = areas.map(areas => areas.setCoord(x, y)))
+  def getPlayer(dir:String): Option[Int] = if(!isEmpty) areas.get.find(_.getCorners.contains(dir)).get.getPlayer else None
 
-  def getValue(dir:Char): Char = areas.find(_.getCorners.contains(dir)).get.getValue
+  def getAreas():Option[List[AreaInterface]] = areas
 
-  def getPlayer(dir:Char): Int = areas.find(_.getCorners.contains(dir)).get.getPlayer
+  def getCornersLookingFrom(dir:String): Option[List[String]] = if(!isEmpty) Option(areas.get.find(_.getCorners.contains(dir)).get.getCorners) else None
 
-  def getAreas():List[AreaInterface] = areas
-
-  def getCornersLookingFrom(dir:Char): List[Char] = areas.find(_.getCorners.contains(dir)).get.getCorners
-
-  def getAreaLookingFrom(dir:Char): AreaInterface = areas.find(_.getCorners.contains(dir)).get
-
-  def isValid: Boolean = {
-    var check = true
-    for(x <- areas)
-      for(y <- areas)
-        for(c <- x.getCorners){
-          if(y.getCorners.contains(c)  && y != x){
-            check = false
-          }
-        }
-    check
-  }
+  def getAreaLookingFrom(dir:String): Option[AreaInterface] = if(!isEmpty) Option(areas.get.find(_.getCorners.contains(dir)).get) else None
 
   def rotateRight():CardInterface = {
-    val rotatedAreas:List[AreaInterface] = areas.map { x => x.rotateRight() }
-    var rotations = id._2 + 1
+    val rotatedAreas:List[AreaInterface] = areas.get.map { x => x.rotateRight() }
+    var rotations = id_rotation.get._2 + 1
     if(rotations == 4){
      rotations = 0
     }
-    Card(rotatedAreas, id = (id._1, rotations))
+    Card(Option(rotatedAreas), id_rotation = Option(id_rotation.get._1, rotations))
   }
 
   override def toString:String = {
 
     var tmpstring = ""
 
-    val o = getValue('n')
-    var ol = '┌'
-    var or = '┐'
-    if (getCornersLookingFrom('n').contains('w')) ol = o
-    if (getCornersLookingFrom('n').contains('e')) or = o
+    val o = getValueString("n")
+    var ol = "┌"
+    var or = "┐"
+    if (containsCornerLookingFromString("n", "w")) ol = o
+    if (containsCornerLookingFromString("n", "e")) or = o
     tmpstring += s" $ol $o $or"
 
     tmpstring += s"\n"
 
-    val l = getValue('w')
-    val r = getValue('e')
-    var m = ' '
-    if (getCornersLookingFrom('e').contains('w')) m = l
-    if (getCornersLookingFrom('n').contains('s')) m = getValue('n')
+    val l = getValueString("w")
+    val r = getValueString("e")
+    var m = " "
+    if (containsCornerLookingFromString("e", "w")) m = l
+    if (containsCornerLookingFromString("n", "s")) m = getValueString("n")
     tmpstring += s" $l $m $r"
 
     tmpstring += "\n"
 
-    val u = getValue('s')
-    var ul = '└'
-    var ur = '┘'
-    if (getCornersLookingFrom('s').contains('w')) ul = u
-    if (getCornersLookingFrom('s').contains('e')) ur = u
+    val u = getValueString("s")
+    var ul = "└"
+    var ur = "┘"
+    if (containsCornerLookingFromString("s", "w")) ul = u
+    if (containsCornerLookingFromString("s", "e")) ur = u
     tmpstring += s" $ul $u $ur"
 
     tmpstring += "\n"
 
     tmpstring
-
   }
+
+  def getValueString(dir:String): String = if(getValue(dir).isDefined) getValue(dir).get else " "
+
+  def containsCornerLookingFromString(dir:String, look:String): Boolean =
+    if(getCornersLookingFrom(dir).isDefined) getCornersLookingFrom(dir).get.contains(look) else false
 
   private val color = List(Console.BLUE, Console.RED, Console.YELLOW, Console.GREEN)
 
+  def colorDir(dir:String): String = {
+    var o = getValueString(dir)
+    if(getAreaLookingFrom(dir).isDefined) {
+      val index = areas.get.indexWhere(p => p == getAreaLookingFrom(dir))
+      o = color(index) + o + Console.RESET
+    }
+    o
+  }
+
   def topString:String = {
-    val o = color(areas.indexWhere(p => p == getAreaLookingFrom('n')) ) + getValue('n') + Console.RESET
+    val o = colorDir("n")
     var ol = "┌"
     var or = "┐"
-    if (getCornersLookingFrom('n').contains('w')) ol = o
-    if (getCornersLookingFrom('n').contains('e')) or = o
+    if (containsCornerLookingFromString("n", "w")) ol = o
+    if (containsCornerLookingFromString("n", "e")) or = o
     s" $ol $o $or"
   }
 
   def midString:String = {
-    val l = color(areas.indexWhere(p => p == getAreaLookingFrom('w')) ) + getValue('w') + Console.RESET
-    val r = color(areas.indexWhere(p => p == getAreaLookingFrom('e')) ) + getValue('e') + Console.RESET
+    val l = colorDir("w")
+    val r = colorDir("e")
     var m = " "
-    if (getCornersLookingFrom('e').contains('w')) m = l
-    if (getCornersLookingFrom('n').contains('s')) m = color(areas.indexWhere(p => p == getAreaLookingFrom('n')) ) + getValue('n') + Console.RESET
+    if (containsCornerLookingFromString("e", "w")) m = l
+    if (containsCornerLookingFromString("n", "s")) m = colorDir("n")
     s" $l $m $r"
   }
 
   def lowString:String = {
-    val u = color(areas.indexWhere(p => p == getAreaLookingFrom('s')) ) + getValue('s') + Console.RESET
+    val u = colorDir("s")
     var ul = "└"
     var ur = "┘"
-    if (getCornersLookingFrom('s').contains('w')) ul = u
-    if (getCornersLookingFrom('s').contains('e')) ur = u
+    if (containsCornerLookingFromString("s", "w")) ul = u
+    if (containsCornerLookingFromString("s", "e")) ur = u
     s" $ul $u $ur"
   }
 }
