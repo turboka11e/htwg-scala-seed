@@ -22,6 +22,7 @@ class StartGUI(controller: ControllerInterface) extends Frame {
   visible = true
   val gsize: Int = controller.getPlayfield.getGrid.getSize
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
+
   val infoLabel: Label = new Label("") {
     font = new Font("Verdana", 1, 20)
   }

@@ -10,7 +10,7 @@ case class Playfield (players:List[Player] = Nil, isOn: Int = 0, grid: GridInter
                      freshCard:CardManipulatorInterface = new CardManipulator(), gameState:Int =  0, success:Boolean = true) extends PlayfieldInterface {
 
   def this() = this(players = Nil, isOn = 0, grid = new Grid(1),
-  freshCard = new CardManipulator(), gameState =  0, success = true)
+  freshCard = new CardManipulator(), gameState = 0, success = true)
 
   def changeGameState(gs:Int):Playfield = copy(gameState = gs)
 

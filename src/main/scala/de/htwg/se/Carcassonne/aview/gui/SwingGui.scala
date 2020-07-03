@@ -101,8 +101,8 @@ class SwingGui(controller: ControllerInterface) extends Frame {
         } {
           val points = controller.getPlayfield.getPlayers(i).points
           pointsLables(i).text = f"$points%.2f"
-          val colors:List[java.awt.Color] = List(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN)
-          if(i == controller.getPlayfield.getIsOn) {
+          val colors: List[java.awt.Color] = List(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN)
+          if (i == controller.getPlayfield.getIsOn) {
             playerLables(i).foreground = colors(i)
           } else {
             playerLables(i).foreground = java.awt.Color.BLACK
@@ -131,8 +131,14 @@ class SwingGui(controller: ControllerInterface) extends Frame {
           selected = false
           reactions += {
             case event: ButtonClicked =>
-              new StartGUI(controller)
               controller.newGame()
+              for {
+                x <- cells.indices
+                y <- cells.indices
+              } {
+                cells(x)(y).deafTo(controller)
+              }
+              new StartGUI(controller)
               close()
           }
         }

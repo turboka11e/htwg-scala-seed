@@ -10,11 +10,12 @@ import de.htwg.se.Carcassonne.util.UndoManager
 
 class Controller @Inject() (var playfield: PlayfieldInterface) extends ControllerInterface {
 
-  private val undoManager = new UndoManager
+  private var undoManager = new UndoManager
   val injector: Injector = Guice.createInjector(new CarcassonneModule)
 
   def newGame():Unit = {
     playfield = injector.instance[PlayfieldInterface]
+    undoManager = new UndoManager
     publish(new SetGrid)
   }
 

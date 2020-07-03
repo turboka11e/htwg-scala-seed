@@ -4,14 +4,14 @@ import java.awt.geom.AffineTransform
 import java.io.File
 
 import javax.imageio.ImageIO
-import java.awt.{Graphics2D, Image}
+import java.awt.Graphics2D
 import java.awt.image.{AffineTransformOp, BufferedImage}
 
 import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
-import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{Controller, PlayfieldChanged}
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{PlayfieldChanged, SetGrid}
 
 import scala.swing.event.MouseClicked
-import scala.swing.{Dimension, FlowPanel, GridBagPanel}
+import scala.swing.{Dimension, FlowPanel}
 
 class GuiCard(controller: ControllerInterface, row:Int, col:Int) extends FlowPanel {
 
@@ -65,10 +65,13 @@ class GuiCard(controller: ControllerInterface, row:Int, col:Int) extends FlowPan
     img = op.filter(image, null)
   }
 
+  def close(): Unit = {
+    deafTo(controller)
+  }
+
   reactions += {
     case event: PlayfieldChanged => setCard()
     case event: MouseClicked => controller.placeCard(row, col)
   }
-
 
 }
