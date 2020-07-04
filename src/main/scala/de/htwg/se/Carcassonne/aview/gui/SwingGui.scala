@@ -138,6 +138,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
               } {
                 cells(x)(y).deafTo(controller)
               }
+              this.deafTo(controller)
               new StartGUI(controller)
               close()
           }

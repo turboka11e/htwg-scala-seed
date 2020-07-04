@@ -1,7 +1,7 @@
 package de.htwg.se.Carcassonne.aview.tui
 
-import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
-import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, Controller, NewGame, PlayfieldChanged, RotateR, SetGrid}
+import de.htwg.se.Carcassonne.controller.controllerComponent.{ControllerInterface, GameStatus}
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, Controller, GameOver, NewGame, PlayfieldChanged, RotateR, SetGrid}
 
 import scala.swing.Reactor
 
@@ -62,11 +62,16 @@ class TUI(controller: ControllerInterface) extends Reactor {
   }
 
   reactions += {
-    case event: NewGame => print(controller.playFieldToString)
-    case event: SetGrid => print(controller.playFieldToString)
-    case event: AddPlayers => print(controller.playFieldToString)
-    case event: PlayfieldChanged => print(controller.playFieldToString)
-    case event: RotateR => print(controller.playFieldToString)
+    case event: NewGame => printTui()
+    case event: SetGrid => printTui()
+    case event: AddPlayers => printTui()
+    case event: PlayfieldChanged => printTui()
+    case event: RotateR => printTui()
+    case event: GameOver => printTui()
+  }
+
+  def printTui():Unit = {
+    println(controller.statusText)
   }
 
 }

@@ -6,6 +6,8 @@ import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
 
 class Controller @Inject() (var playfield: PlayfieldInterface) extends ControllerInterface {
 
+  def statusText:String = ""
+
   def newGame():Unit = {}
 
   def getPlayfield: PlayfieldInterface = playfield
@@ -27,6 +29,8 @@ class Controller @Inject() (var playfield: PlayfieldInterface) extends Controlle
   def rotateLeft():Unit = {}
 
   def selectArea(nr: Int):Unit = {}
+
+  def placeAble():Unit = {}
 
   def placeCard(x:Int, y:Int):Unit = {}
 

@@ -6,6 +6,7 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
+  def statusText:String
   def newGame():Unit
   def getPlayfield: PlayfieldInterface
   def createGrid(size: Int):Unit
@@ -18,6 +19,7 @@ trait ControllerInterface extends Publisher {
   def rotateLeft():Unit
   def selectArea(nr: Int):Unit
   def placeCard(x:Int, y:Int):Unit
+  def placeAble():Unit
   def undo(): Unit
   def redo(): Unit
   def playFieldToString: String

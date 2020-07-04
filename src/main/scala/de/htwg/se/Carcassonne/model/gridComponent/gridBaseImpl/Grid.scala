@@ -25,6 +25,20 @@ case class Grid(private val cells: Matrix[CardInterface]) extends GridInterface 
     }
   }
 
+  def placeable(newCard:CardInterface):Boolean = {
+    var placeable = false
+    for{
+      row <- 0 until size
+      col <- 0 until size
+    } {
+      placeable = placeable || cells.checkSet(row, col, newCard)
+      placeable = placeable || cells.checkSet(row, col, newCard.rotateRight())
+      placeable = placeable || cells.checkSet(row, col, newCard.rotateRight().rotateRight())
+      placeable = placeable || cells.checkSet(row, col, newCard.rotateRight().rotateRight().rotateRight())
+    }
+    placeable
+  }
+
   def getTerritories: List[List[(Int, AreaInterface)]] = {
     var territories: List[List[(Int, AreaInterface)]] = Nil
     for {

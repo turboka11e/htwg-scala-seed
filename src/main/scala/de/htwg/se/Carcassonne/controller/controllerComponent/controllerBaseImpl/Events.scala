@@ -11,3 +11,5 @@ class SetGrid extends Event
 class AddPlayers extends Event
 
 class RotateR extends Event
+
+class GameOver extends Event

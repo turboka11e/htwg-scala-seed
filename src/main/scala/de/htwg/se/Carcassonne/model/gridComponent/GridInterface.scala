@@ -6,6 +6,7 @@ trait GridInterface {
   def getSize:Int
   def card(row: Int, col: Int): CardInterface
   def set(row: Int, col: Int, newCard:CardInterface): GridInterface
+  def placeable(newCard:CardInterface):Boolean
   def place(row: Int, col: Int, newCard:CardInterface): GridInterface
   def getTerritories:List[List[(Int, AreaInterface)]]
 }

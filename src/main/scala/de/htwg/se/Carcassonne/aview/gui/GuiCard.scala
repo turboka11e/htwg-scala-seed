@@ -72,7 +72,9 @@ class GuiCard(controller: ControllerInterface, row:Int, col:Int) extends FlowPan
 
   reactions += {
     case event: PlayfieldChanged => setCard()
-    case event: MouseClicked => controller.placeCard(row, col)
+    case event: MouseClicked =>
+      controller.placeCard(row, col)
+      controller.placeAble()
   }
 
 }

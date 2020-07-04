@@ -19,6 +19,7 @@ trait PlayfieldInterface {
   def rotateR:PlayfieldInterface
   def rotateL:PlayfieldInterface
   def selectArea(nr:Int):PlayfieldInterface
+  def placeable:Boolean
   def placeCard(x: Int, y: Int): PlayfieldInterface
   def nextPlayer: PlayfieldInterface
   def playFieldToString:String
