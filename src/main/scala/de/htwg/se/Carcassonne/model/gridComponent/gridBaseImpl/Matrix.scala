@@ -2,19 +2,13 @@ package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
 import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface, GridInterface, MatrixInterface}
 
-case class Matrix[T] (rows:Vector[Vector[CardInterface]]/*, private val count:Int = 0*/) extends MatrixInterface[T] {
+case class Matrix[T] (rows:Vector[Vector[CardInterface]]) extends MatrixInterface[T] {
   def this(size:Int) = this(Vector.tabulate(size, size){(row, col) => new Card((row, col))})
 
   val size:Int = rows.size
 
   def getCount:Int = {
     var count = 0
-//    for{
-//      row <- rows.indices
-//      col <- rows.indices
-//    } {
-//      if(!card(row, col).isEmpty) count += 1
-//    }
     rows.foreach(p => p.foreach(c => if(!c.isEmpty) count += 1))
     count
   }
@@ -22,7 +16,7 @@ case class Matrix[T] (rows:Vector[Vector[CardInterface]]/*, private val count:In
   def card(row:Int, col:Int):CardInterface = rows (row)(col)
 
   def replaceCell(row:Int, col:Int, card:CardInterface):Matrix[CardInterface] = {
-    copy(rows.updated(row, rows(row).updated(col, card))/*, count + 1*/)
+    copy(rows.updated(row, rows(row).updated(col, card)))
   }
 
   def checkEdge(row: Int, col: Int, dir: Char):Boolean = {

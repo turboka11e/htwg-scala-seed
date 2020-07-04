@@ -34,7 +34,7 @@ def cardToXml(row:Int, col:Int):Elem = {
   </card>
 }
 
-val xml = <playfield size={playfield.grid.getSize.toString} isOn={playfield.isOn.toString} freshCard={playfield.freshCard.getCard.getID._1.toString}>
+val xml = <playfield size={playfield.grid.getSize.toString} isOn={playfield.isOn.toString} freshCard={playfield.freshCard.getCard.getID._1.toString} gameState={playfield.getGameState.toString}>
   <players>
     {for {
     p <- playfield.getPlayers
@@ -60,6 +60,7 @@ val play = (xml \\ "playfield")
 val size = (play \ "@size").text.toInt
 val isOn = (play \ "@isOn").text.toInt
 val freshCard = (play \ "@freshCard").text.toInt
+val gameState = (play \ "@gameState").text.toInt
 
 var players:List[Player] = Nil
 for(p <- xml \\ "player") {
@@ -94,6 +95,4 @@ for(c <- xml \\ "card") {
 playfield.grid.toString
 restoredGrid.toString
 
-//var newPlayfield = Playfield(players, isOn, )
-//newPlayfield = newPlayfield.fieldSize(size)
-//
+var newPlayfield = Playfield(players, isOn, restoredGrid, RawCardFactory("selectCard", isOn, freshCard).drawCard(), gameState)

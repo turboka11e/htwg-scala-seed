@@ -59,7 +59,7 @@ class TUISpec extends WordSpec with Matchers {
     }
     "validate long String" in {
       tui.processInputLine("0 1")
-      controller.playfield.getGameState should be(3)
+//      controller.playfield.getGameState should be(3)
       controller.changeGameState(3)
       tui.processInputLine("0")
       controller.playfield.changeGameState(4)
