@@ -118,45 +118,79 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
     val gameControl: BorderPanel = new BorderPanel {
 
-      val topButtons: FlowPanel = new FlowPanel {
-        background = java.awt.Color.DARK_GRAY
-        val newGameButton: Button = new Button("New Game") {
-          preferredSize = new Dimension(140, 45)
-          background = java.awt.Color.DARK_GRAY.brighter().brighter()
-          foreground = java.awt.Color.BLACK
-          focusable = false
-          border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
-          font = new Font("Verdana", 1, 20)
+      val topButtons: BorderPanel = new BorderPanel {
 
-          selected = false
-          reactions += {
-            case event: ButtonClicked =>
-              controller.newGame()
-              for {
-                x <- cells.indices
-                y <- cells.indices
-              } {
-                cells(x)(y).deafTo(controller)
-              }
-              this.deafTo(controller)
-              new StartGUI(controller)
-              close()
+        val newExitButtons: FlowPanel = new FlowPanel {
+          background = java.awt.Color.DARK_GRAY
+          val newGameButton: Button = new Button("New Game") {
+            preferredSize = new Dimension(140, 45)
+            background = java.awt.Color.DARK_GRAY.brighter().brighter()
+            foreground = java.awt.Color.BLACK
+            focusable = false
+            border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+            font = new Font("Verdana", 1, 20)
+
+            selected = false
+            reactions += {
+              case event: ButtonClicked =>
+                controller.newGame()
+                for {
+                  x <- cells.indices
+                  y <- cells.indices
+                } {
+                  cells(x)(y).deafTo(controller)
+                }
+                this.deafTo(controller)
+                new StartGUI(controller)
+                close()
+            }
           }
-        }
-        val exitButton: Button = new Button("Exit Game") {
-          preferredSize = new Dimension(140, 45)
-          background = java.awt.Color.DARK_GRAY.brighter().brighter()
-          foreground = java.awt.Color.BLACK
-          focusable = false
-          border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
-          font = new Font("Verdana", 1, 20)
-          reactions += {
-            case event: ButtonClicked => sys.exit()
+          val exitButton: Button = new Button("Exit Game") {
+            preferredSize = new Dimension(140, 45)
+            background = java.awt.Color.DARK_GRAY.brighter().brighter()
+            foreground = java.awt.Color.BLACK
+            focusable = false
+            border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+            font = new Font("Verdana", 1, 20)
+            reactions += {
+              case event: ButtonClicked => sys.exit()
+            }
           }
+          contents += newGameButton
+          contents += exitButton
         }
-        contents += newGameButton
-        contents += exitButton
+        val saveLoadButtons: FlowPanel = new FlowPanel {
+          background = java.awt.Color.DARK_GRAY
+          val saveButton: Button = new Button("Save") {
+            preferredSize = new Dimension(140, 45)
+            background = java.awt.Color.DARK_GRAY.brighter().brighter()
+            foreground = java.awt.Color.BLACK
+            focusable = false
+            border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+            font = new Font("Verdana", 1, 20)
+            reactions += {
+              case event: ButtonClicked => controller.save()
+            }
+          }
+          val loadButton: Button = new Button("Load") {
+            preferredSize = new Dimension(140, 45)
+            background = java.awt.Color.DARK_GRAY.brighter().brighter()
+            foreground = java.awt.Color.BLACK
+            focusable = false
+            border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+            font = new Font("Verdana", 1, 20)
+            reactions += {
+              case event: ButtonClicked => controller.load()
+            }
+          }
+          contents += saveButton
+          contents += loadButton
+        }
+
+        add(newExitButtons, BorderPanel.Position.Center)
+        add(saveLoadButtons, BorderPanel.Position.South)
       }
+
       val buttomButtons: FlowPanel = new FlowPanel {
         background = java.awt.Color.DARK_GRAY
         val undoButton: Button = new Button("Undo") {

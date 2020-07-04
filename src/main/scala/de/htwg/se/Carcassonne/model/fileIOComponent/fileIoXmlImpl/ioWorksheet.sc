@@ -50,49 +50,45 @@ val xml = <playfield size={playfield.grid.getSize.toString} isOn={playfield.isOn
 
 
 
+def load(xml: Elem): Playfield = {
 
-xml.attributes
+  val play = xml \\ "playfield"
 
-//def load(xml:Elem):Playfield
+  val size = (play \ "@size").text.toInt
+  val isOn = (play \ "@isOn").text.toInt
+  val freshCard = (play \ "@freshCard").text.toInt
+  val gameState = (play \ "@gameState").text.toInt
 
-val play = (xml \\ "playfield")
+  var players: List[Player] = Nil
+  for (p <- xml \\ "player") {
+    val name = (p \ "@name").text
+    val points = p.child(1).text.toDouble
+    players = Player(name, points) :: players
+  }
 
-val size = (play \ "@size").text.toInt
-val isOn = (play \ "@isOn").text.toInt
-val freshCard = (play \ "@freshCard").text.toInt
-val gameState = (play \ "@gameState").text.toInt
+  var restoredGrid: Grid = new Grid(size)
 
-var players:List[Player] = Nil
-for(p <- xml \\ "player") {
-  val name = (p  \ "@name").text
-  val points = p.child(1).text.toDouble
-  players = Player(name, points)::players
+  for (c <- xml \\ "card") {
+    val row = (c \ "@row").text.toInt
+    val col = (c \ "@col").text.toInt
+    val name = (c \ "@name").text.toInt
+    val rotation = (c \ "@rotation").text.toInt
+    var restoredCard = RawCardFactory("emptyCard").drawCard()
+    if (name != -1) {
+      restoredCard = RawCardFactory("selectCard", -1, name).drawCard()
+    }
+    if (c.child.isDefinedAt(2)) {
+      val player = (c \\ "@index").text.toInt
+      val select = (c \\ "@player").text.toInt
+      restoredCard = RawCardFactory("selectCard", player, name).drawCard()
+      restoredCard = restoredCard.setPlayerToArea(select)
+    }
+    for (_ <- 0 until rotation) {
+      restoredCard = restoredCard.rotateRight
+    }
+    restoredGrid = restoredGrid.set(row, col, restoredCard.finalCard(row, col)).asInstanceOf[Grid]
+  }
+  Playfield(players, isOn, restoredGrid, RawCardFactory("selectCard", isOn, freshCard).drawCard(), gameState)
 }
-players
 
-var restoredGrid:Grid = new Grid(size)
-
-for(c <- xml \\ "card") {
-  val row = (c \ "@row").text.toInt
-  val col = (c \ "@col").text.toInt
-  val name = (c \ "@name").text.toInt
-  val rotation = (c \ "@rotation").text.toInt
-  var restoredCard = RawCardFactory("emptyCard").drawCard()
-  if(name != -1){
-    restoredCard = RawCardFactory("selectCard", -1, name).drawCard()
-  }
-  if(c.child.isDefinedAt(2)){
-    val player = (c \\ "@index").text.toInt
-    val select = (c \\ "@player").text.toInt
-    restoredCard = RawCardFactory("selectCard", player, name).drawCard()
-    restoredCard = restoredCard.setPlayerToArea(select)
-  }
-  for(_ <- 0 until rotation){
-    restoredCard = restoredCard.rotateRight
-  }
-  restoredGrid = restoredGrid.set(row, col, restoredCard.finalCard(row, col)).asInstanceOf[Grid]
-}
-playfield.grid.toString
-restoredGrid.toString
-
-var newPlayfield = Playfield(players, isOn, restoredGrid, RawCardFactory("selectCard", isOn, freshCard).drawCard(), gameState)
+load(xml)

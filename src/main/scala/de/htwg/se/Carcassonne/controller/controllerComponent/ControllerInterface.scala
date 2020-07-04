@@ -22,6 +22,8 @@ trait ControllerInterface extends Publisher {
   def placeAble():Unit
   def undo(): Unit
   def redo(): Unit
+  def save(): Unit
+  def load(): Unit
   def playFieldToString: String
 
 }

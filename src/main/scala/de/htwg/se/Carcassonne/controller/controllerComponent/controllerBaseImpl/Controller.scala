@@ -5,6 +5,7 @@ import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.Carcassonne.CarcassonneModule
 import de.htwg.se.Carcassonne.controller.controllerComponent.{ControllerInterface, GameStatus}
 import de.htwg.se.Carcassonne.controller.controllerComponent.GameStatus._
+import de.htwg.se.Carcassonne.model.fileIOComponent.FileIOInterface
 import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
 import de.htwg.se.Carcassonne.util.UndoManager
 
@@ -14,6 +15,7 @@ class Controller @Inject() (var playfield: PlayfieldInterface) extends Controlle
   var gameStatus: GameStatus = IDLE
   private var undoManager = new UndoManager
   val injector: Injector = Guice.createInjector(new CarcassonneModule)
+  val fileIo: FileIOInterface = injector.instance[FileIOInterface]
 
   def statusText:String = GameStatus.message(gameStatus)
 
@@ -99,6 +101,18 @@ class Controller @Inject() (var playfield: PlayfieldInterface) extends Controlle
   def redo(): Unit = {
     undoManager.redoStep()
     gameStatus = REDO
+    publish(new PlayfieldChanged)
+  }
+
+  def save(): Unit = {
+    fileIo.save(playfield)
+    gameStatus = SAVE
+    publish(new PlayfieldChanged)
+  }
+
+  def load(): Unit = {
+    playfield = fileIo.load
+    gameStatus = LOADED
     publish(new PlayfieldChanged)
   }
 
