@@ -7,12 +7,7 @@ trait GridInterface {
   def card(row: Int, col: Int): CardInterface
   def set(row: Int, col: Int, newCard:CardInterface): GridInterface
   def place(row: Int, col: Int, newCard:CardInterface): GridInterface
-  def addCardToTerri(row: Int, col: Int, newCard: CardInterface, newestCells:MatrixInterface[CardInterface]):List[List[(Int, AreaInterface)]]
-  def lookNeighbours(row:Int, col:Int, dir:Char, newCard: CardInterface):Option[List[AreaInterface]]
-  def insertNeighbourTerrisInJoinedTerri(tmpTerri:List[List[(Int, AreaInterface)]], col_ind:List[AreaInterface]):List[(Int, AreaInterface)]
-  def tmpTerriList(row:Int, col:Int, dir:Char, newCard: CardInterface, list:List[List[(Int, AreaInterface)]]):List[List[(Int, AreaInterface)]]
   def getTerritories:List[List[(Int, AreaInterface)]]
-  def updateTerriEnv(terriEnv:List[(Int, AreaInterface)], newestCells:MatrixInterface[CardInterface]):List[(Int, AreaInterface)]
 }
 
 trait MatrixInterface[T] {
@@ -37,7 +32,6 @@ trait CardInterface {
   def getAreas:List[AreaInterface]
   def getCornersLookingFrom(dir:Char): List[Char]
   def getAreaLookingFrom(dir:Char): AreaInterface
-  def isValid: Boolean
   def rotateRight():CardInterface
   def toString:String
   def topString:String

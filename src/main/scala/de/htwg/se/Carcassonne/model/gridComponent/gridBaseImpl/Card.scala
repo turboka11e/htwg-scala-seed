@@ -2,15 +2,11 @@ package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
 import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface}
 
-case class Card(areas:List[AreaInterface] = List(Area()), private val id:(Int, Int) = (-1, 0)) extends CardInterface {
+case class Card(areas:List[AreaInterface], private val id:(Int, Int) = (-1, 0)) extends CardInterface {
 
   def this(xy:(Int, Int)) = this(areas = List(Area(corners = List('n'), xy = (xy._1, xy._2)),
     Area(corners = List('w'), xy = (xy._1, xy._2)), Area(corners = List('e'), xy = (xy._1, xy._2)),
     Area(corners = List('s'), xy = (xy._1, xy._2))), id = (-1, 0))
-
-  def this(xy:(Int, Int), idx:(Int, Int)) = this(areas = List(Area(corners = List('n'), xy = (xy._1, xy._2)),
-    Area(corners = List('w'), xy = (xy._1, xy._2)), Area(corners = List('e'), xy = (xy._1, xy._2)),
-    Area(corners = List('s'), xy = (xy._1, xy._2))), id = idx)
 
   def isEmpty: Boolean = areas.head.getValue == ' ' && areas.size == 4
 
@@ -22,23 +18,11 @@ case class Card(areas:List[AreaInterface] = List(Area()), private val id:(Int, I
 
   def getPlayer(dir:Char): Int = areas.find(_.getCorners.contains(dir)).get.getPlayer
 
-  def getAreas():List[AreaInterface] = areas
+  def getAreas:List[AreaInterface] = areas
 
   def getCornersLookingFrom(dir:Char): List[Char] = areas.find(_.getCorners.contains(dir)).get.getCorners
 
   def getAreaLookingFrom(dir:Char): AreaInterface = areas.find(_.getCorners.contains(dir)).get
-
-  def isValid: Boolean = {
-    var check = true
-    for(x <- areas)
-      for(y <- areas)
-        for(c <- x.getCorners){
-          if(y.getCorners.contains(c)  && y != x){
-            check = false
-          }
-        }
-    check
-  }
 
   def rotateRight():CardInterface = {
     val rotatedAreas:List[AreaInterface] = areas.map { x => x.rotateRight() }

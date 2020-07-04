@@ -1,5 +1,6 @@
 package de.htwg.se.Carcassonne.model
 
+import de.htwg.se.Carcassonne.model.gridComponent.CardInterface
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.{Area, Card, Matrix}
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.RawCardFactory
 import org.scalatest._
@@ -11,8 +12,8 @@ class MatrixSpec extends WordSpec with Matchers {
         val matrix = new Matrix[Card](2)
         matrix.size should be(2)
       }
-      "for test purposes only be created with a Vector of Vectors" in {
-        val testMatrix = Matrix(Vector(Vector(Card())))
+      "for test purposes only be created with Size 1" in {
+        val testMatrix = new Matrix[CardInterface](1)
         testMatrix.size should be(1)
       }
 

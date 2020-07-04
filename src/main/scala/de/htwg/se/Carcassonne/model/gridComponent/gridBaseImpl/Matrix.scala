@@ -11,8 +11,8 @@ case class Matrix[T] (rows:Vector[Vector[CardInterface]], private val count:Int 
 
   def card(row:Int, col:Int):CardInterface = rows (row)(col)
 
-  def replaceCell(row:Int, col:Int, cell:CardInterface):Matrix[CardInterface] = {
-    copy(rows.updated(row, rows(row).updated(col, cell)), count + 1)
+  def replaceCell(row:Int, col:Int, card:CardInterface):Matrix[CardInterface] = {
+    copy(rows.updated(row, rows(row).updated(col, card)), count + 1)
   }
 
   def checkEdge(row: Int, col: Int, dir: Char):Boolean = {
@@ -67,11 +67,9 @@ case class Matrix[T] (rows:Vector[Vector[CardInterface]], private val count:Int 
 
   def hasNeighbor(row: Int, col: Int): Boolean = {
     var check = false
-
     for(x <- List('n', 's', 'w', 'e')){
       check = check || !checkEnvEmpty(row, col, x)
     }
-
     check
   }
 

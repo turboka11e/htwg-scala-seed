@@ -55,10 +55,10 @@ private class SelectCard(isOn: Int, select:Int) extends RawCardFactory {
 }
 
 object RawCardFactory {
-  def apply(kind: String, isOn:Int = -1, select:Int = 0): RawCardFactory = kind match {
+  def apply(kind: String, isOn:Int = -1, selectedCard:Int = 0): RawCardFactory = kind match {
     case "emptyCard" => new EmptyCard()
     case "randomCard" => new RandomCard(isOn)
-    case "selectCard" => new SelectCard(isOn, select)
+    case "selectCard" => new SelectCard(isOn, selectedCard)
   }
 }
 
