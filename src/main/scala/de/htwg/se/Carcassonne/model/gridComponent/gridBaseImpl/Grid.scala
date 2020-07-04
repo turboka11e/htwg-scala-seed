@@ -36,7 +36,6 @@ case class Grid(private val cells: Matrix[CardInterface]) extends GridInterface 
         territories = areaToTerritoresProcess(dir, row, col, territories)
       }
     }
-    print(territories)
     territories
   }
 
