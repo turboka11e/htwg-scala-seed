@@ -8,11 +8,11 @@ import scala.xml.Elem
 class FileIO extends FileIOInterface {
 
   def load: PlayfieldInterface = {
-    val playfield: PlayfieldInterface = null
+    var playfield: PlayfieldInterface = null
     playfield
   }
   def save(playfieldInterface: PlayfieldInterface): PlayfieldInterface = {
-    val playfield: PlayfieldInterface = null
+    var playfield: PlayfieldInterface = null
     playfield
   }
 

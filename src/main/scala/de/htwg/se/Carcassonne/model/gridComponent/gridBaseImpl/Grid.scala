@@ -1,6 +1,5 @@
 package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
-import com.google.inject.Inject
 import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface, GridInterface}
 
 case class Grid(private val cells: Matrix[CardInterface]) extends GridInterface {
@@ -25,6 +24,7 @@ case class Grid(private val cells: Matrix[CardInterface]) extends GridInterface 
     }
   }
 
+  /* Checks whether the Card can fit in at least on cell with all Rotations covered. Returns false if no placing is possible */
   def placeable(newCard:CardInterface):Boolean = {
     var placeable = false
     for{

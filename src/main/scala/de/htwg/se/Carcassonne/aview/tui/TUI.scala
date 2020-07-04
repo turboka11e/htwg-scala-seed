@@ -23,17 +23,17 @@ class TUI(controller: ControllerInterface) extends Reactor {
     }
   }
 
-  def decide(dc:Boolean):Unit = {
+  def decide(dc: Boolean): Unit = {
     controller.getGameState match {
       case 2 =>
-        if(!dc){
+        if (!dc) {
           controller.firstCard()
         } else {
           controller.changeGameState(1)
         }
-      case 3 => if(dc) controller.changeGameState(4)
+      case 3 => if (dc) controller.changeGameState(4)
 
-      case 4 => if(!dc) controller.changeGameState(5)
+      case 4 => if (!dc) controller.changeGameState(5)
 
       case _ =>
     }
@@ -46,6 +46,7 @@ class TUI(controller: ControllerInterface) extends Reactor {
       extract.length match {
         case 1 => forkDigit(extract.head.toInt)
         case 2 => controller.placeCard(extract(0).toInt, extract(1).toInt)
+          controller.placeAble()
         case _ =>
       }
     } else if (input.nonEmpty) {
@@ -53,7 +54,7 @@ class TUI(controller: ControllerInterface) extends Reactor {
     }
   }
 
-  def forkDigit(input:Int):Unit = {
+  def forkDigit(input: Int): Unit = {
     controller.getGameState match {
       case 0 => controller.createGrid(input)
       case 4 => controller.selectArea(input)
@@ -70,7 +71,7 @@ class TUI(controller: ControllerInterface) extends Reactor {
     case event: GameOver => printTui()
   }
 
-  def printTui():Unit = {
+  def printTui(): Unit = {
     println(controller.statusText)
   }
 

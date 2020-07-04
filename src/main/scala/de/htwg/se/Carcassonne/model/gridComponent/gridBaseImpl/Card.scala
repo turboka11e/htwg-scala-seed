@@ -10,6 +10,7 @@ case class Card(areas:List[AreaInterface], private val id:(Int, Int) = (-1, 0)) 
 
   def isEmpty: Boolean = areas.head.getValue == ' ' && areas.size == 4
 
+  /* id => CardNumber (-1 is EmptyCard) and Rotation of Card */
   def getID: (Int, Int) = id
 
   def setAreasXY(x:Int, y:Int):CardInterface = copy(areas = areas.map(areas => areas.setCoord(x, y)))

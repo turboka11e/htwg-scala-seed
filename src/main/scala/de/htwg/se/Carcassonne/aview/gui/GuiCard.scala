@@ -15,7 +15,7 @@ import scala.swing.{Dimension, FlowPanel}
 
 class GuiCard(controller: ControllerInterface, row:Int, col:Int) extends FlowPanel {
 
-  preferredSize = new Dimension(80, 80)
+  preferredSize = new Dimension(79, 79)
   listenTo(controller, mouse.clicks)
 
   var img: BufferedImage = findImage()
