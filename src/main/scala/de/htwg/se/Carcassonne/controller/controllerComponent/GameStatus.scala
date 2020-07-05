@@ -2,7 +2,7 @@ package de.htwg.se.Carcassonne.controller.controllerComponent
 
 object GameStatus extends Enumeration {
   type GameStatus = Value
-  val IDLE, PLAYER, RESIZE, FIRSTCARD, MANIPULATE, NEW, UNDO, REDO, MANICAN, GAMEOVER, ROTATE, PLACE, SAVE, LOADED = Value
+  val IDLE, PLAYER, RESIZE, FIRSTCARD, NEW, UNDO, REDO, MANICAN, GAMEOVER, ROTATE, PLACE, SAVE, LOADED = Value
 
   val map: Map[GameStatus, String] = Map[GameStatus, String](
     IDLE -> "",

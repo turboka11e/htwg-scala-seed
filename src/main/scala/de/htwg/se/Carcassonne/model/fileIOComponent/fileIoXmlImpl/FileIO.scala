@@ -10,7 +10,7 @@ import scala.xml.Elem
 
 class FileIO extends FileIOInterface {
 
-  def load: PlayfieldInterface = {
+  override def load: PlayfieldInterface = {
 
     val xml = scala.xml.XML.loadFile("playfield.xml")
 
@@ -53,7 +53,7 @@ class FileIO extends FileIOInterface {
     }
     Playfield(players, isOn, restoredGrid, RawCardFactory("selectCard", isOn, freshCard).drawCard(), gameState)
   }
-  def save(playfield: PlayfieldInterface): Unit = {
+  override def save(playfield: PlayfieldInterface): Unit = {
 
     val xml = <playfield size={playfield.getGrid.getSize.toString} isOn={playfield.getIsOn.toString}
                          freshCard={playfield.getCurrentFreshCard.getCard.getID._1.toString} gameState={playfield.getGameState.toString}>

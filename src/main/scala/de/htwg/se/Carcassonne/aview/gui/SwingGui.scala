@@ -4,7 +4,7 @@ import java.awt.Color
 import java.io.File
 
 import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
-import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{Controller, PlayfieldChanged}
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{Controller, NewGame, PlayfieldChanged}
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, ImageIcon}
 
@@ -140,6 +140,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
                 } {
                   cells(x)(y).deafTo(controller)
                 }
+                playerInfos.deafTo(controller)
                 this.deafTo(controller)
                 new StartGUI(controller)
                 close()
@@ -180,12 +181,29 @@ class SwingGui(controller: ControllerInterface) extends Frame {
             border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
             font = new Font("Verdana", 1, 20)
             reactions += {
-              case event: ButtonClicked => controller.load()
+              case event: ButtonClicked => loadRequest()
             }
           }
+
+          def loadRequest(): Unit = {
+            close()
+            for {
+              x <- cells.indices
+              y <- cells.indices
+            } {
+              cells(x)(y).deafTo(controller)
+            }
+            playerInfos.deafTo(controller)
+            this.deafTo(controller)
+            controller.load()
+            new SwingGui(controller)
+          }
+
+
           contents += saveButton
           contents += loadButton
         }
+
 
         add(newExitButtons, BorderPanel.Position.Center)
         add(saveLoadButtons, BorderPanel.Position.South)

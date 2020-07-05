@@ -18,7 +18,8 @@ class GuiCard(controller: ControllerInterface, row:Int, col:Int) extends FlowPan
   preferredSize = new Dimension(79, 79)
   listenTo(controller, mouse.clicks)
 
-  var img: BufferedImage = findImage()
+  var img: BufferedImage = _
+  setCard()
 
   override def paint(g:Graphics2D):Unit = {
     background = Color.BLACK

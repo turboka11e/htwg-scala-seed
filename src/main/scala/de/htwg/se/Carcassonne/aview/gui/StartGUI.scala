@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent
 import java.io.File
 
 import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
-import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, NewGame, SetGrid}
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, NewGame, PlayfieldChanged, SetGrid}
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, ImageIcon}
 
@@ -66,6 +66,13 @@ class StartGUI(controller: ControllerInterface) extends Frame {
     border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
     font = new Font("Verdana", 1, 20)
   }
+  val loadButton: Button = new Button("Load Game") {
+    background = java.awt.Color.DARK_GRAY.brighter().brighter()
+    foreground = java.awt.Color.BLACK
+    focusable = false
+    border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+    font = new Font("Verdana", 1, 20)
+  }
   val addButton: Button = new Button("Add Player") {
     background = java.awt.Color.DARK_GRAY.brighter().brighter()
     foreground = java.awt.Color.BLACK
@@ -77,6 +84,15 @@ class StartGUI(controller: ControllerInterface) extends Frame {
   val banner: Label = new Label() {
     private val logo = ImageIO.read(new File("./src/main/scala/de/htwg/se/Carcassonne/aview/media/CarcassonneText.png"))
     icon = new ImageIcon(logo)
+  }
+  val startLoadButton: FlowPanel = new FlowPanel {
+    contents += startButton
+    contents += loadButton
+  }
+
+  val twoButton: FlowPanel = new FlowPanel {
+    contents += addButton
+    contents += declineButton
   }
 
   val infobox: GridBagPanel = new GridBagPanel() {
@@ -107,12 +123,8 @@ class StartGUI(controller: ControllerInterface) extends Frame {
     infoMidLabel.visible = false
     addButton.visible = false
 
-    val twoButton: FlowPanel = new FlowPanel {
-      contents += addButton
-      contents += declineButton
-    }
 
-    add(startButton, constraints(1, 0))
+    add(startLoadButton, constraints(1, 0))
 
     add(infoLabel, constraints(1, 0, insets = new Insets(0, 0, 20, 0)))
     add(selectGrid, constraints(0, 1, gridwidth = 2, insets = new Insets(0, 0, 20, 0)))
@@ -124,14 +136,14 @@ class StartGUI(controller: ControllerInterface) extends Frame {
     add(twoButton, constraints(0, 3))
   }
 
-  listenTo(confirmButton, startButton, declineButton, addButton)
+  listenTo(confirmButton, startButton, declineButton, addButton, loadButton)
 
   def welcomeScreenAction(): Unit = {
     infoLabel.text = "New Game"
   }
 
   def gridSizeSelectAction(): Unit = {
-    startButton.visible = false
+    startLoadButton.visible = false
     confirmButton.visible = true
     infoLabel.text = "Choose Field Size"
     selectGrid.visible = true
@@ -163,22 +175,24 @@ class StartGUI(controller: ControllerInterface) extends Frame {
   }
 
   def startGame(): Unit = {
-    controller.firstCard()
     new SwingGui(controller)
     this.close()
   }
 
   reactions += {
     case ButtonClicked(b) =>
-      if (b == confirmButton) {
+      if (b == loadButton) {
+        controller.load()
+        startGame()
+      } else if (b == confirmButton) {
         controller.getGameState match {
           case 0 => controller.createGrid(selectGrid.selection.index + 2)
         }
       } else if (b == startButton) {
         controller.newGame()
-      }
-      else if (b == declineButton) {
+      } else if (b == declineButton) {
         if (controller.getPlayfield.getPlayers.nonEmpty) {
+          controller.firstCard()
           startGame()
         }
       } else if (b == addButton) {
