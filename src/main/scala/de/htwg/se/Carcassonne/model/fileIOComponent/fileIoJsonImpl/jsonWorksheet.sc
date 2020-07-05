@@ -21,29 +21,25 @@ playfield = playfield.placeCard(0, 0)
 playfield = playfield.getFreshCard(14)
 playfield = playfield.placeCard(0, 1)
 
-implicit val cardWrites = new Writes[CardInterface] {
-  override def writes(card: CardInterface) = {
-    var obj = Json.obj(
-      "name" -> card.getID._1,
-      "rotation" -> card.getID._2)
-    val indexArea = card.getAreas.indexWhere(p => p.getPlayer != -1)
-    if (indexArea != -1) {
-      obj = obj.++(Json.obj(
-        "index" -> indexArea,
-        "player" -> card.getAreas(indexArea).getPlayer
-      ))
-    }
-    obj
+implicit val cardWrites: Writes[CardInterface] = (card: CardInterface) => {
+  var obj = Json.obj(
+    "name" -> card.getID._1,
+    "rotation" -> card.getID._2)
+  val indexArea = card.getAreas.indexWhere(p => p.getPlayer != -1)
+  if (indexArea != -1) {
+    obj = obj.++(Json.obj(
+      "index" -> indexArea,
+      "player" -> card.getAreas(indexArea).getPlayer
+    ))
   }
+  obj
 }
 
-implicit val playerWrites = new Writes[Player] {
-  override def writes(player: Player) = {
-    Json.obj(
-      "name" -> player.name,
-      "points" -> player.points
-    )
-  }
+implicit val playerWrites: Writes[Player] = (player: Player) => {
+  Json.obj(
+    "name" -> player.name,
+    "points" -> player.points
+  )
 }
 
 def playfieldToJson(playfield: PlayfieldInterface): JsObject = {
@@ -77,7 +73,7 @@ val json = playfieldToJson(playfield)
 Json.prettyPrint(json)
 
 (json \\ "index").isDefinedAt(0)
-(((json \ "cards")(1)) \ "card" \\ "index").isEmpty
+((json \ "cards")(1) \ "card" \\ "index").isEmpty
 
 val index = 0
 val row = (json \\ "row")(index).as[Int]

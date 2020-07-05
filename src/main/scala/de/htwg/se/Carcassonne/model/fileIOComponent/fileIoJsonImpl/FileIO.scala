@@ -2,9 +2,6 @@ package de.htwg.se.Carcassonne.model.fileIOComponent.fileIoJsonImpl
 
 import java.io.{File, PrintWriter}
 
-import com.google.inject.Guice
-import de.htwg.se.Carcassonne.Carcassonne.injector
-import de.htwg.se.Carcassonne.CarcassonneModule
 import de.htwg.se.Carcassonne.model.fileIOComponent.FileIOInterface
 import de.htwg.se.Carcassonne.model.gridComponent.{CardInterface, GridInterface}
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
@@ -57,30 +54,27 @@ class FileIO extends FileIOInterface {
     Playfield(players, isOn, restoredGrid, RawCardFactory("selectCard", isOn, fresCard).drawCard(), gameState)
   }
 
-  implicit val cardWrites = new Writes[CardInterface] {
-    override def writes(card: CardInterface) = {
-      var obj = Json.obj(
-        "name" -> card.getID._1,
-        "rotation" -> card.getID._2)
-      val indexArea = card.getAreas.indexWhere(p => p.getPlayer != -1)
-      if (indexArea != -1) {
-        obj = obj.++(Json.obj(
-          "index" -> indexArea,
-          "player" -> card.getAreas(indexArea).getPlayer
-        ))
-      }
-      obj
+  implicit val cardWrites: Writes[CardInterface] = (card: CardInterface) => {
+    var obj = Json.obj(
+      "name" -> card.getID._1,
+      "rotation" -> card.getID._2)
+    val indexArea = card.getAreas.indexWhere(p => p.getPlayer != -1)
+    if (indexArea != -1) {
+      obj = obj.++(Json.obj(
+        "index" -> indexArea,
+        "player" -> card.getAreas(indexArea).getPlayer
+      ))
     }
+    obj
   }
 
-  implicit val playerWrites = new Writes[Player] {
-    override def writes(player: Player) = {
-      Json.obj(
-        "name" -> player.name,
-        "points" -> player.points
-      )
-    }
+  implicit val playerWrites: Writes[Player] = (player: Player) => {
+    Json.obj(
+      "name" -> player.name,
+      "points" -> player.points
+    )
   }
+
   override def save(playfield: PlayfieldInterface): Unit = {
     val jsonPlayfield = playfieldToJson(playfield)
     val jsonFile = Json.prettyPrint(jsonPlayfield)
