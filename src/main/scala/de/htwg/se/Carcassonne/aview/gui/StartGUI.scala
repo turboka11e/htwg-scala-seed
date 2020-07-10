@@ -3,14 +3,15 @@ package de.htwg.se.Carcassonne.aview.gui
 import java.awt.event.KeyEvent
 import java.io.File
 
-import de.htwg.se.Carcassonne.controller._
+import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, NewGame, PlayfieldChanged, SetGrid}
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, ImageIcon}
 
 import scala.swing._
 import scala.swing.event.{ButtonClicked, KeyTyped}
 
-class StartGUI(controller: Controller) extends Frame {
+class StartGUI(controller: ControllerInterface) extends Frame {
 
   listenTo(controller)
 
@@ -19,8 +20,9 @@ class StartGUI(controller: Controller) extends Frame {
   preferredSize = new Dimension(1000, 700)
 
   visible = true
-  val gsize: Int = controller.playfield.grid.size
+  val gsize: Int = controller.getPlayfield.getGrid.getSize
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
+
   val infoLabel: Label = new Label("") {
     font = new Font("Verdana", 1, 20)
   }
@@ -64,6 +66,13 @@ class StartGUI(controller: Controller) extends Frame {
     border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
     font = new Font("Verdana", 1, 20)
   }
+  val loadButton: Button = new Button("Load Game") {
+    background = java.awt.Color.DARK_GRAY.brighter().brighter()
+    foreground = java.awt.Color.BLACK
+    focusable = false
+    border = BorderFactory.createEmptyBorder(10, 10, 10, 10)
+    font = new Font("Verdana", 1, 20)
+  }
   val addButton: Button = new Button("Add Player") {
     background = java.awt.Color.DARK_GRAY.brighter().brighter()
     foreground = java.awt.Color.BLACK
@@ -75,6 +84,15 @@ class StartGUI(controller: Controller) extends Frame {
   val banner: Label = new Label() {
     private val logo = ImageIO.read(new File("./src/main/scala/de/htwg/se/Carcassonne/aview/media/CarcassonneText.png"))
     icon = new ImageIcon(logo)
+  }
+  val startLoadButton: FlowPanel = new FlowPanel {
+    contents += startButton
+    contents += loadButton
+  }
+
+  val twoButton: FlowPanel = new FlowPanel {
+    contents += addButton
+    contents += declineButton
   }
 
   val infobox: GridBagPanel = new GridBagPanel() {
@@ -105,12 +123,8 @@ class StartGUI(controller: Controller) extends Frame {
     infoMidLabel.visible = false
     addButton.visible = false
 
-    val twoButton: FlowPanel = new FlowPanel {
-      contents += addButton
-      contents += declineButton
-    }
 
-    add(startButton, constraints(1, 0))
+    add(startLoadButton, constraints(1, 0))
 
     add(infoLabel, constraints(1, 0, insets = new Insets(0, 0, 20, 0)))
     add(selectGrid, constraints(0, 1, gridwidth = 2, insets = new Insets(0, 0, 20, 0)))
@@ -122,14 +136,14 @@ class StartGUI(controller: Controller) extends Frame {
     add(twoButton, constraints(0, 3))
   }
 
-  listenTo(confirmButton, startButton, declineButton, addButton)
+  listenTo(confirmButton, startButton, declineButton, addButton, loadButton)
 
   def welcomeScreenAction(): Unit = {
     infoLabel.text = "New Game"
   }
 
   def gridSizeSelectAction(): Unit = {
-    startButton.visible = false
+    startLoadButton.visible = false
     confirmButton.visible = true
     infoLabel.text = "Choose Field Size"
     selectGrid.visible = true
@@ -146,7 +160,7 @@ class StartGUI(controller: Controller) extends Frame {
     playerLabel.text = {
       var tmpString = ""
       for {
-        (p, i) <- controller.playfield.players.zipWithIndex
+        (p, i) <- controller.getPlayfield.getPlayers.zipWithIndex
       } {
         tmpString += p.name + "  "
       }
@@ -161,22 +175,24 @@ class StartGUI(controller: Controller) extends Frame {
   }
 
   def startGame(): Unit = {
-    controller.firstCard()
     new SwingGui(controller)
     this.close()
   }
 
   reactions += {
     case ButtonClicked(b) =>
-      if (b == confirmButton) {
+      if (b == loadButton) {
+        controller.load()
+        startGame()
+      } else if (b == confirmButton) {
         controller.getGameState match {
           case 0 => controller.createGrid(selectGrid.selection.index + 2)
         }
       } else if (b == startButton) {
         controller.newGame()
-      }
-      else if (b == declineButton) {
-        if (controller.playfield.players.nonEmpty) {
+      } else if (b == declineButton) {
+        if (controller.getPlayfield.getPlayers.nonEmpty) {
+          controller.firstCard()
           startGame()
         }
       } else if (b == addButton) {

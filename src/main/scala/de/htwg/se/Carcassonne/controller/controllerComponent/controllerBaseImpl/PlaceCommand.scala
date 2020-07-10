@@ -1,18 +1,18 @@
-package de.htwg.se.Carcassonne.controller
+package de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl
 
-import de.htwg.se.Carcassonne.model.{CardManipulator, Playfield}
+import de.htwg.se.Carcassonne.model.playfieldComponent.{CardManipulatorInterface, PlayfieldInterface}
 import de.htwg.se.Carcassonne.util.Command
 
-class PlaceCommand(x:Int, y:Int, oldPlayfield:Playfield, controller: Controller) extends Command {
+class PlaceCommand(x:Int, y:Int, oldPlayfield:PlayfieldInterface, controller: Controller) extends Command {
 
-  var oldFreshCard:CardManipulator = _
+  var oldFreshCard:CardManipulatorInterface = _
 
   override def doStep():Unit = {
     controller.playfield = controller.playfield.placeCard(x, y)
     if(controller.playfield.getSuccess) {
       controller.playfield = controller.playfield.nextPlayer.getFreshCard
     }
-    oldFreshCard = controller.playfield.freshCard
+    oldFreshCard = controller.playfield.getCurrentFreshCard
   }
 
   override def undoStep(): Unit = {
@@ -23,7 +23,7 @@ class PlaceCommand(x:Int, y:Int, oldPlayfield:Playfield, controller: Controller)
     controller.playfield = controller.playfield.placeCard(x, y)
     if(controller.playfield.getSuccess) {
       controller.playfield = controller.playfield.nextPlayer
-      controller.playfield = controller.playfield.copy(freshCard = oldFreshCard)
+      controller.playfield = controller.playfield.setCurrentFreshCard(oldFreshCard)
     }
   }
 

@@ -1,12 +1,11 @@
-package de.htwg.se.Carcassonne.aview
+package de.htwg.se.Carcassonne.aview.tui
 
-import de.htwg.se.Carcassonne.controller.{AddPlayers, Controller, NewGame, PlayfieldChanged, RotateR, SetGrid}
-import de.htwg.se.Carcassonne.model.{Area, Card, CardManipulator, Grid, Matrix, Player, Points}
-import de.htwg.se.Carcassonne.util.Observer
+import de.htwg.se.Carcassonne.controller.controllerComponent.{ControllerInterface, GameStatus}
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, Controller, GameOver, NewGame, PlayfieldChanged, RotateR, SetGrid}
 
 import scala.swing.Reactor
 
-class TUI(controller: Controller) extends Reactor {
+class TUI(controller: ControllerInterface) extends Reactor {
 
   listenTo(controller)
 
@@ -24,17 +23,17 @@ class TUI(controller: Controller) extends Reactor {
     }
   }
 
-  def decide(dc:Boolean):Unit = {
+  def decide(dc: Boolean): Unit = {
     controller.getGameState match {
       case 2 =>
-        if(!dc){
+        if (!dc) {
           controller.firstCard()
         } else {
           controller.changeGameState(1)
         }
-      case 3 => if(dc) controller.changeGameState(4)
+      case 3 => if (dc) controller.changeGameState(4)
 
-      case 4 => if(!dc) controller.changeGameState(5)
+      case 4 => if (!dc) controller.changeGameState(5)
 
       case _ =>
     }
@@ -47,6 +46,7 @@ class TUI(controller: Controller) extends Reactor {
       extract.length match {
         case 1 => forkDigit(extract.head.toInt)
         case 2 => controller.placeCard(extract(0).toInt, extract(1).toInt)
+          controller.placeAble()
         case _ =>
       }
     } else if (input.nonEmpty) {
@@ -54,7 +54,7 @@ class TUI(controller: Controller) extends Reactor {
     }
   }
 
-  def forkDigit(input:Int):Unit = {
+  def forkDigit(input: Int): Unit = {
     controller.getGameState match {
       case 0 => controller.createGrid(input)
       case 4 => controller.selectArea(input)
@@ -63,11 +63,17 @@ class TUI(controller: Controller) extends Reactor {
   }
 
   reactions += {
-    case event: NewGame => print(controller.playFieldToString)
-    case event: SetGrid => print(controller.playFieldToString)
-    case event: AddPlayers => print(controller.playFieldToString)
-    case event: PlayfieldChanged => print(controller.playFieldToString)
-    case event: RotateR => print(controller.playFieldToString)
+    case event: NewGame => printTui()
+    case event: SetGrid => printTui()
+    case event: AddPlayers => printTui()
+    case event: PlayfieldChanged => printTui()
+    case event: RotateR => printTui()
+    case event: GameOver => printTui()
+  }
+
+  def printTui(): Unit = {
+//    println(controller.statusText)
+    print(controller.playFieldToString)
   }
 
 }

@@ -1,12 +1,14 @@
 package de.htwg.se.Carcassonne.model
 
+
+import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.{Area, Card}
 import org.scalatest._
 
 class CardSpec extends WordSpec with Matchers {
 
   "A Card" when {
     "not set to any value " should {
-      val emptyCell = Card()
+      val emptyCell = Card(List(Area()), (-1,0))
       "have List with ' '" in {
         emptyCell.areas should be(List(Area(corners = List('n', 'w', 'e', 's'), player = -1, xy = (-1, -1))))
       }
@@ -26,8 +28,6 @@ class CardSpec extends WordSpec with Matchers {
         nonEmptyCell.isEmpty should be(false)
       }
     }
-
-
 
     "set to a specific value" should {
       val nonEmptyCell = Card(List(Area('c', List('n', 's'), player = 0), Area('g', List('w', 'e'), player = 1)))
@@ -57,15 +57,8 @@ class CardSpec extends WordSpec with Matchers {
     }
     "containing areas" should{
       val validAreaCard = Card(List(Area('c', List('n', 's')), Area('g', List('w', 'e'))))
-      val nonValidAreaCard = Card(List(Area('c', List('n', 's')), Area('g', List('n', 'e'))))
-      "be valid" in {
-        validAreaCard.isValid should be(true)
-      }
       "valid containing areas could rotate" in{
         validAreaCard.rotateRight() should be (Card(List(Area('c', List('e' , 'w')), Area('g', List('n', 's'))), id = (-1, 1)))
-      }
-      "not be valid" in {
-        nonValidAreaCard.isValid should be(false)
       }
       "print out nicely" in {
         val c = Console.BLUE + "c" + Console.RESET

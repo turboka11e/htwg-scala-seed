@@ -1,19 +1,18 @@
 package de.htwg.se.Carcassonne
 
-import de.htwg.se.Carcassonne.aview.TUI
-import de.htwg.se.Carcassonne.aview.gui.{StartGUI, SwingGui}
-import de.htwg.se.Carcassonne.controller.{Controller, NewGame}
-import de.htwg.se.Carcassonne.model.{Area, Card, CardManipulator, Grid, Player, Playfield}
+import com.google.inject.{Guice, Injector}
+import de.htwg.se.Carcassonne.aview.gui.StartGUI
+import de.htwg.se.Carcassonne.aview.tui.TUI
+import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
 
 import scala.io.StdIn._
 
 object Carcassonne {
 
-  val controller = new Controller(new Playfield)
+  val injector: Injector = Guice.createInjector(new CarcassonneModule)
+  val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new TUI(controller)
-  val gui = new StartGUI(controller)
-
-  //controller.publish(new NewGame)
+//  val gui = new StartGUI(controller)
 
   def main(args: Array[String]): Unit = {
     var input: String = ""

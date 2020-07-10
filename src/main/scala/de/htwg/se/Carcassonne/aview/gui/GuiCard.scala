@@ -3,27 +3,31 @@ package de.htwg.se.Carcassonne.aview.gui
 import java.awt.geom.AffineTransform
 import java.io.File
 
-import de.htwg.se.Carcassonne.controller.{Controller, PlayfieldChanged}
 import javax.imageio.ImageIO
-import java.awt.{Graphics2D, Image}
+import java.awt.{Color, Graphics2D}
 import java.awt.image.{AffineTransformOp, BufferedImage}
 
+import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{PlayfieldChanged, SetGrid}
+
 import scala.swing.event.MouseClicked
-import scala.swing.{Dimension, FlowPanel, GridBagPanel}
+import scala.swing.{Dimension, FlowPanel}
 
-class GuiCard(controller: Controller, row:Int, col:Int) extends FlowPanel {
+class GuiCard(controller: ControllerInterface, row:Int, col:Int) extends FlowPanel {
 
-  preferredSize = new Dimension(80, 80)
+  preferredSize = new Dimension(79, 79)
   listenTo(controller, mouse.clicks)
 
-  var img: BufferedImage = findImage()
+  var img: BufferedImage = _
+  setCard()
 
   override def paint(g:Graphics2D):Unit = {
+    background = Color.BLACK
     g.drawImage(img, 0, 0, null)
     val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican"
     val dirCombi = List(('n', 27, 0), ('s', 25, 55), ('w', 0, 27), ('e', 55, 27))
     for {
-      x <- controller.playfield.grid.card(row, col).areas
+      x <- controller.getPlayfield.getGrid.card(row, col).getAreas
     } {
       if(x.getPlayer != -1) {
         val dir = x.getCorners.head
@@ -36,14 +40,14 @@ class GuiCard(controller: Controller, row:Int, col:Int) extends FlowPanel {
 
   def setCard(): Unit = {
     img = findImage()
-    for (x <- 0 until controller.playfield.grid.card(row, col).getID._2) rotateCardR()
+    for (x <- 0 until controller.getPlayfield.getGrid.card(row, col).getID._2) rotateCardR()
     repaint()
   }
 
   def findImage(): BufferedImage = {
     val numToCharImage = List("D", "E", "G", "H", "I", "J", "K", "L", "N", "O", "R", "T", "U", "V", "C", "W")
 
-    val index = controller.playfield.grid.card(row, col).getID._1
+    val index = controller.getPlayfield.getGrid.card(row, col).getID._1
 
     var dataImg: String = ""
     if (index == -1) {
@@ -63,10 +67,15 @@ class GuiCard(controller: Controller, row:Int, col:Int) extends FlowPanel {
     img = op.filter(image, null)
   }
 
-  reactions += {
-    case event: PlayfieldChanged => setCard()
-    case event: MouseClicked => controller.placeCard(row, col)
+  def close(): Unit = {
+    deafTo(controller)
   }
 
+  reactions += {
+    case event: PlayfieldChanged => setCard()
+    case event: MouseClicked =>
+      controller.placeCard(row, col)
+      controller.placeAble()
+  }
 
 }

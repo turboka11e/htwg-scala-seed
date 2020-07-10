@@ -1,16 +1,22 @@
-package de.htwg.se.Carcassonne.model
+package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
-case class Matrix[T] (rows:Vector[Vector[Card]], private val count:Int = 0) {
+import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface, GridInterface, MatrixInterface}
+
+case class Matrix[T] (rows:Vector[Vector[CardInterface]]) extends MatrixInterface[T] {
   def this(size:Int) = this(Vector.tabulate(size, size){(row, col) => new Card((row, col))})
 
   val size:Int = rows.size
 
-  def getCount:Int = count
+  def getCount:Int = {
+    var count = 0
+    rows.foreach(p => p.foreach(c => if(!c.isEmpty) count += 1))
+    count
+  }
 
-  def card(row:Int, col:Int):Card = rows (row)(col)
+  def card(row:Int, col:Int):CardInterface = rows (row)(col)
 
-  def replaceCell(row:Int, col:Int, cell:Card):Matrix[Card] = {
-    copy(rows.updated(row, rows(row).updated(col, cell)), count + 1)
+  def replaceCell(row:Int, col:Int, card:CardInterface):Matrix[CardInterface] = {
+    copy(rows.updated(row, rows(row).updated(col, card)))
   }
 
   def checkEdge(row: Int, col: Int, dir: Char):Boolean = {
@@ -37,7 +43,7 @@ case class Matrix[T] (rows:Vector[Vector[Card]], private val count:Int = 0) {
 
   }
 
-  def checkEnv(row: Int, col: Int, dir: Char, checkCard: Card):Boolean = {
+  def checkEnv(row: Int, col: Int, dir: Char, checkCard: CardInterface):Boolean = {
     if(!checkEnvEmpty(row, col, dir)){
       dir match{
         case 'n' => card(row, col - 1).getValue('s').equals(checkCard.getValue('n'))
@@ -50,7 +56,7 @@ case class Matrix[T] (rows:Vector[Vector[Card]], private val count:Int = 0) {
     }
   }
 
-  def getDirEnv(row: Int, col: Int, dir:Char):Option[Area] = {
+  def getDirEnv(row: Int, col: Int, dir:Char):Option[AreaInterface] = {
     if(!checkEnvEmpty(row, col, dir)){
       dir match{
         case 'n' => Some(card(row, col - 1).getAreaLookingFrom('s'))
@@ -65,15 +71,13 @@ case class Matrix[T] (rows:Vector[Vector[Card]], private val count:Int = 0) {
 
   def hasNeighbor(row: Int, col: Int): Boolean = {
     var check = false
-
     for(x <- List('n', 's', 'w', 'e')){
       check = check || !checkEnvEmpty(row, col, x)
     }
-
     check
   }
 
-  def checkSet(row: Int, col: Int, checkCard:Card): Boolean = {
+  def checkSet(row: Int, col: Int, checkCard:CardInterface): Boolean = {
 
     var check = true
 

@@ -1,6 +1,12 @@
-package de.htwg.se.Carcassonne.model
+package de.htwg.se.Carcassonne.aview.tui
 
-class PrettyPrint(grid: Grid, freshCard:CardManipulator, players:List[Player], isOn: Int, success: Boolean) extends PrettyPrintStrategyTemplate {
+import de.htwg.se.Carcassonne.model.gridComponent.GridInterface
+import de.htwg.se.Carcassonne.model.playerComponent.Player
+import de.htwg.se.Carcassonne.model.playfieldComponent.CardManipulatorInterface
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.CardManipulator
+
+class PrettyPrint(grid: GridInterface, freshCard:CardManipulatorInterface, players:List[Player], isOn: Int, success: Boolean)
+  extends PrettyPrintStrategyTemplate {
 
   private val color = List(Console.BLUE, Console.RED, Console.YELLOW, Console.GREEN)
 
@@ -58,15 +64,15 @@ class PrettyPrint(grid: Grid, freshCard:CardManipulator, players:List[Player], i
   def freshCardPart: String = {
     var tmpString = ""
     tmpString = lowRow(0) + "\tDeine neue Karte:\n" +
-      topRow(1) + "\t" + freshCard.card.topString + "\n" +
-      midRow(1) + "\t" + freshCard.card.midString + "\n" +
-      lowRow(1) + "\t" + freshCard.card.lowString + "\n"
+      topRow(1) + "\t" + freshCard.getCard.topString + "\n" +
+      midRow(1) + "\t" + freshCard.getCard.midString + "\n" +
+      lowRow(1) + "\t" + freshCard.getCard.lowString + "\n"
     tmpString
   }
 
   def restPart: String = {
     var tmpString = ""
-    for(y <- 2 until grid.size){
+    for(y <- 2 until grid.getSize){
       tmpString += topRow(y) + "\n" + midRow(y) + "\n" + lowRow(y) + "\n"
     }
     tmpString
@@ -74,7 +80,7 @@ class PrettyPrint(grid: Grid, freshCard:CardManipulator, players:List[Player], i
 
   def topRow(y: Int):String = {
     var tmpString = ""
-    for(x <- 0 until grid.size){
+    for(x <- 0 until grid.getSize){
       tmpString = tmpString + topSeg(x, y)
     }
     tmpString
@@ -82,7 +88,7 @@ class PrettyPrint(grid: Grid, freshCard:CardManipulator, players:List[Player], i
 
   def midRow(y: Int):String = {
     var tmpString = ""
-    for(x <- 0 until grid.size){
+    for(x <- 0 until grid.getSize){
       tmpString = tmpString + midSeg(x, y)
     }
     tmpString
@@ -90,7 +96,7 @@ class PrettyPrint(grid: Grid, freshCard:CardManipulator, players:List[Player], i
 
   def lowRow(y: Int):String = {
     var tmpString = ""
-    for(x <- 0 until grid.size){
+    for(x <- 0 until grid.getSize){
       tmpString = tmpString + lowSeg(x, y)
     }
     tmpString

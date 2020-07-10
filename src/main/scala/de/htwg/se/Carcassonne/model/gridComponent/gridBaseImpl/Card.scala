@@ -1,43 +1,32 @@
-package de.htwg.se.Carcassonne.model
+package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
-case class Card(areas:List[Area] = List(Area()), private val id:(Int, Int) = (-1, 0)){
+import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface}
+
+case class Card(areas:List[AreaInterface], private val id:(Int, Int) = (-1, 0)) extends CardInterface {
 
   def this(xy:(Int, Int)) = this(areas = List(Area(corners = List('n'), xy = (xy._1, xy._2)),
     Area(corners = List('w'), xy = (xy._1, xy._2)), Area(corners = List('e'), xy = (xy._1, xy._2)),
     Area(corners = List('s'), xy = (xy._1, xy._2))), id = (-1, 0))
 
-  def this(xy:(Int, Int), idx:(Int, Int)) = this(areas = List(Area(corners = List('n'), xy = (xy._1, xy._2)),
-    Area(corners = List('w'), xy = (xy._1, xy._2)), Area(corners = List('e'), xy = (xy._1, xy._2)),
-    Area(corners = List('s'), xy = (xy._1, xy._2))), id = idx)
-
   def isEmpty: Boolean = areas.head.getValue == ' ' && areas.size == 4
 
+  /* id => CardNumber (-1 is EmptyCard) and Rotation of Card */
   def getID: (Int, Int) = id
 
-  def setAreasXY(x:Int, y:Int):Card = copy(areas = areas.map(areas => areas.copy(xy = (x, y))))
+  def setAreasXY(x:Int, y:Int):CardInterface = copy(areas = areas.map(areas => areas.setCoord(x, y)))
 
   def getValue(dir:Char): Char = areas.find(_.getCorners.contains(dir)).get.getValue
 
   def getPlayer(dir:Char): Int = areas.find(_.getCorners.contains(dir)).get.getPlayer
 
+  def getAreas:List[AreaInterface] = areas
+
   def getCornersLookingFrom(dir:Char): List[Char] = areas.find(_.getCorners.contains(dir)).get.getCorners
 
-  def getAreaLookingFrom(dir:Char): Area = areas.find(_.getCorners.contains(dir)).get
+  def getAreaLookingFrom(dir:Char): AreaInterface = areas.find(_.getCorners.contains(dir)).get
 
-  def isValid: Boolean = {
-    var check = true
-    for(x <- areas)
-      for(y <- areas)
-        for(c <- x.getCorners){
-          if(y.getCorners.contains(c)  && y != x){
-            check = false
-          }
-        }
-    check
-  }
-
-  def rotateRight():Card = {
-    val rotatedAreas:List[Area] = areas.map { x => x.rotateRight() }
+  def rotateRight():CardInterface = {
+    val rotatedAreas:List[AreaInterface] = areas.map { x => x.rotateRight() }
     var rotations = id._2 + 1
     if(rotations == 4){
      rotations = 0
@@ -109,4 +98,3 @@ case class Card(areas:List[Area] = List(Area()), private val id:(Int, Int) = (-1
     s" $ul $u $ur"
   }
 }
-

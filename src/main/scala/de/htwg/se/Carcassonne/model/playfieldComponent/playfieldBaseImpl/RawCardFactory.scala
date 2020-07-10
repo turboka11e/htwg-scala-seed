@@ -1,4 +1,7 @@
-package de.htwg.se.Carcassonne.model
+package de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
+
+import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.{Area, Card}
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
 
 import scala.util.Random
 
@@ -48,14 +51,14 @@ private class RandomCard(isOn: Int) extends RawCardFactory {
 }
 
 private class SelectCard(isOn: Int, select:Int) extends RawCardFactory {
-  override def drawCard(): CardManipulator = CardManipulator(isOn, randomCards(select))
+  override def drawCard(): CardManipulator = playfieldBaseImpl.CardManipulator(isOn, randomCards(select))
 }
 
 object RawCardFactory {
-  def apply(kind: String, isOn:Int = -1, select:Int = 0): RawCardFactory = kind match {
+  def apply(kind: String, isOn:Int = -1, selectedCard:Int = 0): RawCardFactory = kind match {
     case "emptyCard" => new EmptyCard()
     case "randomCard" => new RandomCard(isOn)
-    case "selectCard" => new SelectCard(isOn, select)
+    case "selectCard" => new SelectCard(isOn, selectedCard)
   }
 }
 

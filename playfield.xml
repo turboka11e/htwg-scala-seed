@@ -1,0 +1,16 @@
+<playfield size="2" isOn="0" freshCard="14" gameState="3">
+      <players>
+        <player name="Lukas" points="0.0"></player><player name="Basti" points="0.0"></player>
+      </players>
+      <grid>
+        <card row="0" col="0" name="14" rotation="1">
+      <selectedArea index="1" player="0"></selectedArea>
+    </card><card row="0" col="1" name="14" rotation="0">
+      
+    </card><card row="1" col="0" name="-1" rotation="0">
+      
+    </card><card row="1" col="1" name="-1" rotation="0">
+      
+    </card>
+      </grid>
+    </playfield>

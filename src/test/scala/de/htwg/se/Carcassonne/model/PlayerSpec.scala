@@ -1,5 +1,6 @@
 package de.htwg.se.Carcassonne.model
 
+import de.htwg.se.Carcassonne.model.playerComponent.Player
 import org.scalatest._
 
 class PlayerSpec extends WordSpec with Matchers {
