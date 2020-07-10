@@ -12,7 +12,7 @@ object Carcassonne {
   val injector: Injector = Guice.createInjector(new CarcassonneModule)
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new TUI(controller)
-  val gui = new StartGUI(controller)
+//  val gui = new StartGUI(controller)
 
   def main(args: Array[String]): Unit = {
     var input: String = ""

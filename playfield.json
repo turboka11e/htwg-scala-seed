@@ -1,29 +1,55 @@
 {
-  "size" : 2,
-  "isOn" : 0,
+  "size" : 6,
+  "isOn" : 1,
   "freshCard" : 14,
   "gameState" : 3,
   "players" : [ {
-    "name" : "Lukas",
-    "points" : 0
+    "name" : "Marko",
+    "points" : 3
   }, {
-    "name" : "Basti",
-    "points" : 0
+    "name" : "Lukas",
+    "points" : 3
   } ],
   "cards" : [ {
     "row" : 0,
     "col" : 0,
     "card" : {
-      "name" : 14,
-      "rotation" : 1,
-      "index" : 1,
-      "player" : 0
+      "name" : -1,
+      "rotation" : 0
     }
   }, {
     "row" : 0,
     "col" : 1,
     "card" : {
-      "name" : 14,
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 0,
+    "col" : 2,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 0,
+    "col" : 3,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 0,
+    "col" : 4,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 0,
+    "col" : 5,
+    "card" : {
+      "name" : -1,
       "rotation" : 0
     }
   }, {
@@ -36,6 +62,206 @@
   }, {
     "row" : 1,
     "col" : 1,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 1,
+    "col" : 2,
+    "card" : {
+      "name" : 14,
+      "rotation" : 0,
+      "index" : 2,
+      "player" : 0
+    }
+  }, {
+    "row" : 1,
+    "col" : 3,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 1,
+    "col" : 4,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 1,
+    "col" : 5,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 2,
+    "col" : 0,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 2,
+    "col" : 1,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 2,
+    "col" : 2,
+    "card" : {
+      "name" : 2,
+      "rotation" : 0,
+      "index" : 0,
+      "player" : 1
+    }
+  }, {
+    "row" : 2,
+    "col" : 3,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 2,
+    "col" : 4,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 2,
+    "col" : 5,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 3,
+    "col" : 0,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 3,
+    "col" : 1,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 3,
+    "col" : 2,
+    "card" : {
+      "name" : 14,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 3,
+    "col" : 3,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 3,
+    "col" : 4,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 3,
+    "col" : 5,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 4,
+    "col" : 0,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 4,
+    "col" : 1,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 4,
+    "col" : 2,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 4,
+    "col" : 3,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 4,
+    "col" : 4,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 4,
+    "col" : 5,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 5,
+    "col" : 0,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 5,
+    "col" : 1,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 5,
+    "col" : 2,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 5,
+    "col" : 3,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 5,
+    "col" : 4,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 5,
+    "col" : 5,
     "card" : {
       "name" : -1,
       "rotation" : 0

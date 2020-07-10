@@ -13,7 +13,7 @@ class CarcassonneModule extends AbstractModule with ScalaModule {
   def configure(): Unit = {
     bind[ControllerInterface].to[controllerBaseImpl.Controller]
     bind[PlayfieldInterface].to[playfieldBaseImpl.Playfield]
-//    bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
-    bind[FileIOInterface].to[fileIoJsonImpl.FileIO]
+    bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
+//    bind[FileIOInterface].to[fileIoJsonImpl.FileIO]
   }
 }
