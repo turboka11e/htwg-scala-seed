@@ -1,7 +1,5 @@
 package de.htwg.se.Carcassonne.model.gridComponent
 
-import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
-
 trait GridInterface {
 
   def getCount:Int
