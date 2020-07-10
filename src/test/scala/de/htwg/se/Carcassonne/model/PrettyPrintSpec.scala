@@ -1,7 +1,6 @@
 package de.htwg.se.Carcassonne.model
 
 import de.htwg.se.Carcassonne.aview.tui.PrettyPrint
-import de.htwg.se.Carcassonne.model
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.RawCardFactory
@@ -12,13 +11,12 @@ class PrettyPrintSpec extends WordSpec with Matchers {
     "is created it" should {
       val grid = new Grid(3)
       val pList = List(Player("Mark"))
-      val pList2 = List(Player("Mark"), Player("Lukas"))
-      val p0 = new PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
-      val p1 = new PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
-      val p2 = new PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
-      val p3 = new PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
-      val p4 = new PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = true)
-      val p5 = new PrettyPrint(grid, RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = false)
+      val p0 = new PrettyPrint(grid, RawCardFactory("selectCard", 0).drawCard(), pList, 0, success = true)
+      val p1 = new PrettyPrint(grid, RawCardFactory("selectCard", 0).drawCard(), pList, 0, success = true)
+      val p2 = new PrettyPrint(grid, RawCardFactory("selectCard", 0).drawCard(), pList, 0, success = true)
+      val p3 = new PrettyPrint(grid, RawCardFactory("selectCard", 0).drawCard(), pList, 0, success = true)
+      val p4 = new PrettyPrint(grid, RawCardFactory("selectCard", 0).drawCard(), pList, 0, success = true)
+      val p5 = new PrettyPrint(grid, RawCardFactory("selectCard", 0).drawCard(), pList, 0, success = false)
       val ccp6 = new PrettyPrint(grid.place(0, 0, RawCardFactory("selectCard", 0, 0).drawCard().setPlayerToArea(0).finalCard(0, 0)),
         RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = false)
       "print playfieldView" in {

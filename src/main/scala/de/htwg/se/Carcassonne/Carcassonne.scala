@@ -5,7 +5,6 @@ import de.htwg.se.Carcassonne.aview.gui.StartGUI
 import de.htwg.se.Carcassonne.aview.tui.TUI
 import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
 
-
 import scala.io.StdIn._
 
 object Carcassonne {

@@ -1,0 +1,58 @@
+<playfield size="5" isOn="0" freshCard="13" gameState="3">
+      <players>
+        <player name="Lukas" points="4.0"></player><player name="Basti" points="10.0"></player>
+      </players>
+      <grid>
+        <card row="0" col="0" name="-1" rotation="0">
+      
+    </card><card row="0" col="1" name="-1" rotation="0">
+      
+    </card><card row="0" col="2" name="-1" rotation="0">
+      
+    </card><card row="0" col="3" name="-1" rotation="0">
+      
+    </card><card row="0" col="4" name="-1" rotation="0">
+      
+    </card><card row="1" col="0" name="-1" rotation="0">
+      
+    </card><card row="1" col="1" name="12" rotation="1">
+      <selectedArea index="0" player="1"></selectedArea>
+    </card><card row="1" col="2" name="3" rotation="0">
+      <selectedArea index="0" player="0"></selectedArea>
+    </card><card row="1" col="3" name="-1" rotation="0">
+      
+    </card><card row="1" col="4" name="-1" rotation="0">
+      
+    </card><card row="2" col="0" name="-1" rotation="0">
+      
+    </card><card row="2" col="1" name="0" rotation="2">
+      <selectedArea index="1" player="1"></selectedArea>
+    </card><card row="2" col="2" name="8" rotation="0">
+      
+    </card><card row="2" col="3" name="-1" rotation="0">
+      
+    </card><card row="2" col="4" name="-1" rotation="0">
+      
+    </card><card row="3" col="0" name="9" rotation="2">
+      <selectedArea index="0" player="1"></selectedArea>
+    </card><card row="3" col="1" name="9" rotation="1">
+      
+    </card><card row="3" col="2" name="-1" rotation="0">
+      
+    </card><card row="3" col="3" name="-1" rotation="0">
+      
+    </card><card row="3" col="4" name="-1" rotation="0">
+      
+    </card><card row="4" col="0" name="9" rotation="3">
+      <selectedArea index="0" player="0"></selectedArea>
+    </card><card row="4" col="1" name="8" rotation="0">
+      
+    </card><card row="4" col="2" name="-1" rotation="0">
+      
+    </card><card row="4" col="3" name="-1" rotation="0">
+      
+    </card><card row="4" col="4" name="-1" rotation="0">
+      
+    </card>
+      </grid>
+    </playfield>

@@ -72,7 +72,8 @@ class TUI(controller: ControllerInterface) extends Reactor {
   }
 
   def printTui(): Unit = {
-    println(controller.statusText)
+//    println(controller.statusText)
+    print(controller.playFieldToString)
   }
 
 }
