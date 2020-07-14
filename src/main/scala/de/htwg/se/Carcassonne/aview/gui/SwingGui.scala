@@ -4,7 +4,7 @@ import java.awt.Color
 import java.io.File
 
 import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
-import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{Controller, GameOver, NewGame, PlayfieldChanged}
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{GameOver, PlayfieldChanged}
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, ImageIcon}
 
