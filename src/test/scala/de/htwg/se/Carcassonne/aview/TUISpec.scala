@@ -9,11 +9,8 @@ class TUISpec extends WordSpec with Matchers {
 
   "A Carcasonne TUI" should  {
     val controller = new Controller(Playfield())
-    val notChangedController = new Controller(Playfield())
     val playfield = Playfield().fieldSize(3)
-    val g1 = playfield.changeGameState(1)
-    val g4 = playfield.changeGameState(4)
-    val g5 = playfield.changeGameState(5)
+
     val tui = new TUI(controller)
     "create a new game on input 'new'" in {
       tui.processInputLine("new")
@@ -59,7 +56,6 @@ class TUISpec extends WordSpec with Matchers {
     }
     "validate long String" in {
       tui.processInputLine("0 1")
-//      controller.playfield.getGameState should be(3)
       controller.changeGameState(3)
       tui.processInputLine("0")
       controller.playfield.changeGameState(4)
