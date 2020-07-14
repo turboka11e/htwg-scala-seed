@@ -41,10 +41,12 @@ class StartGUI(controller: ControllerInterface) extends Frame {
       case KeyTyped(_, c, _, _) =>
         controller.getGameState match {
           case 1 => if (c == KeyEvent.VK_ENTER && text != "") controller.addPlayer(textInput.text)
+          case 2 => if (c == KeyEvent.VK_ENTER && text != "") controller.addPlayer(textInput.text)
           case _ =>
         }
     }
   }
+
   val confirmButton: Button = new Button("") {
     background = java.awt.Color.DARK_GRAY.brighter().brighter()
     foreground = java.awt.Color.BLACK
@@ -194,7 +196,6 @@ class StartGUI(controller: ControllerInterface) extends Frame {
       } else if (b == declineButton) {
         if (controller.getPlayfield.getPlayers.nonEmpty) {
           controller.firstCard()
-          startGame()
         }
       } else if (b == addButton) {
         controller.getGameState match {
