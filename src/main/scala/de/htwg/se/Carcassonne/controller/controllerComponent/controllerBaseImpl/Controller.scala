@@ -35,24 +35,21 @@ class Controller @Inject() (var playfield: PlayfieldInterface) extends Controlle
   }
 
   def addPlayer(name: String): Unit = {
-    playfield.getGameState match {
-      case 1 => playfield = playfield.addPlayer(name)
-        gameStatus = PLAYER
-        publish(new AddPlayers)
-      case _ =>
-    }
+    playfield = playfield.addPlayer(name)
+    gameStatus = PLAYER
+    publish(new AddPlayers)
   }
 
   def firstCard(): Unit = {
     playfield = playfield.changeGameState(3).getFreshCard
     gameStatus = FIRSTCARD
-    publish(new PlayfieldChanged)
+    publish(new FirstCard)
   }
 
   def firstCard(select: Int): Unit = {
     playfield = playfield.changeGameState(3).getFreshCard(select)
     gameStatus = FIRSTCARD
-    publish(new PlayfieldChanged)
+    publish(new FirstCard)
   }
 
   def changeGameState(gs: Int): Unit = {

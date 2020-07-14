@@ -10,6 +10,10 @@ class SetGrid extends Event
 
 class AddPlayers extends Event
 
+class FirstCard extends Event
+
 class RotateR extends Event
 
 class GameOver extends Event
+
+class InvalidInputString extends Event

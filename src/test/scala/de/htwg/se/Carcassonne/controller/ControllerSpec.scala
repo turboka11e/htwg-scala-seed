@@ -18,10 +18,6 @@ class ControllerSpec extends WordSpec with Matchers {
         "return logical GameState" in {
           controller.getGameState should be(0)
         }
-        "try to add too early player" in {
-          controller.addPlayer("Sollte Game State nicht ändern")
-          controller.gameStatus should be(GameStatus.NEW)
-        }
         "create Grid" in {
           controller.createGrid(2)
           controller.gameStatus should be(GameStatus.RESIZE)
@@ -73,7 +69,6 @@ class ControllerSpec extends WordSpec with Matchers {
           controller.placeCard(1, 1)
           controller.placeAble()
           controller.gameStatus should be(GameStatus.GAMEOVER)
-
         }
       }
     }

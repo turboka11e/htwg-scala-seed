@@ -25,7 +25,7 @@ class PrettyPrint(playfield: PlayfieldInterface) extends PrettyPrintStrategyTemp
 
   override def printo():String = printStrategy
 
-  def g0:String = "Welcome to Carcassonne\nNeues Spiel mit 'new' starten.\nBitte Feldgröße angeben: "
+  def g0:String = "Welcome to Carcassonne\nBitte Feldgröße angeben: "
 
   def g1:String = "Name eingeben: "
 

@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent
 import java.io.File
 
 import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
-import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, NewGame, PlayfieldChanged, SetGrid}
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, FirstCard, NewGame, PlayfieldChanged, SetGrid}
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, ImageIcon}
 
@@ -155,7 +155,7 @@ class StartGUI(controller: ControllerInterface) extends Frame {
     confirmButton.visible = false
     addButton.visible = true
     infoMidLabel.visible = true
-    controller.changeGameState(1)
+//    controller.changeGameState(1)
     playerLabel.visible = true
     playerLabel.text = {
       var tmpString = ""
@@ -176,6 +176,7 @@ class StartGUI(controller: ControllerInterface) extends Frame {
 
   def startGame(): Unit = {
     new SwingGui(controller)
+    this.deafTo(controller)
     this.close()
   }
 
@@ -198,6 +199,7 @@ class StartGUI(controller: ControllerInterface) extends Frame {
       } else if (b == addButton) {
         controller.getGameState match {
           case 1 => if (textInput.text != "") controller.addPlayer(textInput.text)
+          case 2 => if (textInput.text != "") controller.addPlayer(textInput.text) // for TUI compatibility
         }
       }
   }
@@ -213,6 +215,7 @@ class StartGUI(controller: ControllerInterface) extends Frame {
     case event: NewGame => welcomeScreenAction()
     case event: SetGrid => gridSizeSelectAction()
     case event: AddPlayers => addPlayersAction()
+    case event: FirstCard => startGame()
   }
 
 

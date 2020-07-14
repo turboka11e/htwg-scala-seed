@@ -16,17 +16,11 @@ object Carcassonne {
 
   def main(args: Array[String]): Unit = {
     var input: String = ""
-    if(args.length > 0) input = args(0)
-
-    if (!input.isEmpty){
-      tui.processInputLine(input)
-    }
-    else {
+      println("Neues Spiel mit 'new' starten.")
       do {
         input = readLine()
         tui.processInputLine(input)
       } while (input != "q")
-    }
 
   }
 }

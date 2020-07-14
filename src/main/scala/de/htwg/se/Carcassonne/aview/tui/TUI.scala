@@ -1,7 +1,7 @@
 package de.htwg.se.Carcassonne.aview.tui
 
 import de.htwg.se.Carcassonne.controller.controllerComponent.{ControllerInterface, GameStatus}
-import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, Controller, GameOver, NewGame, PlayfieldChanged, RotateR, SetGrid}
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, Controller, FirstCard, GameOver, InvalidInputString, NewGame, PlayfieldChanged, RotateR, SetGrid}
 
 import scala.swing.Reactor
 
@@ -30,11 +30,13 @@ class TUI(controller: ControllerInterface) extends Reactor {
           controller.firstCard()
         } else {
           controller.changeGameState(1)
+          controller.publish(new PlayfieldChanged)
         }
       case 3 => if (dc) controller.changeGameState(4)
+        controller.publish(new PlayfieldChanged)
 
       case 4 => if (!dc) controller.changeGameState(5)
-
+        controller.publish(new PlayfieldChanged)
       case _ =>
     }
   }
@@ -50,8 +52,13 @@ class TUI(controller: ControllerInterface) extends Reactor {
         case _ =>
       }
     } else if (input.nonEmpty) {
-      controller.addPlayer(input)
+      if (controller.getGameState == 1) {
+        controller.addPlayer(input)
+      } else {
+        if( controller.getGameState > 1) controller.publish(new InvalidInputString)
+      }
     }
+
   }
 
   def forkDigit(input: Int): Unit = {
@@ -66,14 +73,21 @@ class TUI(controller: ControllerInterface) extends Reactor {
     case event: NewGame => printTui()
     case event: SetGrid => printTui()
     case event: AddPlayers => printTui()
+    case event: FirstCard => printTui()
     case event: PlayfieldChanged => printTui()
     case event: RotateR => printTui()
-    case event: GameOver => printTui()
+    case event: GameOver => "GAME OVER"
+    case event: InvalidInputString => printErrorTUI()
   }
 
   def printTui(): Unit = {
-    println("*** " + controller.statusText + " ***")
-    println(new PrettyPrint(controller.getPlayfield).printo())    // comment out, if only statusText is desired
+    println(Console.RED + "*** " + controller.statusText + " ***" + Console.RESET)
+    print(new PrettyPrint(controller.getPlayfield).printo())    // comment out, if only statusText is desired
+  }
+
+  def printErrorTUI(): Unit = {
+    println(Console.RED + "*** " + "Ungültige Eingabe! Den Anweisungen folgen!" + " ***" + Console.RESET)
+    print(new PrettyPrint(controller.getPlayfield).printo())    // comment out, if only statusText is desired
   }
 
 }
