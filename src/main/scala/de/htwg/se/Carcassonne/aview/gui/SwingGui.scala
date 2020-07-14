@@ -4,7 +4,7 @@ import java.awt.Color
 import java.io.File
 
 import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
-import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{Controller, NewGame, PlayfieldChanged}
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{Controller, GameOver, NewGame, PlayfieldChanged}
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, ImageIcon}
 
@@ -21,6 +21,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   /* Cells is Array for GuiCard Classes */
   val gsize: Int = controller.getPlayfield.getGrid.getSize
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
+  var playerInfos: GridBagPanel = _
 
   /* Components for main GUI */
   val banner: Label = new Label() {
@@ -29,7 +30,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
   val controlPanel: BorderPanel = new BorderPanel {
 
-    val playerInfos: GridBagPanel = new GridBagPanel() {
+    playerInfos = new GridBagPanel() {
 
       def constraints(x: Int, y: Int,
                       gridwidth: Int = 1, gridheight: Int = 1,
@@ -278,6 +279,34 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       add(tmpCard, constraints(row, col))
     }
 
+  }
+
+  def gameOver(): Unit = {
+    var winner = controller.getPlayfield.getPlayers.sortBy(p => p.points > p.points)
+    winner = winner.filter(p => p.points >= winner.head.points)
+    var winnerList:List[String] = Nil
+    for (elem <- winner) {winnerList = elem.name::winnerList}
+    winnerList = winnerList.reverse
+    val res = Dialog.showConfirmation(contents.head, f"${winnerList.mkString(", ")} won!\nNew Game?", title = "Game Over", optionType = Dialog.Options.YesNo)
+    if (res == Dialog.Result.Ok) {
+      controller.newGame()
+      for {
+        x <- cells.indices
+        y <- cells.indices
+      } {
+        cells(x)(y).deafTo(controller)
+      }
+      playerInfos.deafTo(controller)
+      this.deafTo(controller)
+      new StartGUI(controller)
+      close()
+    } else {
+      sys.exit(0)
+    }
+  }
+
+  reactions += {
+    case event: GameOver => gameOver()
   }
 
   contents = new BorderPanel {

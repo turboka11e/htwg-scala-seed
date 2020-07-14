@@ -1,10 +1,9 @@
-import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
-import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.RawCardFactory
+import de.htwg.se.Carcassonne.model.playerComponent.Player
 
-var testGrid = new Grid(3)
+val pList = List(Player("Mark", 2), Player("Nail", 2), Player("Kalle", 1))
 
-val card = RawCardFactory("selectCard", -1, 14).drawCard().finalCard(0, 0)
-
-val g1 = testGrid.place(0, 0, card)
-
-g1.getTerritories
+var winner = pList.sortBy(p => p.points > p.points)
+winner = winner.filter(p => p.points >= winner.head.points)
+var winnerList:List[String] = Nil
+for (elem <- winner) {winnerList = elem.name::winnerList}
+winnerList.mkString(", ")
