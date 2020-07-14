@@ -1,7 +1,7 @@
 package de.htwg.se.Carcassonne.aview.tui
 
 import de.htwg.se.Carcassonne.controller.controllerComponent.{ControllerInterface, GameStatus}
-import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, Controller, FirstCard, GameOver, InvalidInputString, NewGame, PlayfieldChanged, RotateR, SetGrid}
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, Controller, FirstCard, GameOver, InvalidInputString, PlayfieldChanged, SetGrid}
 
 import scala.swing.Reactor
 
@@ -70,13 +70,11 @@ class TUI(controller: ControllerInterface) extends Reactor {
   }
 
   reactions += {
-    case event: NewGame => printTui()
     case event: SetGrid => printTui()
     case event: AddPlayers => printTui()
     case event: FirstCard => printTui()
     case event: PlayfieldChanged => printTui()
-    case event: RotateR => printTui()
-    case event: GameOver => "GAME OVER"
+    case event: GameOver => println("GAME OVER")
     case event: InvalidInputString => printErrorTUI()
   }
 

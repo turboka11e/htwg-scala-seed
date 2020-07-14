@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent
 import java.io.File
 
 import de.htwg.se.Carcassonne.controller.controllerComponent.ControllerInterface
-import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, FirstCard, NewGame, PlayfieldChanged, SetGrid}
+import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.{AddPlayers, FirstCard, SetGrid}
 import javax.imageio.ImageIO
 import javax.swing.{BorderFactory, ImageIcon}
 
@@ -213,7 +213,6 @@ class StartGUI(controller: ControllerInterface) extends Frame {
   centerOnScreen()
 
   reactions += {
-    case event: NewGame => welcomeScreenAction()
     case event: SetGrid => gridSizeSelectAction()
     case event: AddPlayers => addPlayersAction()
     case event: FirstCard => startGame()

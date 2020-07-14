@@ -9,14 +9,17 @@ class GUISpec extends WordSpec with Matchers {
       val newGame = Carcassonne
       "go through almost everything" in {
         newGame.tui.processInputLine("new")
-        newGame.tui.processInputLine("2")
+        newGame.tui.processInputLine("3")
         newGame.tui.processInputLine("Lukas")
         newGame.tui.processInputLine("n")
+        newGame.controller.firstCard(5)
+        newGame.tui.processInputLine("ldkjflkjasd")
         newGame.tui.processInputLine("r")
         newGame.tui.processInputLine("l")
         newGame.tui.processInputLine("l")
         newGame.tui.processInputLine("0")
-        newGame.tui.processInputLine("0 0")
+        newGame.tui.processInputLine("1 1")
+        newGame.tui.processInputLine("new")
       }
     }
   }
