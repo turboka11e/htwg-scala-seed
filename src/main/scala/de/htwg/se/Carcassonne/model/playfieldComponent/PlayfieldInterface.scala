@@ -22,10 +22,11 @@ trait PlayfieldInterface {
   def placeable:Boolean
   def placeCard(x: Int, y: Int): PlayfieldInterface
   def nextPlayer: PlayfieldInterface
-  def playFieldToString:String
+//  def playFieldToString:String
 }
 
 trait CardManipulatorInterface {
+
   def getCard:CardInterface
   def rotateRight:CardManipulatorInterface
   def rotateLeft:CardManipulatorInterface
@@ -33,3 +34,4 @@ trait CardManipulatorInterface {
   def finalCard(x:Int, y:Int):CardInterface
 
 }
+

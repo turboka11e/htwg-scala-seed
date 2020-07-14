@@ -2,8 +2,19 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/turboka11e/de.htwg.se.Carcassonne/badge.svg?branch=master)](https://coveralls.io/github/turboka11e/de.htwg.se.Carcassonne?branch=master)
 
-Carcassonne
-=====================================================
+#Carcassonne
+
+###Option Monade
+gridComponent -> gridBaseImpl -> case class Matrix -> getDirEnv
+
+###Pattern I
+RawCardFactory -> Factory
+
+###Pattern II
+PrettyPrint -> Strategy
+
+###Pattern III
+CardManipulator -> Builder
 
 
 This is a project created from the htwg-scala-seed-master. It is a basic scala project as used in the

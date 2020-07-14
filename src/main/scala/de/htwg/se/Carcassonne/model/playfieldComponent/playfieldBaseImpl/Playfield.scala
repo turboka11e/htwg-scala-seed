@@ -68,7 +68,4 @@ case class Playfield (players:List[Player] = Nil, isOn: Int = 0, grid: GridInter
     }
   }
 
-  def playFieldToString:String = {
-    new PrettyPrint(grid, freshCard, players, isOn, success).printo(gameState)
-  }
 }

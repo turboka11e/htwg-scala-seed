@@ -3,7 +3,7 @@ package de.htwg.se.Carcassonne.model
 import de.htwg.se.Carcassonne.aview.tui.PrettyPrint
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.Carcassonne.model.playerComponent.Player
-import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.RawCardFactory
+import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.{Playfield, RawCardFactory}
 import org.scalatest._
 
 class PrettyPrintSpec extends WordSpec with Matchers {
@@ -11,14 +11,14 @@ class PrettyPrintSpec extends WordSpec with Matchers {
     "is created it" should {
       val grid = new Grid(3)
       val pList = List(Player("Mark"))
-      val p0 = new PrettyPrint(grid, RawCardFactory("selectCard", 0).drawCard(), pList, 0, success = true)
-      val p1 = new PrettyPrint(grid, RawCardFactory("selectCard", 0).drawCard(), pList, 0, success = true)
-      val p2 = new PrettyPrint(grid, RawCardFactory("selectCard", 0).drawCard(), pList, 0, success = true)
-      val p3 = new PrettyPrint(grid, RawCardFactory("selectCard", 0).drawCard(), pList, 0, success = true)
-      val p4 = new PrettyPrint(grid, RawCardFactory("selectCard", 0).drawCard(), pList, 0, success = true)
-      val p5 = new PrettyPrint(grid, RawCardFactory("selectCard", 0).drawCard(), pList, 0, success = false)
-      val ccp6 = new PrettyPrint(grid.place(0, 0, RawCardFactory("selectCard", 0, 0).drawCard().setPlayerToArea(0).finalCard(0, 0)),
-        RawCardFactory("selectCard", 0, 0).drawCard(), pList, 0, success = false)
+      val p0 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, gameState = 0))
+      val p1 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, gameState = 1))
+      val p2 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, gameState = 2))
+      val p3 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, gameState = 3))
+      val p4 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, gameState = 4))
+      val p5 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, gameState = 5, success = false))
+      val ccp6 = new PrettyPrint(Playfield(grid = grid.place(0, 0, RawCardFactory("selectCard", 0, 0).drawCard().setPlayerToArea(0).finalCard(0, 0)),
+        freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, success = false))
       "print playfieldView" in {
         val r = Console.BLUE + "r" + Console.RESET
         val c = Console.RED + "c" + Console.RESET
@@ -37,19 +37,19 @@ class PrettyPrintSpec extends WordSpec with Matchers {
           s" └   ┘ └   ┘ └   ┘\n")
       }
       "print g1" in {
-        p1.printo(1) should be("Name eingeben: ")
+        p1.printo() should be("Name eingeben: ")
       }
       "print g2" in  {
-        p2.printo(2) should be("Weitere Spieler hinzufügen? [y],[n]\nEingabe: ")
+        p2.printo() should be("Weitere Spieler hinzufügen? [y],[n]\nEingabe: ")
       }
       "print g3" in {
-        p3.printo(3) should be(p3.playfieldView + "Karte drehen: Rechts [r], Links [l]\nFertig: [y]\nEingabe: ")
+        p3.printo() should be(p3.playfieldView + "Karte drehen: Rechts [r], Links [l]\nFertig: [y]\nEingabe: ")
       }
       "print g4" in {
-        p4.printo(4) should be(p4.playfieldView + "Männchen auf Gebiet setzen! Blau [0], Rot [1], Gelb [2], Grün [3]\nEingabe: ")
+        p4.printo() should be(p4.playfieldView + "Männchen auf Gebiet setzen! Blau [0], Rot [1], Gelb [2], Grün [3]\nEingabe: ")
       }
       "print g5" in {
-        p5.printo(5) should be(p5.playfieldView + p5.illegalPlace + "Setze Karte in das Spielfeld! [x y]\nEingabe: ")
+        p5.printo() should be(p5.playfieldView + p5.illegalPlace + "Setze Karte in das Spielfeld! [x y]\nEingabe: ")
       }
       "print the player " in {
         val points = 0.0

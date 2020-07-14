@@ -116,7 +116,4 @@ class Controller @Inject() (var playfield: PlayfieldInterface) extends Controlle
     publish(new PlayfieldChanged)
   }
 
-
-  def playFieldToString: String = playfield.playFieldToString
-
 }

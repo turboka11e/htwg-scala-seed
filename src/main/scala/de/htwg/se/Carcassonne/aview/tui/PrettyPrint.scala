@@ -2,28 +2,28 @@ package de.htwg.se.Carcassonne.aview.tui
 
 import de.htwg.se.Carcassonne.model.gridComponent.GridInterface
 import de.htwg.se.Carcassonne.model.playerComponent.Player
-import de.htwg.se.Carcassonne.model.playfieldComponent.CardManipulatorInterface
-import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.CardManipulator
+import de.htwg.se.Carcassonne.model.playfieldComponent.{CardManipulatorInterface, PlayfieldInterface}
 
-class PrettyPrint(grid: GridInterface, freshCard:CardManipulatorInterface, players:List[Player], isOn: Int, success: Boolean)
-  extends PrettyPrintStrategyTemplate {
+class PrettyPrint(playfield: PlayfieldInterface) extends PrettyPrintStrategyTemplate {
+
+  val grid: GridInterface = playfield.getGrid
+  val freshCard: CardManipulatorInterface = playfield.getCurrentFreshCard
+  val players: List[Player] = playfield.getPlayers
+  val isOn: Int = playfield.getIsOn
+  val success: Boolean = playfield.getSuccess
 
   private val color = List(Console.BLUE, Console.RED, Console.YELLOW, Console.GREEN)
 
-  var printable: String = g0
-
-  override def printo(gameState: Int):String = {
-
-    gameState match {
-      case 0 => printable = g0
-      case 1 => printable = g1
-      case 2 => printable = g2
-      case 3 => printable = g3
-      case 4 => printable = g4
-      case 5 => printable = g5
-    }
-    printable
+  var printStrategy: String = playfield.getGameState match {
+    case 0 => g0
+    case 1 => g1
+    case 2 => g2
+    case 3 => g3
+    case 4 => g4
+    case 5 => g5
   }
+
+  override def printo():String = printStrategy
 
   def g0:String = "Welcome to Carcassonne\nNeues Spiel mit 'new' starten.\nBitte Feldgröße angeben: "
 

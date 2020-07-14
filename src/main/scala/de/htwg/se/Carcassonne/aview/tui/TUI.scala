@@ -72,8 +72,7 @@ class TUI(controller: ControllerInterface) extends Reactor {
   }
 
   def printTui(): Unit = {
-//    println(controller.statusText)
-    print(controller.playFieldToString)
+    println(new PrettyPrint(controller.getPlayfield).printo())
   }
 
 }
