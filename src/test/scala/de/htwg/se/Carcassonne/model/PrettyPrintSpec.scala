@@ -11,14 +11,14 @@ class PrettyPrintSpec extends WordSpec with Matchers {
     "is created it" should {
       val grid = new Grid(3)
       val pList = List(Player("Mark"))
-      val p0 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, gameState = 0))
-      val p1 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, gameState = 1))
-      val p2 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, gameState = 2))
-      val p3 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, gameState = 3))
-      val p4 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, gameState = 4))
-      val p5 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, gameState = 5, success = false))
+      val p0 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectCard", 0).drawCard(), players = pList, gameState = 0))
+      val p1 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectCard", 0).drawCard(), players = pList, gameState = 1))
+      val p2 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectCard", 0).drawCard(), players = pList, gameState = 2))
+      val p3 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectCard", 0).drawCard(), players = pList, gameState = 3))
+      val p4 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectCard", 0).drawCard(), players = pList, gameState = 4))
+      val p5 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectCard", 0).drawCard(), players = pList, gameState = 5, success = false))
       val ccp6 = new PrettyPrint(Playfield(grid = grid.place(0, 0, RawCardFactory("selectCard", 0, 0).drawCard().setPlayerToArea(0).finalCard(0, 0)),
-        freshCard = RawCardFactory("selectedCard", 0).drawCard(), players = pList, success = false))
+        freshCard = RawCardFactory("selectCard", 0).drawCard(), players = pList, success = false))
       "print playfieldView" in {
         val r = Console.BLUE + "r" + Console.RESET
         val c = Console.RED + "c" + Console.RESET
