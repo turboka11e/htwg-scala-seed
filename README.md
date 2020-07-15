@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/turboka11e/de.htwg.se.Carcassonne/badge.svg?branch=master)](https://coveralls.io/github/turboka11e/de.htwg.se.Carcassonne?branch=master)
 # Carcassonne
 
-This game was developed by Lukas for the class Software Engeneering at HTWG Konstanz.
+This game was developed by Lukas for the class Software Engineering at HTWG Konstanz.
 
 ![](DemoScreenshot.png)
 
