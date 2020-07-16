@@ -1,4 +1,4 @@
-package de.htwg.se.Carcassonne.aview
+package de.htwg.se.Carcassonne.aview.gui
 
 import de.htwg.se.Carcassonne.Carcassonne
 import org.scalatest.{Matchers, WordSpec}

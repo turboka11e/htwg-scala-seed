@@ -1,7 +1,5 @@
-package de.htwg.se.Carcassonne.model
+package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
-
-import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.{Area, Card}
 import org.scalatest._
 
 class CardSpec extends WordSpec with Matchers {

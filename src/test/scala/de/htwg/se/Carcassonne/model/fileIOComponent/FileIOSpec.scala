@@ -1,4 +1,4 @@
-package de.htwg.se.Carcassonne.model
+package de.htwg.se.Carcassonne.model.fileIOComponent
 
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
 import org.scalatest.{Matchers, WordSpec}

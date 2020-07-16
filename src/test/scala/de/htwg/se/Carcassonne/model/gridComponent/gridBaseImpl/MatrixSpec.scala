@@ -1,7 +1,6 @@
-package de.htwg.se.Carcassonne.model
+package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
 import de.htwg.se.Carcassonne.model.gridComponent.CardInterface
-import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.{Area, Card, Matrix}
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.RawCardFactory
 import org.scalatest._
 

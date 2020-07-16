@@ -1,6 +1,5 @@
-package de.htwg.se.Carcassonne.aview
+package de.htwg.se.Carcassonne.aview.tui
 
-import de.htwg.se.Carcassonne.aview.tui.TUI
 import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.Controller
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
 import org.scalatest._

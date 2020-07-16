@@ -1,6 +1,5 @@
-package de.htwg.se.Carcassonne.model
+package de.htwg.se.Carcassonne.aview.tui
 
-import de.htwg.se.Carcassonne.aview.tui.PrettyPrint
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.{Playfield, RawCardFactory}
@@ -17,7 +16,7 @@ class PrettyPrintSpec extends WordSpec with Matchers {
       val p3 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectCard", 0).drawCard(), players = pList, gameState = 3))
       val p4 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectCard", 0).drawCard(), players = pList, gameState = 4))
       val p5 = new PrettyPrint(Playfield(grid = grid, freshCard = RawCardFactory("selectCard", 0).drawCard(), players = pList, gameState = 5, success = false))
-      val ccp6 = new PrettyPrint(Playfield(grid = grid.place(0, 0, RawCardFactory("selectCard", 0, 0).drawCard().setPlayerToArea(0).finalCard(0, 0)),
+      val ccp6 = new PrettyPrint(Playfield(grid = grid.place(0, 0, RawCardFactory("selectCard", 0).drawCard().setPlayerToArea(0).finalCard(0, 0)),
         freshCard = RawCardFactory("selectCard", 0).drawCard(), players = pList, success = false))
       "print playfieldView" in {
         val r = Console.BLUE + "r" + Console.RESET

@@ -1,4 +1,4 @@
-package de.htwg.se.Carcassonne.controller
+package de.htwg.se.Carcassonne.controller.contollerComponent.controllerBaseImpl
 
 import de.htwg.se.Carcassonne.controller.controllerComponent.GameStatus
 import de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl.Controller
