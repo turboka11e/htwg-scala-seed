@@ -17,11 +17,34 @@ case class Grid(private val cells: Matrix[CardInterface]) extends GridInterface 
   def set(row: Int, col: Int, newCard: CardInterface): GridInterface = copy(cells.replaceCell(row, col, newCard))
 
   def place(row: Int, col: Int, newCard: CardInterface): GridInterface = {
-    if (!cells.checkSet(row, col, newCard) && cells.getCount > 0) {
+    if (!cells.checkSet(row, col, newCard) && cells.getCount > 0 ) {
+      copy()
+    }
+    else if (!manicanFree(row, col, newCard)) {
       copy()
     } else {
       copy(cells = cells.replaceCell(row, col, newCard))
     }
+  }
+
+  def checkSetandCount(row: Int, col: Int, newCard:CardInterface): Boolean ={
+    !cells.checkSet(row, col, newCard) && cells.getCount > 0
+  }
+
+  def manicanFree(row: Int, col:Int, newCard: CardInterface): Boolean = {
+    val dir = newCard.getAreas.find(p => p.getPlayer != -1)
+    if(dir.isDefined) {
+      for {
+        realDir <- dir.get.getCorners
+      } {
+        val neigbor = cells.getDirEnv(row, col, realDir)
+        if(neigbor.isDefined) {
+          val lookUpTerri = getTerritories.find(p => p.exists(p => p._2.equals(neigbor.get)))
+          if (lookUpTerri.exists(p => p.exists(c => c._2.getPlayer != -1))) return false
+        }
+      }
+    }
+    true
   }
 
   /* Checks whether the Card can fit in at least on cell with all Rotations covered. Returns false if no placing is possible */

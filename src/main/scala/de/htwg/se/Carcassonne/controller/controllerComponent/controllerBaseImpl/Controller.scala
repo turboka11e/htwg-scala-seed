@@ -77,9 +77,11 @@ class Controller @Inject() (var playfield: PlayfieldInterface) extends Controlle
   }
 
   def placeCard(x: Int, y: Int): Unit = {
-    undoManager.doStep(new PlaceCommand(x, y, playfield, this))
-    gameStatus = PLACE
-    publish(new PlayfieldChanged)
+    if(playfield.legalPlace(x, y)){
+      undoManager.doStep(new PlaceCommand(x, y, playfield, this))
+      gameStatus = PLACE
+      publish(new PlayfieldChanged)
+    }
   }
 
   def placeAble():Unit = {

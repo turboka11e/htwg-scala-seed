@@ -8,6 +8,8 @@ trait GridInterface {
   def set(row: Int, col: Int, newCard:CardInterface): GridInterface
   def placeable(newCard:CardInterface):Boolean
   def place(row: Int, col: Int, newCard:CardInterface): GridInterface
+  def manicanFree(row: Int, col: Int, newCard:CardInterface): Boolean
+  def checkSetandCount(row: Int, col: Int, newCard:CardInterface): Boolean
   def getTerritories:List[List[(Int, AreaInterface)]]
 }
 

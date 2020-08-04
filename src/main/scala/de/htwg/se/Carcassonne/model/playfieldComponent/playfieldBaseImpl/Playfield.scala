@@ -50,6 +50,10 @@ case class Playfield (players:List[Player] = Nil, isOn: Int = 0, grid: GridInter
 
   def placeable:Boolean = grid.placeable(freshCard.finalCard(0, 0))
 
+  def legalPlace(x: Int, y: Int): Boolean = {
+    !grid.checkSetandCount(x, y, freshCard.finalCard(x, y)) && grid.manicanFree(x, y, freshCard.finalCard(x, y))
+  }
+
   def placeCard(x: Int, y: Int): Playfield = { // Gamestate 5
     val check = grid.getCount
     val CardAdded = grid.place(x, y, freshCard.finalCard(x, y))
