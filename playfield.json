@@ -1,37 +1,37 @@
 {
   "size" : 2,
   "isOn" : 0,
-  "freshCard" : 0,
+  "freshCard" : 14,
   "gameState" : 3,
   "players" : [ {
-    "name" : "Trevor",
+    "name" : "Lukas",
     "points" : 0
   }, {
-    "name" : "Adams",
+    "name" : "Basti",
     "points" : 0
   } ],
   "cards" : [ {
     "row" : 0,
     "col" : 0,
     "card" : {
-      "name" : 12,
-      "rotation" : 0
+      "name" : 14,
+      "rotation" : 1,
+      "index" : 1,
+      "player" : 0
     }
   }, {
     "row" : 0,
     "col" : 1,
     "card" : {
-      "name" : -1,
+      "name" : 14,
       "rotation" : 0
     }
   }, {
     "row" : 1,
     "col" : 0,
     "card" : {
-      "name" : 10,
-      "rotation" : 1,
-      "index" : 0,
-      "player" : 1
+      "name" : -1,
+      "rotation" : 0
     }
   }, {
     "row" : 1,

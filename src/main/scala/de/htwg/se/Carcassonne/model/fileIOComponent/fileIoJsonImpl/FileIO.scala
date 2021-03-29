@@ -86,24 +86,24 @@ class FileIO extends FileIOInterface {
 
   def playfieldToJson(playfield: PlayfieldInterface): JsObject = {
     Json.obj(
-      "size" -> playfield.getGrid.getSize,
-      "isOn" -> playfield.getIsOn,
-      "freshCard" -> playfield.getCurrentFreshCard.getCard.getID._1,
-      "gameState" -> playfield.getGameState,
+      "size" -> playfield.grid.getSize,
+      "isOn" -> playfield.isOn,
+      "freshCard" -> playfield.freshCard.getCard.getID._1,
+      "gameState" -> playfield.gameState,
       "players" -> Json.toJson(
         for {
-          p <- playfield.getPlayers
+          p <- playfield.players
         } yield Json.toJson(p)
       ),
       "cards" -> Json.toJson(
         for {
-          row <- 0 until playfield.getGrid.getSize
-          col <- 0 until playfield.getGrid.getSize
+          row <- 0 until playfield.grid.getSize
+          col <- 0 until playfield.grid.getSize
         } yield {
           Json.obj(
             "row" -> row,
             "col" -> col,
-            "card" -> Json.toJson(playfield.getGrid.card(row, col))
+            "card" -> Json.toJson(playfield.grid.card(row, col))
           )
         }
       )

@@ -9,10 +9,10 @@ class PlaceCommand(x:Int, y:Int, oldPlayfield:PlayfieldInterface, controller: Co
 
   override def doStep():Unit = {
     controller.playfield = controller.playfield.placeCard(x, y)
-    if(controller.playfield.getSuccess) {
+    if(controller.playfield.success) {
       controller.playfield = controller.playfield.nextPlayer.getFreshCard
     }
-    oldFreshCard = controller.playfield.getCurrentFreshCard
+    oldFreshCard = controller.playfield.freshCard
   }
 
   override def undoStep(): Unit = {
@@ -21,7 +21,7 @@ class PlaceCommand(x:Int, y:Int, oldPlayfield:PlayfieldInterface, controller: Co
 
   override def redoStep(): Unit = {
     controller.playfield = controller.playfield.placeCard(x, y)
-    if(controller.playfield.getSuccess) {
+    if(controller.playfield.success) {
       controller.playfield = controller.playfield.nextPlayer
       controller.playfield = controller.playfield.setCurrentFreshCard(oldFreshCard)
     }

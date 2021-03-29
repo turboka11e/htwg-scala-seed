@@ -6,15 +6,16 @@ import de.htwg.se.Carcassonne.model.playfieldComponent.{CardManipulatorInterface
 
 class PrettyPrint(playfield: PlayfieldInterface) extends PrettyPrintStrategyTemplate {
 
-  val grid: GridInterface = playfield.getGrid
-  val freshCard: CardManipulatorInterface = playfield.getCurrentFreshCard
-  val players: List[Player] = playfield.getPlayers
-  val isOn: Int = playfield.getIsOn
-  val success: Boolean = playfield.getSuccess
+  val grid: GridInterface = playfield.grid
+  val freshCard: CardManipulatorInterface = playfield.freshCard
+  val players: List[Player] = playfield.players
+  playfield.isOn
+  val isOn: Int = playfield.isOn
+  val success: Boolean = playfield.success
 
   private val color = List(Console.BLUE, Console.RED, Console.YELLOW, Console.GREEN)
 
-  var printStrategy: String = playfield.getGameState match {
+  var printStrategy: String = playfield.gameState match {
     case 0 => g0
     case 1 => g1
     case 2 => g2

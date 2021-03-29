@@ -4,13 +4,15 @@ import de.htwg.se.Carcassonne.model.gridComponent.{CardInterface, GridInterface}
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 
 trait PlayfieldInterface {
+
+  val isOn: Int
+  val gameState:Int
+  val success:Boolean
+  val grid:GridInterface
+  val players:List[Player]
+  val freshCard:CardManipulatorInterface
+
   def changeGameState(gs:Int):PlayfieldInterface
-  def getGameState:Int
-  def getIsOn:Int
-  def getGrid:GridInterface
-  def getPlayers:List[Player]
-  def getSuccess:Boolean
-  def getCurrentFreshCard:CardManipulatorInterface
   def setCurrentFreshCard(f:CardManipulatorInterface):PlayfieldInterface
   def fieldSize(size:Int):PlayfieldInterface
   def addPlayer(name:String):PlayfieldInterface

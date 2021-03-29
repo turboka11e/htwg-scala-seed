@@ -2,9 +2,9 @@ package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
 import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface, GridInterface}
 
-case class Grid(private val cells: Matrix[CardInterface]) extends GridInterface {
+case class Grid(private val cells: Matrix) extends GridInterface {
 
-  def this(size: Int) = this(new Matrix[CardInterface](size))
+  def this(size: Int) = this(new Matrix(size))
 
   val size: Int = cells.size
 
@@ -70,6 +70,7 @@ case class Grid(private val cells: Matrix[CardInterface]) extends GridInterface 
       col <- 0 until size
     } {
       if (!card(row, col).isEmpty && !card(row, col).getValue(dir).equals('g')) {
+        // todo use recursive return value for areaToTerritoriesProcess
         territories = areaToTerritoresProcess(dir, row, col, territories)
       }
     }
@@ -98,6 +99,7 @@ case class Grid(private val cells: Matrix[CardInterface]) extends GridInterface 
                            territories: List[List[(Int, AreaInterface)]], openCorners: Int): List[List[(Int, AreaInterface)]] = {
     var tmpTerri = territories
     /* Füge die Umgebende Area List in neue List joined Terri hinein */
+    // todo joinTerrie needs to be recursive
     var joinedTerri = insertNeighbourTerrisInJoinedTerri(territories, neighbours.get)
 
     /* Lösche die alten Territorien in der Hauptliste */

@@ -8,17 +8,17 @@ class MatrixSpec extends WordSpec with Matchers {
   "A Matrix is a tailor-made immutable data type that contains a two-dimentional Vector of Cells. A Matrix" when {
     "empty " should {
       "be created by using a dimention and a sample cell" in {
-        val matrix = new Matrix[Card](2)
+        val matrix = new Matrix(2)
         matrix.size should be(2)
       }
       "for test purposes only be created with Size 1" in {
-        val testMatrix = new Matrix[CardInterface](1)
+        val testMatrix = new Matrix(1)
         testMatrix.size should be(1)
       }
 
     }
     "filled" should {
-      val matrix = new Matrix[Card](2)
+      val matrix = new Matrix(2)
       "give access to its cells" in {
         matrix.card(0, 0) should be(Card(List(Area(corners = List('n'), xy = (0, 0)), Area(corners = List('w'), xy = (0, 0)),
           Area(corners = List('e'), xy = (0, 0)), Area(corners = List('s'), xy = (0, 0)))))

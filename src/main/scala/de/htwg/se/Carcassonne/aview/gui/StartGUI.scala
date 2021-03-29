@@ -20,7 +20,7 @@ class StartGUI(controller: ControllerInterface) extends Frame {
   preferredSize = new Dimension(1000, 700)
 
   visible = true
-  val gsize: Int = controller.getPlayfield.getGrid.getSize
+  val gsize: Int = controller.getPlayfield.grid.getSize
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
 
   val infoLabel: Label = new Label("") {
@@ -162,7 +162,7 @@ class StartGUI(controller: ControllerInterface) extends Frame {
     playerLabel.text = {
       var tmpString = ""
       for {
-        (p, i) <- controller.getPlayfield.getPlayers.zipWithIndex
+        (p, i) <- controller.getPlayfield.players.zipWithIndex
       } {
         tmpString += p.name + "  "
       }
@@ -194,7 +194,7 @@ class StartGUI(controller: ControllerInterface) extends Frame {
       } else if (b == startButton) {
         controller.newGame()
       } else if (b == declineButton) {
-        if (controller.getPlayfield.getPlayers.nonEmpty) {
+        if (controller.getPlayfield.players.nonEmpty) {
           controller.firstCard()
         }
       } else if (b == addButton) {

@@ -1,21 +1,22 @@
 package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
-import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface, GridInterface, MatrixInterface}
+import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface, MatrixInterface}
 
-case class Matrix[T] (rows:Vector[Vector[CardInterface]]) extends MatrixInterface[T] {
+case class Matrix (rows:Vector[Vector[CardInterface]]) extends MatrixInterface {
   def this(size:Int) = this(Vector.tabulate(size, size){(row, col) => new Card((row, col))})
 
   val size:Int = rows.size
 
   def getCount:Int = {
     var count = 0
+    // todo function count or recursive
     rows.foreach(p => p.foreach(c => if(!c.isEmpty) count += 1))
     count
   }
 
   def card(row:Int, col:Int):CardInterface = rows (row)(col)
 
-  def replaceCell(row:Int, col:Int, card:CardInterface):Matrix[CardInterface] = {
+  def replaceCell(row:Int, col:Int, card:CardInterface):Matrix = {
     copy(rows.updated(row, rows(row).updated(col, card)))
   }
 
@@ -70,6 +71,7 @@ case class Matrix[T] (rows:Vector[Vector[CardInterface]]) extends MatrixInterfac
   }
 
   def hasNeighbor(row: Int, col: Int): Boolean = {
+    // todo remove var
     var check = false
     for(x <- List('n', 's', 'w', 'e')){
       check = check || !checkEnvEmpty(row, col, x)
@@ -78,7 +80,7 @@ case class Matrix[T] (rows:Vector[Vector[CardInterface]]) extends MatrixInterfac
   }
 
   def checkSet(row: Int, col: Int, checkCard:CardInterface): Boolean = {
-
+    // todo remove var
     var check = true
 
     for(x <- List('n', 's', 'w', 'e')){

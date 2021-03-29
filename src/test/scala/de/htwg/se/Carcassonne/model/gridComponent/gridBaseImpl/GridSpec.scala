@@ -23,7 +23,7 @@ class GridSpec extends WordSpec with Matchers {
       val smallGrid = new Grid(4)
       val freshCard = RawCardFactory("selectCard", 0).drawCard().finalCard(0, 0)
       val validGrid = smallGrid.place(0, 0, freshCard)
-      val matrix = new Matrix[CardInterface](4)
+      val matrix = new Matrix(4)
 
       "give access to its Cells" in {
         tinygrid.card(0, 0) should be(new Card((0, 0)))

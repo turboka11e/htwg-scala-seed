@@ -56,7 +56,7 @@ class Controller @Inject() (var playfield: PlayfieldInterface) extends Controlle
     playfield = playfield.changeGameState(gs)
   }
 
-  def getGameState: Int = playfield.getGameState
+  def getGameState: Int = playfield.gameState
 
   def rotateRight(): Unit = {
     playfield = playfield.rotateR

@@ -19,7 +19,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   preferredSize = new Dimension(1200, 900)
 
   /* Cells is Array for GuiCard Classes */
-  val gsize: Int = controller.getPlayfield.getGrid.getSize
+  val gsize: Int = controller.getPlayfield.grid.getSize
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
   var playerInfos: GridBagPanel = _
 
@@ -60,7 +60,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
         val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican"
         var tmpLables: List[Label] = Nil
         for {
-          (p, i) <- controller.getPlayfield.getPlayers.zipWithIndex
+          (p, i) <- controller.getPlayfield.players.zipWithIndex
         } {
           val tmpPlayer = new Label() {
             icon = new ImageIcon(ImageIO.read(new File(manican + i + ".png")))
@@ -78,7 +78,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       val pointsLables: List[Label] = {
         var tmpLables: List[Label] = Nil
         for {
-          p <- controller.getPlayfield.getPlayers
+          p <- controller.getPlayfield.players
         } {
           val tmpPlayer = new Label() {
             text = f"${p.points}%.2f"
@@ -90,7 +90,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
       }
 
       for {
-        i <- controller.getPlayfield.getPlayers.indices
+        i <- controller.getPlayfield.players.indices
       } {
         add(playerLables(i), constraints(0, i, gridwidth = 2, insets = new Insets(5, 5, 5, 5), anchor = GridBagPanel.Anchor.West))
         add(pointsLables(i), constraints(2, i, insets = new Insets(5, 5, 5, 5), anchor = GridBagPanel.Anchor.East))
@@ -98,12 +98,12 @@ class SwingGui(controller: ControllerInterface) extends Frame {
 
       def updatepoints(): Unit = {
         for {
-          i <- controller.getPlayfield.getPlayers.indices
+          i <- controller.getPlayfield.players.indices
         } {
-          val points = controller.getPlayfield.getPlayers(i).points
+          val points = controller.getPlayfield.players(i).points
           pointsLables(i).text = f"$points%.2f"
           val colors: List[java.awt.Color] = List(Color.BLUE, Color.RED, Color.YELLOW, Color.GREEN)
-          if (i == controller.getPlayfield.getIsOn) {
+          if (i == controller.getPlayfield.isOn) {
             playerLables(i).foreground = colors(i)
           } else {
             playerLables(i).foreground = java.awt.Color.BLACK
@@ -282,7 +282,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   }
 
   def gameOver(): Unit = {
-    var winner = controller.getPlayfield.getPlayers.sortBy(p => p.points > p.points)
+    var winner = controller.getPlayfield.players.sortBy(p => p.points > p.points)
     winner = winner.filter(p => p.points >= winner.head.points)
     var winnerList:List[String] = Nil
     for (elem <- winner) {winnerList = elem.name::winnerList}

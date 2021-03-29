@@ -27,7 +27,7 @@ class GuiCard(controller: ControllerInterface, row:Int, col:Int) extends FlowPan
     val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican"
     val dirCombi = List(('n', 27, 0), ('s', 25, 55), ('w', 0, 27), ('e', 55, 27))
     for {
-      x <- controller.getPlayfield.getGrid.card(row, col).getAreas
+      x <- controller.getPlayfield.grid.card(row, col).getAreas
     } {
       if(x.getPlayer != -1) {
         val dir = x.getCorners.head
@@ -40,14 +40,14 @@ class GuiCard(controller: ControllerInterface, row:Int, col:Int) extends FlowPan
 
   def setCard(): Unit = {
     img = findImage()
-    for (x <- 0 until controller.getPlayfield.getGrid.card(row, col).getID._2) rotateCardR()
+    for (x <- 0 until controller.getPlayfield.grid.card(row, col).getID._2) rotateCardR()
     repaint()
   }
 
   def findImage(): BufferedImage = {
     val numToCharImage = List("D", "E", "G", "H", "I", "J", "K", "L", "N", "O", "R", "T", "U", "V", "C", "W")
 
-    val index = controller.getPlayfield.getGrid.card(row, col).getID._1
+    val index = controller.getPlayfield.grid.card(row, col).getID._1
 
     var dataImg: String = ""
     if (index == -1) {

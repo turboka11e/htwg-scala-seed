@@ -13,7 +13,7 @@ trait GridInterface {
   def getTerritories:List[List[(Int, AreaInterface)]]
 }
 
-trait MatrixInterface[T] {
+trait MatrixInterface {
 
   def getCount:Int
   def card(row:Int, col:Int):CardInterface

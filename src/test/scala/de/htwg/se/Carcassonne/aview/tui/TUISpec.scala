@@ -42,15 +42,15 @@ class TUISpec extends WordSpec with Matchers {
     "decideds at Gamestate 2" in {
       controller.changeGameState(2)
       tui.processInputLine("y")
-      controller.playfield.getGameState should be(1)
+      controller.playfield.gameState should be(1)
       tui.processInputLine("n")
-      controller.playfield.getGameState should be(1)
+      controller.playfield.gameState should be(1)
       controller.changeGameState(3)
       tui.processInputLine("y")
-      controller.playfield.getGameState should be(4)
+      controller.playfield.gameState should be(4)
       controller.changeGameState(4)
       tui.processInputLine("n")
-      controller.playfield.getGameState should be(5)
+      controller.playfield.gameState should be(5)
       controller.changeGameState(1)
     }
     "validate long String" in {
@@ -59,7 +59,7 @@ class TUISpec extends WordSpec with Matchers {
       tui.processInputLine("0")
       controller.playfield.changeGameState(4)
       tui.processInputLine("0")
-      controller.playfield.getGameState should be(3)
+      controller.playfield.gameState should be(3)
     }
 
   }
