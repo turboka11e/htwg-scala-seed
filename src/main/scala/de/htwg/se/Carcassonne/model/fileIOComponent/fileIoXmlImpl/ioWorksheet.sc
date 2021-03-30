@@ -34,7 +34,7 @@ def cardToXml(row:Int, col:Int):Elem = {
   </card>
 }
 
-val xml = <playfield size={playfield.grid.getSize.toString} isOn={playfield.isOn.toString} freshCard={playfield.freshCard.getCard.getID._1.toString} gameState={playfield.getGameState.toString}>
+val xml = <playfield size={playfield.grid.size.toString} isOn={playfield.isOn.toString} freshCard={playfield.freshCard.getCard.getID._1.toString} gameState={playfield.getGameState.toString}>
   <players>
     {for {
     p <- playfield.getPlayers
@@ -42,8 +42,8 @@ val xml = <playfield size={playfield.grid.getSize.toString} isOn={playfield.isOn
   </players>
   <grid>
     {for {
-    row <- 0 until playfield.grid.getSize
-    col <- 0 until playfield.grid.getSize}
+    row <- 0 until playfield.grid.size
+    col <- 0 until playfield.grid.size}
     yield cardToXml(row, col)}
   </grid>
 </playfield>

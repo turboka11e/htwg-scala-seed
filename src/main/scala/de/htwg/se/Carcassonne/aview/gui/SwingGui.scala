@@ -19,7 +19,7 @@ class SwingGui(controller: ControllerInterface) extends Frame {
   preferredSize = new Dimension(1200, 900)
 
   /* Cells is Array for GuiCard Classes */
-  val gsize: Int = controller.getPlayfield.grid.getSize
+  val gsize: Int = controller.getPlayfield.grid.size
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
   var playerInfos: GridBagPanel = _
 

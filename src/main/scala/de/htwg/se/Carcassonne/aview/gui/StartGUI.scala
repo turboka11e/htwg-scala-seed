@@ -20,7 +20,7 @@ class StartGUI(controller: ControllerInterface) extends Frame {
   preferredSize = new Dimension(1000, 700)
 
   visible = true
-  val gsize: Int = controller.getPlayfield.grid.getSize
+  val gsize: Int = controller.getPlayfield.grid.size
   var cells: Array[Array[GuiCard]] = Array.ofDim[GuiCard](gsize, gsize)
 
   val infoLabel: Label = new Label("") {

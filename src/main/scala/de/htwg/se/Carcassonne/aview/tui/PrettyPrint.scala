@@ -73,7 +73,7 @@ class PrettyPrint(playfield: PlayfieldInterface) extends PrettyPrintStrategyTemp
 
   def restPart: String = {
     var tmpString = ""
-    for(y <- 2 until grid.getSize){
+    for(y <- 2 until grid.size){
       tmpString += topRow(y) + "\n" + midRow(y) + "\n" + lowRow(y) + "\n"
     }
     tmpString
@@ -81,7 +81,7 @@ class PrettyPrint(playfield: PlayfieldInterface) extends PrettyPrintStrategyTemp
 
   def topRow(y: Int):String = {
     var tmpString = ""
-    for(x <- 0 until grid.getSize){
+    for(x <- 0 until grid.size){
       tmpString = tmpString + topSeg(x, y)
     }
     tmpString
@@ -89,7 +89,7 @@ class PrettyPrint(playfield: PlayfieldInterface) extends PrettyPrintStrategyTemp
 
   def midRow(y: Int):String = {
     var tmpString = ""
-    for(x <- 0 until grid.getSize){
+    for(x <- 0 until grid.size){
       tmpString = tmpString + midSeg(x, y)
     }
     tmpString
@@ -97,7 +97,7 @@ class PrettyPrint(playfield: PlayfieldInterface) extends PrettyPrintStrategyTemp
 
   def lowRow(y: Int):String = {
     var tmpString = ""
-    for(x <- 0 until grid.getSize){
+    for(x <- 0 until grid.size){
       tmpString = tmpString + lowSeg(x, y)
     }
     tmpString

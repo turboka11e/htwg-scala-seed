@@ -6,11 +6,9 @@ case class Grid(private val cells: Matrix) extends GridInterface {
 
   def this(size: Int) = this(new Matrix(size))
 
-  val size: Int = cells.size
+  def size: Int = cells.size
 
   def getCount: Int = cells.getCount
-
-  def getSize: Int = size
 
   def card(row: Int, col: Int): CardInterface = cells.card(row, col)
 
@@ -27,7 +25,7 @@ case class Grid(private val cells: Matrix) extends GridInterface {
     }
   }
 
-  def checkSetandCount(row: Int, col: Int, newCard:CardInterface): Boolean ={
+  def checkSetAndCount(row: Int, col: Int, newCard:CardInterface): Boolean ={
     !cells.checkSet(row, col, newCard) && cells.getCount > 0
   }
 
@@ -71,13 +69,13 @@ case class Grid(private val cells: Matrix) extends GridInterface {
     } {
       if (!card(row, col).isEmpty && !card(row, col).getValue(dir).equals('g')) {
         // todo use recursive return value for areaToTerritoriesProcess
-        territories = areaToTerritoresProcess(dir, row, col, territories)
+        territories = areaToTerritoriesProcess(dir, row, col, territories)
       }
     }
     territories
   }
 
-  def areaToTerritoresProcess(dir: Char, row: Int, col: Int, territories: List[List[(Int, AreaInterface)]]): List[List[(Int, AreaInterface)]] = {
+  def areaToTerritoriesProcess(dir: Char, row: Int, col: Int, territories: List[List[(Int, AreaInterface)]]): List[List[(Int, AreaInterface)]] = {
     var tmpTerritories = territories
     val currentArea = cells.card(row, col).getAreaLookingFrom(dir)
 

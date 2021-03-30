@@ -55,7 +55,7 @@ class FileIO extends FileIOInterface {
   }
   override def save(playfield: PlayfieldInterface): Unit = {
 
-    val xml = <playfield size={playfield.grid.getSize.toString} isOn={playfield.isOn.toString}
+    val xml = <playfield size={playfield.grid.size.toString} isOn={playfield.isOn.toString}
                          freshCard={playfield.freshCard.getCard.getID._1.toString} gameState={playfield.gameState.toString}>
       <players>
         {for {
@@ -64,8 +64,8 @@ class FileIO extends FileIOInterface {
       </players>
       <grid>
         {for {
-        row <- 0 until playfield.grid.getSize
-        col <- 0 until playfield.grid.getSize}
+        row <- 0 until playfield.grid.size
+        col <- 0 until playfield.grid.size}
         yield cardToXml(row, col, playfield)}
       </grid>
     </playfield>

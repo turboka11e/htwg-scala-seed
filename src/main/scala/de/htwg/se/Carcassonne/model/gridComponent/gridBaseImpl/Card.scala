@@ -28,7 +28,7 @@ case class Card(areas: List[AreaInterface], private val id: (Int, Int) = (-1, 0)
   def rotateRight(): CardInterface = {
     val rotatedAreas: List[AreaInterface] = areas.map { area => area.rotateRight() }
     val current_rotation = id._2
-    if(current_rotation < 3) {
+    if (current_rotation < 3) {
       Card(rotatedAreas, id = (id._1, current_rotation + 1))
     } else {
       Card(rotatedAreas, id = (id._1, 0))

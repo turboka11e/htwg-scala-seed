@@ -3,13 +3,13 @@ package de.htwg.se.Carcassonne.model.gridComponent
 trait GridInterface {
 
   def getCount:Int
-  def getSize:Int
+  def size:Int
   def card(row: Int, col: Int): CardInterface
   def set(row: Int, col: Int, newCard:CardInterface): GridInterface
   def placeable(newCard:CardInterface):Boolean
   def place(row: Int, col: Int, newCard:CardInterface): GridInterface
   def manicanFree(row: Int, col: Int, newCard:CardInterface): Boolean
-  def checkSetandCount(row: Int, col: Int, newCard:CardInterface): Boolean
+  def checkSetAndCount(row: Int, col: Int, newCard:CardInterface): Boolean
   def getTerritories:List[List[(Int, AreaInterface)]]
 }
 
