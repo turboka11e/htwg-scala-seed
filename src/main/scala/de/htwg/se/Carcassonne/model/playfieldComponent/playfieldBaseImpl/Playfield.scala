@@ -28,7 +28,7 @@ case class Playfield(players: List[Player] = Nil, isOn: Int = 0, grid: GridInter
   def rotateL: Playfield = copy(freshCard = freshCard.rotateLeft) // Gamestate 3
 
   def selectArea(nr: Int): Playfield = {
-    if (!freshCard.getCard.getAreas.exists(p => p.getPlayer != -1) && freshCard.getCard.getAreas.apply(nr).getValue != 'g') {
+    if (!freshCard.card.getAreas.exists(p => p.player != -1) && freshCard.card.getAreas.apply(nr).value != 'g') {
       copy(freshCard = freshCard.setPlayerToArea(nr), gameState = 5)
     } else {
       this

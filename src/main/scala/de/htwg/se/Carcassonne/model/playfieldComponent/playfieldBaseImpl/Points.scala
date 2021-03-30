@@ -8,9 +8,9 @@ case class Points(terriList: List[List[(Int, AreaInterface)]], players: List[Pla
   def listOfFinishedTerris: List[List[Double]] =
     terriList.map(l => l.map(a => a._1.toDouble)).map(l => l.distinct.sum :: Nil).map(p => p.map { case 0 => 1.0; case _ => 0.0 })
 
-  def playersToList: List[List[Int]] = terriList.map(l => l.map(a => a._2.getPlayer).distinct.filter(a => a != -1))
+  def playersToList: List[List[Int]] = terriList.map(l => l.map(a => a._2.player).distinct.filter(a => a != -1))
 
-  def typeToPointsList: List[List[Double]] = terriList.map(l => l.map(a => a._2.getValue).distinct.map { case 'c' => 2.0; case 'r' => 1.0; case _ => 0.0 })
+  def typeToPointsList: List[List[Double]] = terriList.map(l => l.map(a => a._2.value).distinct.map { case 'c' => 2.0; case 'r' => 1.0; case _ => 0.0 })
 
   def totalPointsOfTerris: List[List[Double]] = typeToPointsList.zip(terriList.map(l => l.size :: Nil)).map(l => l._1.sum * l._2.sum :: Nil)
 

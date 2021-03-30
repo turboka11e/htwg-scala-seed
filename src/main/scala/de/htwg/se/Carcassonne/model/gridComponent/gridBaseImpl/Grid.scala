@@ -30,15 +30,15 @@ case class Grid(private val cells: Matrix) extends GridInterface {
   }
 
   def manicanFree(row: Int, col:Int, newCard: CardInterface): Boolean = {
-    val dir = newCard.getAreas.find(p => p.getPlayer != -1)
+    val dir = newCard.getAreas.find(p => p.player != -1)
     if(dir.isDefined) {
       for {
-        realDir <- dir.get.getCorners
+        realDir <- dir.get.corners
       } {
         val neigbor = cells.getDirEnv(row, col, realDir)
         if(neigbor.isDefined) {
           val lookUpTerri = getTerritories.find(p => p.exists(p => p._2.equals(neigbor.get)))
-          if (lookUpTerri.exists(p => p.exists(c => c._2.getPlayer != -1))) return false
+          if (lookUpTerri.exists(p => p.exists(c => c._2.player != -1))) return false
         }
       }
     }
@@ -84,10 +84,10 @@ case class Grid(private val cells: Matrix) extends GridInterface {
       /* Process to Add Area to Territories List */
       val neighbours = lookUpNeighbours(dir, row, col)
       if (neighbours.isDefined) {
-        val openCorners = currentArea.getCorners.size - neighbours.get.size
+        val openCorners = currentArea.corners.size - neighbours.get.size
         tmpTerritories = addAreaToTerritories(neighbours, currentArea, territories, openCorners)
       } else {
-        tmpTerritories = List((currentArea.getCorners.size, currentArea)) :: tmpTerritories
+        tmpTerritories = List((currentArea.corners.size, currentArea)) :: tmpTerritories
       }
     }
     tmpTerritories
@@ -127,7 +127,7 @@ case class Grid(private val cells: Matrix) extends GridInterface {
   def lookUpNeighbours(dir: Char, row: Int, col: Int): Option[List[AreaInterface]] = {
     val currentArea = card(row, col).getAreaLookingFrom(dir)
     var neighbours: List[AreaInterface] = Nil
-    for (x <- currentArea.getCorners) {
+    for (x <- currentArea.corners) {
       val neighbor = cells.getDirEnv(row, col, x)
       /* Schaue ob in der Richtung eine Karte ist */
       if (neighbor.nonEmpty) {

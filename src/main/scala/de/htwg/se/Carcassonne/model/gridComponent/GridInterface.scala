@@ -1,5 +1,7 @@
 package de.htwg.se.Carcassonne.model.gridComponent
 
+import de.htwg.se.Carcassonne.model.gridComponent.CardinalDirection.CardinalDirection
+
 trait GridInterface {
 
   def getCount:Int
@@ -45,11 +47,11 @@ trait CardInterface {
 trait AreaInterface {
 
   def isEmpty:Boolean
-  def getValue:Char
-  def getCorners:List[Char]
-  def getPlayer:Int
+  def value:Char
+  def corners:List[Char]
+  def player:Int
   def setPlayer(p:Int):AreaInterface
-  def getCoord:(Int, Int)
+  def xy:(Int, Int)
   def setCoord(a:Int, b:Int):AreaInterface
   def rotateRight():AreaInterface
 }

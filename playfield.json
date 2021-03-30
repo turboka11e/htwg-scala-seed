@@ -1,7 +1,7 @@
 {
   "size" : 2,
   "isOn" : 0,
-  "freshCard" : 2,
+  "freshCard" : 12,
   "gameState" : 3,
   "players" : [ {
     "name" : "Klaus",

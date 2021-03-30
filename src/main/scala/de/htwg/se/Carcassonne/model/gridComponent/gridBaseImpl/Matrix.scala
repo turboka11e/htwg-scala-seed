@@ -5,7 +5,7 @@ import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface,
 case class Matrix(rows: Vector[Vector[CardInterface]]) extends MatrixInterface {
   def this(size: Int) = this(Vector.tabulate(size, size) { (row, col) => new Card((row, col)) })
 
-  val size: Int = rows.size
+  def size: Int = rows.size
 
   def getCount: Int = {
     // todo function count -- DONE!

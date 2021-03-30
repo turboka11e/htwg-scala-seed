@@ -65,9 +65,9 @@ class PrettyPrint(playfield: PlayfieldInterface) extends PrettyPrintStrategyTemp
   def freshCardPart: String = {
     var tmpString = ""
     tmpString = lowRow(0) + "\tDeine neue Karte:\n" +
-      topRow(1) + "\t" + freshCard.getCard.topString + "\n" +
-      midRow(1) + "\t" + freshCard.getCard.midString + "\n" +
-      lowRow(1) + "\t" + freshCard.getCard.lowString + "\n"
+      topRow(1) + "\t" + freshCard.card.topString + "\n" +
+      midRow(1) + "\t" + freshCard.card.midString + "\n" +
+      lowRow(1) + "\t" + freshCard.card.lowString + "\n"
     tmpString
   }
 

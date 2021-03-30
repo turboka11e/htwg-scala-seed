@@ -8,8 +8,6 @@ case class CardManipulator(playerCard: Int, card: CardInterface = new Card((0, 0
 
   def this() = this(playerCard = -1)
 
-  def getCard:CardInterface = card
-
   def rotateRight:CardManipulator = copy(card = card.rotateRight())
 
   def rotateLeft:CardManipulator = copy(card = card.rotateRight().rotateRight().rotateRight())

@@ -30,7 +30,7 @@ trait PlayfieldInterface {
 
 trait CardManipulatorInterface {
 
-  def getCard:CardInterface
+  def card:CardInterface
   def rotateRight:CardManipulatorInterface
   def rotateLeft:CardManipulatorInterface
   def setPlayerToArea(index:Int):CardManipulatorInterface

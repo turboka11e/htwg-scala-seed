@@ -25,11 +25,11 @@ implicit val cardWrites: Writes[CardInterface] = (card: CardInterface) => {
   var obj = Json.obj(
     "name" -> card.getID._1,
     "rotation" -> card.getID._2)
-  val indexArea = card.getAreas.indexWhere(p => p.getPlayer != -1)
+  val indexArea = card.getAreas.indexWhere(p => p.player != -1)
   if (indexArea != -1) {
     obj = obj.++(Json.obj(
       "index" -> indexArea,
-      "player" -> card.getAreas(indexArea).getPlayer
+      "player" -> card.getAreas(indexArea).player
     ))
   }
   obj

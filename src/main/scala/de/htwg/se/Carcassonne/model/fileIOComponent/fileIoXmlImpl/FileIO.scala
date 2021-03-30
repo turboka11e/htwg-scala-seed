@@ -56,7 +56,7 @@ class FileIO extends FileIOInterface {
   override def save(playfield: PlayfieldInterface): Unit = {
 
     val xml = <playfield size={playfield.grid.size.toString} isOn={playfield.isOn.toString}
-                         freshCard={playfield.freshCard.getCard.getID._1.toString} gameState={playfield.gameState.toString}>
+                         freshCard={playfield.freshCard.card.getID._1.toString} gameState={playfield.gameState.toString}>
       <players>
         {for {
         p <- playfield.players
@@ -79,10 +79,10 @@ class FileIO extends FileIOInterface {
 
   def cardToXml(row:Int, col:Int, playfield: PlayfieldInterface):Elem = {
     val card = playfield.grid.card(row, col)
-    val indexArea = card.getAreas.indexWhere(p => p.getPlayer != -1)
+    val indexArea = card.getAreas.indexWhere(p => p.player != -1)
     <card row={row.toString} col={col.toString} name={card.getID._1.toString} rotation={card.getID._2.toString}>
       {if (indexArea != -1) {
-      <selectedArea index={indexArea.toString} player={card.getAreas(indexArea).getPlayer.toString}></selectedArea>
+      <selectedArea index={indexArea.toString} player={card.getAreas(indexArea).player.toString}></selectedArea>
     }}
     </card>
   }

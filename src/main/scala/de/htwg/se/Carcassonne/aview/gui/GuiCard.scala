@@ -29,10 +29,10 @@ class GuiCard(controller: ControllerInterface, row:Int, col:Int) extends FlowPan
     for {
       x <- controller.getPlayfield.grid.card(row, col).getAreas
     } {
-      if(x.getPlayer != -1) {
-        val dir = x.getCorners.head
+      if(x.player != -1) {
+        val dir = x.corners.head
         val combi = dirCombi.find(p => p._1.equals(dir)).get
-        val manicanPlayer = manican + x.getPlayer + ".png"
+        val manicanPlayer = manican + x.player + ".png"
         g.drawImage(ImageIO.read(new File(manicanPlayer)), combi._2, combi._3, null)
       }
     }
