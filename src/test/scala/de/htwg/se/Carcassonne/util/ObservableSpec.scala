@@ -1,7 +1,5 @@
 package de.htwg.se.Carcassonne.util
 
-import java.security.KeyStore.TrustedCertificateEntry
-
 import org.scalatest.{Matchers, WordSpec}
 
 class ObservableSpec extends WordSpec with Matchers {

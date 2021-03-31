@@ -15,7 +15,7 @@ case class Grid(private val cells: Matrix) extends GridInterface {
   def set(row: Int, col: Int, newCard: CardInterface): GridInterface = copy(cells.replaceCell(row, col, newCard))
 
   def place(row: Int, col: Int, newCard: CardInterface): GridInterface = {
-    if (!cells.checkSet(row, col, newCard) && cells.getCount > 0 ) {
+    if (!cells.checkSet(row, col, newCard) && cells.getCount > 0) {
       copy()
     }
     else if (!manicanFree(row, col, newCard)) {
@@ -25,18 +25,18 @@ case class Grid(private val cells: Matrix) extends GridInterface {
     }
   }
 
-  def checkSetAndCount(row: Int, col: Int, newCard:CardInterface): Boolean ={
+  def checkSetAndCount(row: Int, col: Int, newCard: CardInterface): Boolean = {
     !cells.checkSet(row, col, newCard) && cells.getCount > 0
   }
 
-  def manicanFree(row: Int, col:Int, newCard: CardInterface): Boolean = {
-    val dir = newCard.getAreas.find(p => p.player != -1)
-    if(dir.isDefined) {
+  def manicanFree(row: Int, col: Int, newCard: CardInterface): Boolean = {
+    val dir = newCard.areas.find(p => p.player != -1)
+    if (dir.isDefined) {
       for {
         realDir <- dir.get.corners
       } {
         val neigbor = cells.getDirEnv(row, col, realDir)
-        if(neigbor.isDefined) {
+        if (neigbor.isDefined) {
           val lookUpTerri = getTerritories.find(p => p.exists(p => p._2.equals(neigbor.get)))
           if (lookUpTerri.exists(p => p.exists(c => c._2.player != -1))) return false
         }
@@ -46,9 +46,9 @@ case class Grid(private val cells: Matrix) extends GridInterface {
   }
 
   /* Checks whether the Card can fit in at least on cell with all Rotations covered. Returns false if no placing is possible */
-  def placeable(newCard:CardInterface):Boolean = {
+  def placeable(newCard: CardInterface): Boolean = {
     var placeable = false
-    for{
+    for {
       row <- 0 until size
       col <- 0 until size
     } {
@@ -68,7 +68,6 @@ case class Grid(private val cells: Matrix) extends GridInterface {
       col <- 0 until size
     } {
       if (!card(row, col).isEmpty && !card(row, col).getValue(dir).equals('g')) {
-        // todo use recursive return value for areaToTerritoriesProcess
         territories = areaToTerritoriesProcess(dir, row, col, territories)
       }
     }
@@ -97,7 +96,6 @@ case class Grid(private val cells: Matrix) extends GridInterface {
                            territories: List[List[(Int, AreaInterface)]], openCorners: Int): List[List[(Int, AreaInterface)]] = {
     var tmpTerri = territories
     /* Füge die Umgebende Area List in neue List joined Terri hinein */
-    // todo joinTerrie needs to be recursive
     var joinedTerri = insertNeighbourTerrisInJoinedTerri(territories, neighbours.get)
 
     /* Lösche die alten Territorien in der Hauptliste */

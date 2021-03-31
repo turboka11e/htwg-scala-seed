@@ -2,7 +2,7 @@ package de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl
 
 import de.htwg.se.Carcassonne.model.gridComponent.{AreaInterface, CardInterface}
 
-case class Card(areas: List[AreaInterface], private val id: (Int, Int) = (-1, 0)) extends CardInterface {
+case class Card(areas: List[AreaInterface], id: (Int, Int) = (-1, 0)) extends CardInterface {
 
   def this(xy: (Int, Int)) = this(areas = List(Area(corners = List('n'), xy = (xy._1, xy._2)),
     Area(corners = List('w'), xy = (xy._1, xy._2)), Area(corners = List('e'), xy = (xy._1, xy._2)),
@@ -10,16 +10,16 @@ case class Card(areas: List[AreaInterface], private val id: (Int, Int) = (-1, 0)
 
   def isEmpty: Boolean = areas.head.value == ' ' && areas.size == 4
 
+  // todo remove getter and setter - DONE
   /* id => CardNumber (-1 is EmptyCard) and Rotation of Card */
-  def getID: (Int, Int) = id
+//  def getID: (Int, Int) = id
+//  def getAreas: List[AreaInterface] = areas
 
   def setAreasXY(x: Int, y: Int): CardInterface = copy(areas = areas.map(areas => areas.setCoord(x, y)))
 
   def getValue(dir: Char): Char = areas.find(_.corners.contains(dir)).get.value
 
   def getPlayer(dir: Char): Int = areas.find(_.corners.contains(dir)).get.player
-
-  def getAreas: List[AreaInterface] = areas
 
   def getCornersLookingFrom(dir: Char): List[Char] = areas.find(_.corners.contains(dir)).get.corners
 
@@ -40,10 +40,8 @@ case class Card(areas: List[AreaInterface], private val id: (Int, Int) = (-1, 0)
     var tmpstring = ""
 
     val o = getValue('n')
-    var ol = '┌'
-    var or = '┐'
-    if (getCornersLookingFrom('n').contains('w')) ol = o
-    if (getCornersLookingFrom('n').contains('e')) or = o
+    val ol = if (getCornersLookingFrom('n').contains('w')) o else '┌'
+    val or = if (getCornersLookingFrom('n').contains('e')) o else '┐'
     tmpstring += s" $ol $o $or"
 
     tmpstring += s"\n"
@@ -58,10 +56,8 @@ case class Card(areas: List[AreaInterface], private val id: (Int, Int) = (-1, 0)
     tmpstring += "\n"
 
     val u = getValue('s')
-    var ul = '└'
-    var ur = '┘'
-    if (getCornersLookingFrom('s').contains('w')) ul = u
-    if (getCornersLookingFrom('s').contains('e')) ur = u
+    val ul = if (getCornersLookingFrom('s').contains('w')) u else '└'
+    val ur = if (getCornersLookingFrom('s').contains('e')) u else '┘'
     tmpstring += s" $ul $u $ur"
 
     tmpstring += "\n"
@@ -110,6 +106,7 @@ case class Card(areas: List[AreaInterface], private val id: (Int, Int) = (-1, 0)
 
   def getCorner(positionOnCard: Char)(direction: Char): String = {
     val areaInTheMiddle = color(areas.indexWhere(p => p == getAreaLookingFrom(positionOnCard))) + getValue(positionOnCard) + Console.RESET
+
     val getCornerFrom: Char => String = getFromPositionCornerOfDirection(positionOnCard, direction, areaInTheMiddle)
     val directionFromWithDefaultValues: (Char, Char) => String = cornerWithPositionFrom(getCornerFrom, areaInTheMiddle, direction)
     positionOnCard match {
@@ -118,10 +115,10 @@ case class Card(areas: List[AreaInterface], private val id: (Int, Int) = (-1, 0)
     }
   }
 
-  def cornerWithPositionFrom(getCornerFrom: Char => String, areaInTheMiddle: String, direction: Char)(symbolLeft: Char, symbolRight: Char): String = {
+  def cornerWithPositionFrom(getCornerFromFunc: Char => String, areaInTheMiddle: String, direction: Char)(symbolWest: Char, symbolEast: Char): String = {
     direction match {
-      case 'w' => getCornerFrom(symbolLeft)
-      case 'e' => getCornerFrom(symbolRight)
+      case 'w' => getCornerFromFunc(symbolWest)
+      case 'e' => getCornerFromFunc(symbolEast)
       case 'm' => areaInTheMiddle
     }
   }

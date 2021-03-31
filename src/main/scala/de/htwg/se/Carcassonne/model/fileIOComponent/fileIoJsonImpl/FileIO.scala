@@ -56,13 +56,13 @@ class FileIO extends FileIOInterface {
 
   implicit val cardWrites: Writes[CardInterface] = (card: CardInterface) => {
     var obj = Json.obj(
-      "name" -> card.getID._1,
-      "rotation" -> card.getID._2)
-    val indexArea = card.getAreas.indexWhere(p => p.player != -1)
+      "name" -> card.id._1,
+      "rotation" -> card.id._2)
+    val indexArea = card.areas.indexWhere(p => p.player != -1)
     if (indexArea != -1) {
       obj = obj.++(Json.obj(
         "index" -> indexArea,
-        "player" -> card.getAreas(indexArea).player
+        "player" -> card.areas(indexArea).player
       ))
     }
     obj
@@ -88,7 +88,7 @@ class FileIO extends FileIOInterface {
     Json.obj(
       "size" -> playfield.grid.size,
       "isOn" -> playfield.isOn,
-      "freshCard" -> playfield.freshCard.card.getID._1,
+      "freshCard" -> playfield.freshCard.card.id._1,
       "gameState" -> playfield.gameState,
       "players" -> Json.toJson(
         for {

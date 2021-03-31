@@ -23,13 +23,13 @@ playfield = playfield.placeCard(0, 1)
 
 implicit val cardWrites: Writes[CardInterface] = (card: CardInterface) => {
   var obj = Json.obj(
-    "name" -> card.getID._1,
-    "rotation" -> card.getID._2)
-  val indexArea = card.getAreas.indexWhere(p => p.player != -1)
+    "name" -> card.id._1,
+    "rotation" -> card.id._2)
+  val indexArea = card.areas.indexWhere(p => p.player != -1)
   if (indexArea != -1) {
     obj = obj.++(Json.obj(
       "index" -> indexArea,
-      "player" -> card.getAreas(indexArea).player
+      "player" -> card.areas(indexArea).player
     ))
   }
   obj
