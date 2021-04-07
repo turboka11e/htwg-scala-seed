@@ -58,8 +58,10 @@ class TUI(controller: ControllerInterface) extends Reactor {
         if( controller.getGameState > 1) controller.publish(new InvalidInputString)
       }
     }
-
   }
+
+
+
 
   def forkDigit(input: Int): Unit = {
     controller.getGameState match {

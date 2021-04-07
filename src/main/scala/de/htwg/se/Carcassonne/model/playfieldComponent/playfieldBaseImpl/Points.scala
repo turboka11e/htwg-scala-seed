@@ -26,23 +26,6 @@ case class Points(terriList: List[List[(Int, AreaInterface)]], players: List[Pla
   def pointsForPlayersOnTerri: List[(List[Int], Double)] = reducedPlayersList.zip(adjustedPointsForPlayers)
 
   def updatePoints(): List[Player] = {
-    // todo break remove var - DONE with zip and map
-
-    //    var perPlayerPointsList: List[Double] = List.fill(players.size)(elem = 0)
-    //
-    //    for (terri <- pointsForPlayersOnTerri) {
-    //      for (player <- terri._1) {
-    //        perPlayerPointsList = perPlayerPointsList.updated(player, perPlayerPointsList.apply(player) + terri._2)
-    //      }
-    //    }
-    //
-    //    var newPlayerList: List[Player] = players
-    //
-    //    for (x <- perPlayerPointsList.indices) {
-    //      newPlayerList = newPlayerList.updated(x, players(x).copy(points = perPlayerPointsList(x)))
-    //    }
-    //    newPlayerList
-
     players.zipWithIndex map {
       case (player, index) => player.copy(points = {
         pointsForPlayersOnTerri.filter(territories => territories._1.contains(index)).map(p => p._2).sum

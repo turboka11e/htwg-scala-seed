@@ -75,31 +75,50 @@ case class Grid(private val cells: Matrix) extends GridInterface {
   }
 
   def areaToTerritoriesProcess(dir: Char, row: Int, col: Int, territories: List[List[(Int, AreaInterface)]]): List[List[(Int, AreaInterface)]] = {
-    var tmpTerritories = territories
-    val currentArea = cells.card(row, col).getAreaLookingFrom(dir)
+    // todo Option case Some None
 
-    /* Check, whether Area exists in Territories */
-    if (!territories.exists(p => p.exists(a => a._2.equals(currentArea)))) {
-      /* Process to Add Area to Territories List */
-      val neighbours = lookUpNeighbours(dir, row, col)
-      if (neighbours.isDefined) {
-        val openCorners = currentArea.corners.size - neighbours.get.size
-        tmpTerritories = addAreaToTerritories(neighbours, currentArea, territories, openCorners)
-      } else {
-        tmpTerritories = List((currentArea.corners.size, currentArea)) :: tmpTerritories
+    //    var tmpTerritories = territories
+    //    val currentArea = cells.card(row, col).getAreaLookingFrom(dir)
+
+    //    /* Check, whether Area exists in Territories */
+    //    if (!territories.exists(p => p.exists(a => a._2.equals(currentArea)))) {
+    //      /* Process to Add Area to Territories List */
+    //      val neighbours = lookUpNeighbours(dir, row, col)
+    //      if (neighbours.isDefined) {
+    //        val openCorners = currentArea.corners.size - neighbours.get.size
+    //        tmpTerritories = addAreaToTerritories(neighbours, currentArea, territories, openCorners)
+    //      } else {
+    //        tmpTerritories = List((currentArea.corners.size, currentArea)) :: tmpTerritories
+    //      }
+    //    }
+    //    tmpTerritories
+
+    area_exists_in_territories(dir, row, col, territories) match {
+      case Some(currentArea) => lookUpNeighbours(dir, row, col) match {
+        case Some(neighbours) => addAreaToTerritories(neighbours, currentArea, territories, currentArea.corners.size - neighbours.size)
+        case None => List((currentArea.corners.size, currentArea)) :: territories
       }
+      case None => territories
     }
-    tmpTerritories
   }
 
-  def addAreaToTerritories(neighbours: Option[List[AreaInterface]], currentArea: AreaInterface,
+  def area_exists_in_territories(dir: Char, row: Int, col: Int, territories: List[List[(Int, AreaInterface)]]): Option[AreaInterface] = {
+    val currentArea = cells.card(row, col).getAreaLookingFrom(dir);
+    if (!territories.exists(p => p.exists(a => a._2.equals(currentArea)))) {
+      Some(currentArea)
+    } else {
+      None
+    }
+  }
+
+  def addAreaToTerritories(neighbours: List[AreaInterface], currentArea: AreaInterface,
                            territories: List[List[(Int, AreaInterface)]], openCorners: Int): List[List[(Int, AreaInterface)]] = {
     var tmpTerri = territories
     /* Füge die Umgebende Area List in neue List joined Terri hinein */
-    var joinedTerri = insertNeighbourTerrisInJoinedTerri(territories, neighbours.get)
+    var joinedTerri = insertNeighbourTerrisInJoinedTerri(territories, neighbours)
 
     /* Lösche die alten Territorien in der Hauptliste */
-    for (x <- neighbours.get) {
+    for (x <- neighbours) {
       val id = tmpTerri.indexWhere(p => p.exists(b => b._2.equals(x)))
       if (id >= 0) tmpTerri = tmpTerri.filter(_.ne(tmpTerri.apply(id)))
     }

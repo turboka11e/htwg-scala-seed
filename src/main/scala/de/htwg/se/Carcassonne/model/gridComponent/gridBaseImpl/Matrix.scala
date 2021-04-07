@@ -8,12 +8,6 @@ case class Matrix(rows: Vector[Vector[CardInterface]]) extends MatrixInterface {
   def size: Int = rows.size
 
   def getCount: Int = {
-    // todo function count -- DONE!
-
-    //var count = 0
-    //rows.foreach(p => p.foreach(c => if (!c.isEmpty) count += 1))
-    //count
-
     rows.map(vector => vector.count(card => !card.isEmpty)).sum
   }
 
@@ -60,6 +54,8 @@ case class Matrix(rows: Vector[Vector[CardInterface]]) extends MatrixInterface {
     }
   }
 
+  // todo Option Monad
+
   def getDirEnv(row: Int, col: Int, dir: Char): Option[AreaInterface] = {
     if (!checkEnvEmpty(row, col, dir)) {
       dir match {
@@ -74,26 +70,10 @@ case class Matrix(rows: Vector[Vector[CardInterface]]) extends MatrixInterface {
   }
 
   def hasNeighbor(row: Int, col: Int): Boolean = {
-    // todo remove var -- DONE with foldLeft
-
-    //var check = false
-    //for (x <- List('n', 's', 'w', 'e')) {
-    //check = check || !checkEnvEmpty(row, col, x)
-    //}
-    //check
-
     List('n', 's', 'w', 'e').map(c => !checkEnvEmpty(row, col, c)).foldLeft(false)(_ || _)
   }
 
   def checkSet(row: Int, col: Int, checkCard: CardInterface): Boolean = {
-    // todo remove var -- DONE with forall(true && _)
-
-    //    var check = true
-    //    for (x <- List('n', 's', 'w', 'e')) {
-    //      check = check && checkEnv(row, col, x, checkCard)
-    //    }
-    //    check && card(row, col).isEmpty && hasNeighbor(row, col)
-
     List('n', 's', 'w', 'e').map(c => checkEnv(row, col, c, checkCard)).forall(true && _) && card(row, col).isEmpty && hasNeighbor(row, col)
   }
 }

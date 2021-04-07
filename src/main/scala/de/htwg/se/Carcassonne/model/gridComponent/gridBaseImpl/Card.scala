@@ -10,11 +10,6 @@ case class Card(areas: List[AreaInterface], id: (Int, Int) = (-1, 0)) extends Ca
 
   def isEmpty: Boolean = areas.head.value == ' ' && areas.size == 4
 
-  // todo remove getter and setter - DONE
-  /* id => CardNumber (-1 is EmptyCard) and Rotation of Card */
-//  def getID: (Int, Int) = id
-//  def getAreas: List[AreaInterface] = areas
-
   def setAreasXY(x: Int, y: Int): CardInterface = copy(areas = areas.map(areas => areas.setCoord(x, y)))
 
   def getValue(dir: Char): Char = areas.find(_.corners.contains(dir)).get.value
@@ -67,26 +62,6 @@ case class Card(areas: List[AreaInterface], id: (Int, Int) = (-1, 0)) extends Ca
   }
 
   private val color = List(Console.BLUE, Console.RED, Console.YELLOW, Console.GREEN)
-
-  // todo partial function extreme - DONE
-
-  /*def topString: String = {
-    val o = color(areas.indexWhere(p => p == getAreaLookingFrom('n'))) + getValue('n') + Console.RESET
-    var ol = "┌"
-    var or = "┐"
-    if (getCornersLookingFrom('n').contains('w')) ol = o
-    if (getCornersLookingFrom('n').contains('e')) or = o
-    s" $ol $o $or"
-  }*/
-
-  /*def lowString: String = {
-    val u = color(areas.indexWhere(p => p == getAreaLookingFrom('s'))) + getValue('s') + Console.RESET
-    var ul = "└"
-    var ur = "┘"
-    if (getCornersLookingFrom('s').contains('w')) ul = u
-    if (getCornersLookingFrom('s').contains('e')) ur = u
-    s" $ul $u $ur"
-  }*/
 
   def topString: String = {
     edgeString('n')
