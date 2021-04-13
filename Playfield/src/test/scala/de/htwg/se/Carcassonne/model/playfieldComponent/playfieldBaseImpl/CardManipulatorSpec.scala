@@ -2,7 +2,7 @@ package de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
 
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.{Area, Card}
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
-import org.scalatest._
+import org.scalatest.{Matchers, WordSpec}
 
 class CardManipulatorSpec extends WordSpec with Matchers {
   "An CardCreator " when {

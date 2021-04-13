@@ -1,15 +1,14 @@
 package de.htwg.se.Carcassonne.model.fileIOComponent.fileIoJsonImpl
 
-import java.io.{File, PrintWriter}
-
 import de.htwg.se.Carcassonne.model.fileIOComponent.FileIOInterface
-import de.htwg.se.Carcassonne.model.gridComponent.{CardInterface, GridInterface}
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
+import de.htwg.se.Carcassonne.model.gridComponent.{CardInterface, GridInterface}
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.{Playfield, RawCardFactory}
-import play.api.libs.json.{JsObject, JsValue, Json, Reads, Writes}
+import play.api.libs.json._
 
+import java.io.{File, PrintWriter}
 import scala.io.Source
 
 class FileIO extends FileIOInterface {
@@ -41,8 +40,8 @@ class FileIO extends FileIOInterface {
         restoredCard = RawCardFactory("selectCard", -1, name).drawCard()
       }
       if (((json \ "cards") (index) \ "card" \\ "index").nonEmpty) {
-        val i = ((json \ "cards")(index) \ "card" \ "index").as[Int]
-        val player = ((json \ "cards")(index) \ "card" \ "player").as[Int]
+        val i = ((json \ "cards") (index) \ "card" \ "index").as[Int]
+        val player = ((json \ "cards") (index) \ "card" \ "player").as[Int]
         restoredCard = RawCardFactory("selectCard", player, name).drawCard()
         restoredCard = restoredCard.setPlayerToArea(i)
       }

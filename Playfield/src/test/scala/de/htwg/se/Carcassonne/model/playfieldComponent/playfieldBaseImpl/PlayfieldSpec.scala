@@ -3,7 +3,7 @@ package de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
-import org.scalatest._
+import org.scalatest.{Matchers, WordSpec}
 
 class PlayfieldSpec extends WordSpec with Matchers {
 

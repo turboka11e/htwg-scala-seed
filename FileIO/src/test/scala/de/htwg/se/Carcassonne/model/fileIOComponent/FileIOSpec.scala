@@ -20,14 +20,12 @@ class FileIOSpec extends WordSpec with Matchers {
       playfield = playfield.placeCard(0, 1)
 
       "save and load with XML" in {
-        import de.htwg.se.Carcassonne.model.fileIOComponent.fileIoXmlImpl.FileIO
-        val fileIO = new FileIO()
+        val fileIO = new fileIoJsonImpl.FileIO()
         fileIO.save(playfield)
         fileIO.load should be(playfield)
       }
       "save and load with Json" in {
-        import de.htwg.se.Carcassonne.model.fileIOComponent.fileIoJsonImpl.FileIO
-        val fileIO = new FileIO()
+        val fileIO = new fileIoXmlImpl.FileIO()
         fileIO.save(playfield)
         fileIO.load should be(playfield)
       }

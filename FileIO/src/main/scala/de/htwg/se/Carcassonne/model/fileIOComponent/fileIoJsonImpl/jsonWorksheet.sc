@@ -1,12 +1,9 @@
-import java.io.{File, PrintWriter}
-
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.Carcassonne.model.gridComponent.{CardInterface, GridInterface}
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.{Playfield, RawCardFactory}
 import play.api.libs.json.{JsObject, Json, Reads, Writes}
-import play.api.libs.functional.syntax._
 
 var playfield = new Playfield()
 
@@ -44,24 +41,24 @@ implicit val playerWrites: Writes[Player] = (player: Player) => {
 
 def playfieldToJson(playfield: PlayfieldInterface): JsObject = {
   Json.obj(
-    "size" -> playfield.getGrid.getSize,
-    "isOn" -> playfield.getIsOn,
-    "freshCard" -> playfield.getCurrentFreshCard.getCard.getID._1,
-    "gameState" -> playfield.getGameState,
+    "size" -> playfield.grid.size,
+    "isOn" -> playfield.isOn,
+    "freshCard" -> playfield.freshCard.card.id._1,
+    "gameState" -> playfield.gameState,
     "players" -> Json.toJson(
       for {
-        p <- playfield.getPlayers
+        p <- playfield.players
       } yield Json.toJson(p)
     ),
     "cards" -> Json.toJson(
       for {
-        row <- 0 until playfield.getGrid.getSize
-        col <- 0 until playfield.getGrid.getSize
+        row <- 0 until playfield.grid.size
+        col <- 0 until playfield.grid.size
       } yield {
         Json.obj(
           "row" -> row,
           "col" -> col,
-          "card" -> Json.toJson(playfield.getGrid.card(row, col))
+          "card" -> Json.toJson(playfield.grid.card(row, col))
         )
       }
     )

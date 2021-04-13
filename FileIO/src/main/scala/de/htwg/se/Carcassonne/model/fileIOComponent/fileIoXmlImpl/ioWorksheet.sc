@@ -1,9 +1,4 @@
-import de.htwg.se.Carcassonne.model.gridComponent.GridInterface
-import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
-import de.htwg.se.Carcassonne.model.playerComponent.Player
-import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.{Playfield, RawCardFactory}
 
-import scala.xml.Elem
 
 var playfield = new Playfield()
 
