@@ -87,8 +87,8 @@ class TUI(controller: ControllerInterface) extends Reactor {
   }
 
   def printTui(): Unit = {
-    println(Console.RED + "*** " + controller.statusText + " ***" + Console.RESET)
-    //    print(new PrettyPrint(controller.getPlayfield).printo())    // comment out, if only statusText is desired
+//    println(Console.RED + "*** " + controller.statusText + " ***" + Console.RESET)
+        print(new PrettyPrint(controller.getPlayfield).printo())    // comment out, if only statusText is desired
   }
 
   def printErrorTUI(): Unit = {
