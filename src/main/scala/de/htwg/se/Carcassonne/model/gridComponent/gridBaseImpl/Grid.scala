@@ -75,7 +75,6 @@ case class Grid(private val cells: Matrix) extends GridInterface {
   }
 
   def areaToTerritoriesProcess(dir: Char, row: Int, col: Int, territories: List[List[(Int, AreaInterface)]]): List[List[(Int, AreaInterface)]] = {
-    // todo Option case Some None
 
     //    var tmpTerritories = territories
     //    val currentArea = cells.card(row, col).getAreaLookingFrom(dir)

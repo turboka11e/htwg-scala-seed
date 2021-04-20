@@ -45,7 +45,7 @@ class FreshCardGUI(controller: ControllerInterface) extends GridBagPanel {
     override def paint(g: Graphics2D): Unit = {
       g.drawImage(img, 0, 0, null)
       val manican = "./src/main/scala/de/htwg/se/Carcassonne/aview/media/manican"
-      val freshCardAreas = controller.getPlayfield.freshCard.card.areas
+      val freshCardAreas = controller.playfield.freshCard.card.areas
 
       val dirCombi = List(('n', 27, 0), ('s', 25, 55), ('w', 0, 27), ('e', 55, 27))
 
@@ -61,9 +61,9 @@ class FreshCardGUI(controller: ControllerInterface) extends GridBagPanel {
           }
         }
       } else {
-        val dir = controller.getPlayfield.freshCard.card.areas.find(p => p.player != -1).get.corners.head
+        val dir = controller.playfield.freshCard.card.areas.find(p => p.player != -1).get.corners.head
         val combi = dirCombi.find(p => p._1.equals(dir)).get
-        val playerManican = manican + controller.getPlayfield.isOn + ".png"
+        val playerManican = manican + controller.playfield.isOn + ".png"
         g.drawImage(ImageIO.read(new File(playerManican)), combi._2, combi._3, null)
       }
     }
@@ -84,8 +84,8 @@ class FreshCardGUI(controller: ControllerInterface) extends GridBagPanel {
       def validateCoord(xMin: Int, xMax: Int, yMin: Int, yMax: Int): Boolean = xMin < x && x < xMax && yMin < y && y < yMax
 
       def selectArea(dir: Char): Unit = {
-        val area = controller.getPlayfield.freshCard.card.getAreaLookingFrom(dir)
-        val index = controller.getPlayfield.freshCard.card.areas.indexWhere(p => p.eq(area))
+        val area = controller.playfield.freshCard.card.getAreaLookingFrom(dir)
+        val index = controller.playfield.freshCard.card.areas.indexWhere(p => p.eq(area))
         controller.selectArea(index)
       }
     }
@@ -93,14 +93,14 @@ class FreshCardGUI(controller: ControllerInterface) extends GridBagPanel {
 
     def setCard(): Unit = {
       img = findImage()
-      for (x <- 0 until controller.getPlayfield.freshCard.card.id._2) rotateCardR()
+      for (x <- 0 until controller.playfield.freshCard.card.id._2) rotateCardR()
       repaint()
     }
 
     def findImage(): BufferedImage = {
       val numToCharImage = List("D", "E", "G", "H", "I", "J", "K", "L", "N", "O", "R", "T", "U", "V", "C", "W")
 
-      val index = controller.getPlayfield.freshCard.card.id._1
+      val index = controller.playfield.freshCard.card.id._1
 
       var dataImg: String = ""
       if (index == -1) {

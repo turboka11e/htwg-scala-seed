@@ -31,18 +31,15 @@ class TUI(controller: ControllerInterface) extends Reactor {
           controller.firstCard()
         } else {
           controller.changeGameState(1)
-          controller.publish(new PlayfieldChanged)
+
         }
       case 3 => if (dc) controller.changeGameState(4)
-        controller.publish(new PlayfieldChanged)
 
       case 4 => if (!dc) controller.changeGameState(5)
-        controller.publish(new PlayfieldChanged)
+
       case _ =>
     }
   }
-
-  // todo try monade
 
   def validateLongString(input: String): Unit = {
     if (input.forall(p => p.isDigit || p == ' ') && input.nonEmpty) {
@@ -87,8 +84,8 @@ class TUI(controller: ControllerInterface) extends Reactor {
   }
 
   def printTui(): Unit = {
-//    println(Console.RED + "*** " + controller.statusText + " ***" + Console.RESET)
-        print(new PrettyPrint(controller.getPlayfield).printo())    // comment out, if only statusText is desired
+    //    println(Console.RED + "*** " + controller.statusText + " ***" + Console.RESET)
+    print(new PrettyPrint(controller.playfield).printo()) // comment out, if only statusText is desired
   }
 
   def printErrorTUI(): Unit = {

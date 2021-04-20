@@ -26,8 +26,6 @@ class Controller @Inject() (var playfield: PlayfieldInterface) extends Controlle
     publish(new SetGrid)
   }
 
-  def getPlayfield: PlayfieldInterface = playfield
-
   def createGrid(size: Int): Unit = {
     playfield = playfield.fieldSize(size)
     gameStatus = RESIZE
@@ -54,6 +52,7 @@ class Controller @Inject() (var playfield: PlayfieldInterface) extends Controlle
 
   def changeGameState(gs: Int): Unit = {
     playfield = playfield.changeGameState(gs)
+    publish(new PlayfieldChanged)
   }
 
   def getGameState: Int = playfield.gameState

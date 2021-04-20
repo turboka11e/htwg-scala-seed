@@ -3,7 +3,7 @@ package de.htwg.se.Carcassonne
 import com.google.inject.{Guice, Injector}
 import de.htwg.se.Carcassonne.aview.gui.StartGUI
 import de.htwg.se.Carcassonne.aview.tui.TUI
-import de.htwg.se.Carcassonne.controller.controllerComponent.{ControllerInterface, ControllerServer}
+import de.htwg.se.Carcassonne.controller.controllerComponent.{ControllerInterface, RestControllerRoot}
 
 import scala.io.StdIn._
 
@@ -13,11 +13,11 @@ object Carcassonne {
   val controller: ControllerInterface = injector.getInstance(classOf[ControllerInterface])
   val tui = new TUI(controller)
   val gui = new StartGUI(controller)
-  val controllerServer = ControllerServer
+  val restController = RestControllerRoot
 
   def main(args: Array[String]): Unit = {
 
-    val server = controllerServer.startServer()
+    val server = restController.startServer()
 
     var input: String = ""
       println("Neues Spiel mit 'new' starten.")
@@ -26,6 +26,6 @@ object Carcassonne {
         tui.processInputLine(input)
       } while (input != "q")
 
-    controllerServer.stopServer(server)
+    restController.stopServer(server)
   }
 }

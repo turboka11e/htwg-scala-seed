@@ -1,14 +1,10 @@
-package de.htwg.se.Carcassonne.controller.controllerComponent
-
-import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
+package de.htwg.se.Carcassonne.controller
 
 import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher {
 
-  def statusText:String
   def newGame():Unit
-  def playfield: PlayfieldInterface
   def createGrid(size: Int):Unit
   def addPlayer(name: String): Unit
   def firstCard():Unit
