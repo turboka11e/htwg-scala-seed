@@ -1,6 +1,6 @@
-package de.htwg.se.Carcassonne.model.fileIOComponent.fileIoXmlImpl
+package de.htwg.se.Carcassonne.model.fileComponent.fileXmlImpl
 
-import de.htwg.se.Carcassonne.model.fileIOComponent.FileIOInterface
+import de.htwg.se.Carcassonne.model.fileComponent.{FileInterface, RestControllerFileRoot}
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
@@ -8,11 +8,13 @@ import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.{Playfi
 
 import scala.xml.Elem
 
-class FileIO extends FileIOInterface {
+class FileIO extends FileInterface {
 
   override def load: PlayfieldInterface = {
 
-    val xml = scala.xml.XML.loadFile("playfield.xml")
+    //    val xml = scala.xml.XML.loadFile("playfield.xml")
+    val string = RestControllerFileRoot.loadFile("xml")
+    val xml = scala.xml.XML.loadString(string)
 
     val play = xml \\ "playfield"
 
@@ -53,6 +55,7 @@ class FileIO extends FileIOInterface {
     }
     Playfield(players, isOn, restoredGrid, RawCardFactory("selectCard", isOn, freshCard).drawCard(), gameState)
   }
+
   override def save(playfield: PlayfieldInterface): Unit = {
 
     val xml = <playfield size={playfield.grid.size.toString} isOn={playfield.isOn.toString}
@@ -70,14 +73,14 @@ class FileIO extends FileIOInterface {
       </grid>
     </playfield>
 
-    scala.xml.XML.save("playfield.xml", xml)
+    RestControllerFileRoot.saveXmlFile(xml.toString())
   }
 
   def playerToXml(name: String, points: Double): Elem = {
     <player name={name} points={points.toString}></player>
   }
 
-  def cardToXml(row:Int, col:Int, playfield: PlayfieldInterface):Elem = {
+  def cardToXml(row: Int, col: Int, playfield: PlayfieldInterface): Elem = {
     val card = playfield.grid.card(row, col)
     val indexArea = card.areas.indexWhere(p => p.player != -1)
     <card row={row.toString} col={col.toString} name={card.id._1.toString} rotation={card.id._2.toString}>

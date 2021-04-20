@@ -1,19 +1,18 @@
 package de.htwg.se.Carcassonne
 
 import com.google.inject.AbstractModule
-import net.codingwell.scalaguice.ScalaModule
 import de.htwg.se.Carcassonne.controller.controllerComponent._
-import de.htwg.se.Carcassonne.model.fileIOComponent._
-import de.htwg.se.Carcassonne.model.fileIOComponent.FileIOInterface
-import de.htwg.se.Carcassonne.model.playfieldComponent._
-import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
+import de.htwg.se.Carcassonne.model.fileComponent.FileInterface
+import de.htwg.se.Carcassonne.model.fileComponent.fileJsonImpl.FileIO
+import de.htwg.se.Carcassonne.model.playfieldComponent.{PlayfieldInterface, _}
+import net.codingwell.scalaguice.ScalaModule
 
 class CarcassonneModule extends AbstractModule with ScalaModule {
 
   def configure(): Unit = {
     bind[ControllerInterface].to[controllerBaseImpl.Controller]
     bind[PlayfieldInterface].to[playfieldBaseImpl.Playfield]
-//    bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
-    bind[FileIOInterface].to[fileIoJsonImpl.FileIO]
+    //    bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
+    bind[FileInterface].to[FileIO]
   }
 }

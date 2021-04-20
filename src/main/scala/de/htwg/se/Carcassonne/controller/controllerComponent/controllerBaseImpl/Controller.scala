@@ -1,23 +1,23 @@
 package de.htwg.se.Carcassonne.controller.controllerComponent.controllerBaseImpl
 
 import com.google.inject.{Guice, Inject, Injector}
-import net.codingwell.scalaguice.InjectorExtensions._
 import de.htwg.se.Carcassonne.CarcassonneModule
-import de.htwg.se.Carcassonne.controller.controllerComponent.{ControllerInterface, GameStatus}
 import de.htwg.se.Carcassonne.controller.controllerComponent.GameStatus._
-import de.htwg.se.Carcassonne.model.fileIOComponent.FileIOInterface
+import de.htwg.se.Carcassonne.controller.controllerComponent.{ControllerInterface, GameStatus}
+import de.htwg.se.Carcassonne.model.fileComponent.FileInterface
 import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
 import de.htwg.se.Carcassonne.util.UndoManager
+import net.codingwell.scalaguice.InjectorExtensions._
 
 
-class Controller @Inject() (var playfield: PlayfieldInterface) extends ControllerInterface {
+class Controller @Inject()(var playfield: PlayfieldInterface) extends ControllerInterface {
 
   var gameStatus: GameStatus = IDLE
   private var undoManager = new UndoManager
   val injector: Injector = Guice.createInjector(new CarcassonneModule)
-  val fileIo: FileIOInterface = injector.instance[FileIOInterface]
+  val fileIo: FileInterface = injector.instance[FileInterface]
 
-  def statusText:String = GameStatus.message(gameStatus)
+  def statusText: String = GameStatus.message(gameStatus)
 
   def newGame(): Unit = {
     playfield = injector.instance[PlayfieldInterface]
@@ -76,14 +76,14 @@ class Controller @Inject() (var playfield: PlayfieldInterface) extends Controlle
   }
 
   def placeCard(x: Int, y: Int): Unit = {
-    if(playfield.legalPlace(x, y)){
+    if (playfield.legalPlace(x, y)) {
       undoManager.doStep(new PlaceCommand(x, y, playfield, this))
       gameStatus = PLACE
       publish(new PlayfieldChanged)
     }
   }
 
-  def placeAble():Unit = {
+  def placeAble(): Unit = {
     if (!playfield.placeable) {
       gameStatus = GAMEOVER
       publish(new GameOver)

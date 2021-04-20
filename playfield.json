@@ -1,13 +1,16 @@
 {
-  "size" : 7,
-  "isOn" : 1,
-  "freshCard" : 11,
+  "size" : 8,
+  "isOn" : 0,
+  "freshCard" : 13,
   "gameState" : 3,
   "players" : [ {
-    "name" : "Lukas",
+    "name" : "Nail",
     "points" : 0
   }, {
-    "name" : "df",
+    "name" : "Lukas",
+    "points" : 4
+  }, {
+    "name" : "Lilly",
     "points" : 0
   } ],
   "cards" : [ {
@@ -60,6 +63,13 @@
       "rotation" : 0
     }
   }, {
+    "row" : 0,
+    "col" : 7,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
     "row" : 1,
     "col" : 0,
     "card" : {
@@ -109,6 +119,13 @@
       "rotation" : 0
     }
   }, {
+    "row" : 1,
+    "col" : 7,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
     "row" : 2,
     "col" : 0,
     "card" : {
@@ -158,6 +175,13 @@
       "rotation" : 0
     }
   }, {
+    "row" : 2,
+    "col" : 7,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
     "row" : 3,
     "col" : 0,
     "card" : {
@@ -182,7 +206,7 @@
     "row" : 3,
     "col" : 3,
     "card" : {
-      "name" : 2,
+      "name" : -1,
       "rotation" : 0
     }
   }, {
@@ -202,6 +226,13 @@
   }, {
     "row" : 3,
     "col" : 6,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 3,
+    "col" : 7,
     "card" : {
       "name" : -1,
       "rotation" : 0
@@ -231,14 +262,16 @@
     "row" : 4,
     "col" : 3,
     "card" : {
-      "name" : -1,
-      "rotation" : 0
+      "name" : 7,
+      "rotation" : 2,
+      "index" : 0,
+      "player" : 1
     }
   }, {
     "row" : 4,
     "col" : 4,
     "card" : {
-      "name" : -1,
+      "name" : 5,
       "rotation" : 0
     }
   }, {
@@ -251,6 +284,13 @@
   }, {
     "row" : 4,
     "col" : 6,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 4,
+    "col" : 7,
     "card" : {
       "name" : -1,
       "rotation" : 0
@@ -287,8 +327,10 @@
     "row" : 5,
     "col" : 4,
     "card" : {
-      "name" : -1,
-      "rotation" : 0
+      "name" : 0,
+      "rotation" : 0,
+      "index" : 0,
+      "player" : 2
     }
   }, {
     "row" : 5,
@@ -300,6 +342,13 @@
   }, {
     "row" : 5,
     "col" : 6,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 5,
+    "col" : 7,
     "card" : {
       "name" : -1,
       "rotation" : 0
@@ -349,6 +398,69 @@
   }, {
     "row" : 6,
     "col" : 6,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 6,
+    "col" : 7,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 7,
+    "col" : 0,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 7,
+    "col" : 1,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 7,
+    "col" : 2,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 7,
+    "col" : 3,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 7,
+    "col" : 4,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 7,
+    "col" : 5,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 7,
+    "col" : 6,
+    "card" : {
+      "name" : -1,
+      "rotation" : 0
+    }
+  }, {
+    "row" : 7,
+    "col" : 7,
     "card" : {
       "name" : -1,
       "rotation" : 0

@@ -1,9 +1,11 @@
-package de.htwg.se.Carcassonne.model.fileIOComponent
+package de.htwg.se.Carcassonne.model.fileComponent
 
+import de.htwg.se.Carcassonne.model.fileComponent.fileJsonImpl.FileIO
+import de.htwg.se.Carcassonne.model.fileComponent.fileXmlImpl
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
 import org.scalatest.{Matchers, WordSpec}
 
-class FileIOSpec extends WordSpec with Matchers {
+class FileSpec extends WordSpec with Matchers {
 
   "FilIO" when {
     "called playing a Game" should {
@@ -20,12 +22,12 @@ class FileIOSpec extends WordSpec with Matchers {
       playfield = playfield.placeCard(0, 1)
 
       "save and load with XML" in {
-        val fileIO = new fileIoJsonImpl.FileIO()
+        val fileIO = new FileIO()
         fileIO.save(playfield)
         fileIO.load should be(playfield)
       }
       "save and load with Json" in {
-        val fileIO = new fileIoXmlImpl.FileIO()
+        val fileIO = new fileXmlImpl.FileIO()
         fileIO.save(playfield)
         fileIO.load should be(playfield)
       }

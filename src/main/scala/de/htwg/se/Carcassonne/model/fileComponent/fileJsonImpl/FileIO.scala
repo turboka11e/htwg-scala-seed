@@ -1,6 +1,6 @@
-package de.htwg.se.Carcassonne.model.fileIOComponent.fileIoJsonImpl
+package de.htwg.se.Carcassonne.model.fileComponent.fileJsonImpl
 
-import de.htwg.se.Carcassonne.model.fileIOComponent.FileIOInterface
+import de.htwg.se.Carcassonne.model.fileComponent.{FileInterface, RestControllerFileRoot}
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.Carcassonne.model.gridComponent.{CardInterface, GridInterface}
 import de.htwg.se.Carcassonne.model.playerComponent.Player
@@ -8,16 +8,16 @@ import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.{Playfield, RawCardFactory}
 import play.api.libs.json._
 
-import java.io.{File, PrintWriter}
-import scala.io.Source
-
-class FileIO extends FileIOInterface {
+class FileIO extends FileInterface {
 
   override def load: PlayfieldInterface = {
 
-    val source = Source.fromFile("playfield.json")
-    val string = source.getLines.mkString
-    source.close()
+    //    val source = Source.fromFile("playfield.json")
+    //    val string = source.getLines.mkString
+    //    source.close()
+
+    val string = RestControllerFileRoot.loadFile("json")
+
     val json: JsValue = Json.parse(string)
 
     val size = (json \ "size").as[Int]
@@ -78,9 +78,11 @@ class FileIO extends FileIOInterface {
     val jsonPlayfield = playfieldToJson(playfield)
     val jsonFile = Json.prettyPrint(jsonPlayfield)
 
-    val pw = new PrintWriter(new File("playfield.json"))
-    pw.write(jsonFile)
-    pw.close()
+    RestControllerFileRoot.saveJsonFile(jsonFile)
+
+    //    val pw = new PrintWriter(new File("playfield.json"))
+    //    pw.write(jsonFile)
+    //    pw.close()
   }
 
   def playfieldToJson(playfield: PlayfieldInterface): JsObject = {
