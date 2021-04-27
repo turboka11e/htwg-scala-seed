@@ -5,6 +5,7 @@ services:
       context: ./TUI
     ports:
       - "8090:8090"
+    stdin_open: true
   fileio:
     build:
       context: ./FileIO
@@ -14,6 +15,7 @@ services:
     build: .
     ports:
       - "8080:8080"
+    stdin_open: true
     depends_on:
       - tui
       - fileio
