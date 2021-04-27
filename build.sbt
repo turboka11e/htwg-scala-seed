@@ -20,6 +20,8 @@ libraryDependencies += "org.scala-lang.modules" % "scala-xml_2.12" % "1.0.6"
 
 libraryDependencies += "com.typesafe.play" %% "play-json" % "2.6.6"
 
+libraryDependencies += "org.scalatestplus" %% "mockito-3-4" % "3.2.7.0" % "test"
+
 val AkkaVersion = "2.6.8"
 val AkkaHttpVersion = "10.2.4"
 libraryDependencies ++= Seq(

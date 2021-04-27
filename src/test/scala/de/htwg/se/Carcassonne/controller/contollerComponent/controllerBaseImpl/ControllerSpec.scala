@@ -54,12 +54,6 @@ class ControllerSpec extends WordSpec with Matchers {
           controller.redo()
           controller.gameStatus should be(GameStatus.REDO)
         }
-        "save and load" in {
-          controller.save()
-          controller.gameStatus should be(GameStatus.SAVE)
-          controller.load()
-          controller.gameStatus should be(GameStatus.LOADED)
-        }
         "Game over" in {
           controller.firstCard(14) // only for testing
           controller.placeCard(0, 1)

@@ -1,7 +1,7 @@
 {
   "size" : 8,
-  "isOn" : 0,
-  "freshCard" : 13,
+  "isOn" : 2,
+  "freshCard" : 3,
   "gameState" : 3,
   "players" : [ {
     "name" : "Nail",
@@ -213,8 +213,8 @@
     "row" : 3,
     "col" : 4,
     "card" : {
-      "name" : -1,
-      "rotation" : 0
+      "name" : 3,
+      "rotation" : 1
     }
   }, {
     "row" : 3,
@@ -385,7 +385,7 @@
     "row" : 6,
     "col" : 4,
     "card" : {
-      "name" : -1,
+      "name" : 13,
       "rotation" : 0
     }
   }, {

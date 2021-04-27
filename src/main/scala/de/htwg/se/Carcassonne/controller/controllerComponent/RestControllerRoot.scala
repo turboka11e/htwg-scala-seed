@@ -19,7 +19,8 @@ object RestControllerRoot extends Reactor {
 
   def port = 8080
 
-  def url = "localhost"
+  def rootUrl = "root_service"
+  def tuiUrl = "tui_service"
 
   implicit val actorSystem: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "actorSystem");
   implicit val executionContext: ExecutionContextExecutor = actorSystem.executionContext
@@ -84,7 +85,7 @@ object RestControllerRoot extends Reactor {
         commandNoPara("save", () => controller.save()),
         commandNoPara("load", () => controller.load()),
       )
-    Http().newServerAt(url, port).bind(route)
+    Http().newServerAt(rootUrl, port).bind(route)
   }
 
   def stopServer(server: Future[Http.ServerBinding]): Unit = {
@@ -105,7 +106,7 @@ object RestControllerRoot extends Reactor {
     Http().singleRequest(
       HttpRequest(
         method = HttpMethods.POST,
-        uri = "http://localhost:8090/tui/events/" + gameEvent,
+        uri = "http://" + tuiUrl + ":8090/tui/events/" + gameEvent,
         entity =
           HttpEntity(ContentTypes.`text/plain(UTF-8)`, new PrettyPrint(controller.playfield).printo())
       )
@@ -116,7 +117,7 @@ object RestControllerRoot extends Reactor {
     Http().singleRequest(
       HttpRequest(
         method = HttpMethods.GET,
-        uri = "http://localhost:8090/tui/events/" + gameEvent
+        uri = "http://" + tuiUrl + ":8090/tui/events/" + gameEvent
       )
     )
   }

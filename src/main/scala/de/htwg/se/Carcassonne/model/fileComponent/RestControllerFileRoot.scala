@@ -14,11 +14,13 @@ object RestControllerFileRoot {
   implicit val actorSystem: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "actorSystem");
   implicit val executionContext: ExecutionContextExecutor = actorSystem.executionContext
 
+  def fileIoUrl = "fileIo_service"
+
   def saveFile(fileFormat: String, text: String) = {
     Http().singleRequest(
       HttpRequest(
         method = HttpMethods.PUT,
-        uri = "http://localhost:8085/fileIO/" + fileFormat + "/save",
+        uri = "http://" + fileIoUrl + ":8085/fileIO/" + fileFormat + "/save",
         entity = HttpEntity(ContentTypes.`text/html(UTF-8)`, text)
       )
     )
@@ -36,7 +38,7 @@ object RestControllerFileRoot {
     val future = Http().singleRequest(
       HttpRequest(
         method = HttpMethods.GET,
-        uri = "http://localhost:8085/fileIO/load/" + format
+        uri = "http://" + fileIoUrl + ":8085/fileIO/load/" + format
       )
     )
 

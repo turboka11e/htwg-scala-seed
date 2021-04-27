@@ -24,7 +24,8 @@ object RestControllerTUI extends Reactor {
 
   def port = 8090
 
-  def url = "localhost"
+  def rootUrl = "root_service"
+  def tuiUrl = "tui_service"
 
   def receivePOSTAndPublishEvent(eventPath: String, event: String => Event): Route = {
     path("tui" / "events" / eventPath) {
@@ -47,7 +48,7 @@ object RestControllerTUI extends Reactor {
   }
 
   def startServer(): Future[Http.ServerBinding] = {
-    Http().newServerAt(url, port).bind(
+    Http().newServerAt(tuiUrl, port).bind(
       concat(
         receivePOSTAndPublishEvent("playfieldChanged", field => new PlayfieldChanged(field)),
         receivePOSTAndPublishEvent("setGrid", field => new SetGrid(field)),
@@ -68,7 +69,7 @@ object RestControllerTUI extends Reactor {
     Http().singleRequest(
       HttpRequest(
         method = HttpMethods.GET,
-        uri = "http://localhost:8080/controller/" + commandPath,
+        uri = "http://" + rootUrl + ":8080/controller/" + commandPath,
       )
     )
   }
@@ -77,7 +78,7 @@ object RestControllerTUI extends Reactor {
     Http().singleRequest(
       HttpRequest(
         method = HttpMethods.GET,
-        uri = "http://localhost:8080/controller/" + commandPath + "/" + param
+        uri = "http://" + rootUrl + ":8080/controller/" + commandPath + "/" + param
       )
     )
   }
@@ -86,7 +87,7 @@ object RestControllerTUI extends Reactor {
     Http().singleRequest(
       HttpRequest(
         method = HttpMethods.GET,
-        uri = "http://localhost:8080/controller/" + commandPath + "?x=" + x + "&y=" + y
+        uri = "http://" + rootUrl + ":8080/controller/" + commandPath + "?x=" + x + "&y=" + y
       )
     )
   }
@@ -95,7 +96,7 @@ object RestControllerTUI extends Reactor {
     val future = Http().singleRequest(
       HttpRequest(
         method = HttpMethods.GET,
-        uri = "http://localhost:8080/controller/" + commandPath
+        uri = "http://" + rootUrl + ":8080/controller/" + commandPath
       )
     )
 

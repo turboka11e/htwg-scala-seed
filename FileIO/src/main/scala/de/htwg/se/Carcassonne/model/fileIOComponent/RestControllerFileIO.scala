@@ -13,7 +13,7 @@ object RestControllerFileIO {
 
   def port = 8085
 
-  def url = "localhost"
+  def fileIoUrl = "fileIo_service"
 
   implicit val actorSystem: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "actorSystem");
   implicit val executionContext: ExecutionContextExecutor = actorSystem.executionContext
@@ -32,8 +32,8 @@ object RestControllerFileIO {
       }
     }
 
-  println("New Server for FileIO started at http://" + url + ":" + port + "\n Press RETURN to stop...")
-  Http().newServerAt(url, port).bind(
+  println("New Server for FileIO started at http://" + fileIoUrl + ":" + port + "\n Press RETURN to stop...")
+  Http().newServerAt(fileIoUrl, port).bind(
     concat(
       routeSave("Json", jsonFileIO.save),
       routeSave("xml", xmlFileIO.save),

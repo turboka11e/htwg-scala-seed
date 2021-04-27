@@ -5,4 +5,5 @@ RUN apt-get update && \
     apt-get install -y sbt libxrender1 libxtst6 libxi6
 WORKDIR /Carcassonne
 ADD . /Carcassonne
+EXPOSE 8080
 CMD sbt run

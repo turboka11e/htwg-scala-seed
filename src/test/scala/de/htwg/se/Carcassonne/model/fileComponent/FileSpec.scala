@@ -1,10 +1,10 @@
 package de.htwg.se.Carcassonne.model.fileComponent
 
 import de.htwg.se.Carcassonne.model.fileComponent.fileJsonImpl.FileIO
-import de.htwg.se.Carcassonne.model.fileComponent.fileXmlImpl
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{Ignore, Matchers, WordSpec}
 
+@Ignore
 class FileSpec extends WordSpec with Matchers {
 
   "FilIO" when {
