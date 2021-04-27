@@ -6,4 +6,4 @@ RUN apt-get update && \
 WORKDIR /TUI
 ADD . /TUI
 EXPOSE 8090
-CMD sbt run
+# CMD sbt run
