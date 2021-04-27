@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  tui:
+    build:
+      context: ./TUI
+    ports:
+      - "8090:8090"
+  fileio:
+    build:
+      context: ./FileIO
+    ports:
+      - "8085:8085"
+  root:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - tui
+      - fileio
