@@ -2,14 +2,20 @@ package de.htwg.se.Carcassonne.database.playerDB
 
 import de.htwg.se.Carcassonne.database.PlayerDBInterface
 import de.htwg.se.Carcassonne.model.playerComponent.Player
+import slick.jdbc.H2Profile.api._
 
-class PlayerDao extends PlayerDBInterface{
+import scala.concurrent.Future
 
-  override def createPlayer(player: Player): Option[Player] = ???
+class PlayerDao(db: Database ) extends PlayerDBInterface{
 
-  override def readPlayers(): List[Player] = ???
+  def createPlayer(player: Player): Future[Player] = {
+    val addPlayer = players returning players.map(_.name) into ((player, name) => player.copy(name = name)) += player
+    db.run(addPlayer)
+  }
 
-  override def updatePlayer(player: Player): Option[Player] = ???
+  def readPlayers(): List[Player] = ???
 
-  override def deletePlayer(player: Player): Option[Player] = ???
+  def updatePlayer(player: Player): Future[Player] = ???
+
+  def deletePlayer(player: Player): Future[Player] = ???
 }
