@@ -57,6 +57,7 @@ case class Playfield(players: List[Player] = Nil, isOn: Int = 0, grid: GridInter
   }
 
   def nextPlayer: Playfield = {
+    println(dao.readPlayers())
     if (isOn == players.size - 1) {
       copy(isOn = 0)
     } else {

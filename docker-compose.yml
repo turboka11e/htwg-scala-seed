@@ -26,3 +26,11 @@ services:
     stdin_open: true
     environment:
       DISPLAY: host.docker.internal:0
+  board-games-postgres:
+    container_name: "board-games-postgres"
+    build:
+      dockerfile: ./localdeployment/docker-local/board-games-postgres/init/Dockerfile
+      context: .
+    restart: "no"
+    ports:
+      - "5432:5432"
