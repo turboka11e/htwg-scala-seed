@@ -1,9 +1,9 @@
 package de.htwg.se.Carcassonne.database
 
 import de.htwg.se.Carcassonne.model.playerComponent.Player
-import slick.jdbc.H2Profile.api._
+import slick.jdbc.PostgresProfile.api._
 
-trait PlayerDBInterface {
+trait DatabaseSchema {
 
   class Players(tag: Tag) extends Table[Player](tag, "PLAYERS") {
 

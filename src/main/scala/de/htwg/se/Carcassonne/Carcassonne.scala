@@ -4,6 +4,7 @@ import com.google.inject.{Guice, Injector}
 import de.htwg.se.Carcassonne.aview.gui.StartGUI
 import de.htwg.se.Carcassonne.aview.tui.TUI
 import de.htwg.se.Carcassonne.controller.controllerComponent.{ControllerInterface, RestControllerRoot}
+import de.htwg.se.Carcassonne.database.DatabaseObject
 
 import scala.io.StdIn._
 
@@ -14,10 +15,14 @@ object Carcassonne {
   val tui = new TUI(controller)
   val gui = new StartGUI(controller)
   val restController = RestControllerRoot
+  val database = DatabaseObject
 
   def main(args: Array[String]): Unit = {
 
     val server = restController.startServer()
+
+    println(database.players.shaped.value.schemaName)
+
 
     var input: String = ""
       println("Neues Spiel mit 'new' starten.")

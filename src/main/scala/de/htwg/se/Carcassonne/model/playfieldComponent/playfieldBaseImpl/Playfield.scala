@@ -1,5 +1,6 @@
 package de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
 
+import de.htwg.se.Carcassonne.database.DatabaseObject.dao
 import de.htwg.se.Carcassonne.model.gridComponent.GridInterface
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.Carcassonne.model.playerComponent.Player
@@ -17,7 +18,11 @@ case class Playfield(players: List[Player] = Nil, isOn: Int = 0, grid: GridInter
 
   def fieldSize(size: Int): Playfield = copy(grid = new Grid(size), gameState = 1) // GameState 0
 
-  def addPlayer(name: String): Playfield = copy(players = players ::: List(Player(name)), gameState = 2) // GameState 1
+  def addPlayer(name: String): Playfield = copy(players = {
+    val newPlayer = Player(name)
+    dao.createPlayer(newPlayer)
+    players ::: List(newPlayer)
+  }, gameState = 2) // GameState 1
 
   def getFreshCard: Playfield = copy(freshCard = RawCardFactory("randomCard", isOn).drawCard()) // GameState 2
 

@@ -1,5 +1,6 @@
 package de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
 
+import de.htwg.se.Carcassonne.database.DatabaseObject.dao
 import de.htwg.se.Carcassonne.model.gridComponent.AreaInterface
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 
@@ -27,9 +28,13 @@ case class Points(terriList: List[List[(Int, AreaInterface)]], players: List[Pla
 
   def updatePoints(): List[Player] = {
     players.zipWithIndex map {
-      case (player, index) => player.copy(points = {
-        pointsForPlayersOnTerri.filter(territories => territories._1.contains(index)).map(p => p._2).sum
-      })
+      case (player, index) => {
+        val newPoints = player.copy(points = {
+          pointsForPlayersOnTerri.filter(territories => territories._1.contains(index)).map(p => p._2).sum
+        })
+        dao.updatePoints(newPoints)
+        newPoints
+      }
     }
   }
 
