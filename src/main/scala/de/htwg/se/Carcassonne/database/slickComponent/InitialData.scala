@@ -1,12 +1,11 @@
-package de.htwg.se.Carcassonne.database
+package de.htwg.se.Carcassonne.database.slickComponent
 
-import de.htwg.se.Carcassonne.model.playerComponent.Player
 import slick.dbio.DBIO
 import slick.jdbc.JdbcBackend.Database
 import slick.jdbc.PostgresProfile.api._
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.util.{Failure, Success}
 
 trait InitialData {
@@ -15,7 +14,7 @@ trait InitialData {
 
   def db: Database
 
-  def insertInitialData(): Future[Unit] ={
+  def insertInitialData(): Future[Unit] = {
     val setup = DBIO.seq(
       players.delete,
     )

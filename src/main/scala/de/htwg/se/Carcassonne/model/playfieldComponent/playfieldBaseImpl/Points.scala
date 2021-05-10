@@ -1,6 +1,6 @@
 package de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
 
-import de.htwg.se.Carcassonne.database.DatabaseObject.dao
+import de.htwg.se.Carcassonne.database.slickComponent.DatabaseObject.dao
 import de.htwg.se.Carcassonne.model.gridComponent.AreaInterface
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 

@@ -1,12 +1,11 @@
-package de.htwg.se.Carcassonne.database
+package de.htwg.se.Carcassonne.database.slickComponent
 
-import de.htwg.se.Carcassonne.database.dao.PlayerDao
+import de.htwg.se.Carcassonne.database.slickComponent.dao.PlayerDao
 import slick.jdbc.JdbcBackend.Database
 import slick.jdbc.PostgresProfile.api._
 
-import scala.concurrent.{Await, Future}
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 import scala.util.Success
 
 object DatabaseObject extends DatabaseSchema with InitialData {
@@ -22,5 +21,3 @@ object DatabaseObject extends DatabaseSchema with InitialData {
   def dao = new PlayerDao(db)
 
 }
-
-

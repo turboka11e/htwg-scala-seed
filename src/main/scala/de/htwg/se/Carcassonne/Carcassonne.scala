@@ -4,7 +4,7 @@ import com.google.inject.{Guice, Injector}
 import de.htwg.se.Carcassonne.aview.gui.StartGUI
 import de.htwg.se.Carcassonne.aview.tui.TUI
 import de.htwg.se.Carcassonne.controller.controllerComponent.{ControllerInterface, RestControllerRoot}
-import de.htwg.se.Carcassonne.database.DatabaseObject
+import de.htwg.se.Carcassonne.database.slickComponent.DatabaseObject
 
 import scala.io.StdIn._
 
