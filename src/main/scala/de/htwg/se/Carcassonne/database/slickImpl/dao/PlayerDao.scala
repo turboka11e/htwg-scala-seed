@@ -1,6 +1,6 @@
-package de.htwg.se.Carcassonne.database.slickComponent.dao
+package de.htwg.se.Carcassonne.database.slickImpl.dao
 
-import de.htwg.se.Carcassonne.database.slickComponent.DatabaseSchema
+import de.htwg.se.Carcassonne.database.slickImpl.DatabaseSchema
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import slick.jdbc.PostgresProfile.api._
 

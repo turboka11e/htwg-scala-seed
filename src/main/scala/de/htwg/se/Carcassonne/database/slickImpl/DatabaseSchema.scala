@@ -1,4 +1,4 @@
-package de.htwg.se.Carcassonne.database.slickComponent
+package de.htwg.se.Carcassonne.database.slickImpl
 
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import slick.jdbc.PostgresProfile.api._
@@ -14,5 +14,5 @@ trait DatabaseSchema {
     def * = (name, points) <> (Player.tupled, Player.unapply)
   }
 
-  val players = TableQuery[Players]
+  def players = TableQuery[Players]
 }
