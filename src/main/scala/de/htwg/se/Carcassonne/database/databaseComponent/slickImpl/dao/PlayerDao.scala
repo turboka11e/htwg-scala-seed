@@ -1,15 +1,16 @@
-package de.htwg.se.Carcassonne.database.slickImpl.dao
+package de.htwg.se.Carcassonne.database.databaseComponent.slickImpl.dao
 
-import de.htwg.se.Carcassonne.database.slickImpl.DatabaseSchema
+import de.htwg.se.Carcassonne.database.dao.PlayerDaoInterface
+import de.htwg.se.Carcassonne.database.databaseComponent.slickImpl.DatabaseSchema
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import slick.jdbc.PostgresProfile.api._
 
+import scala.concurrent.Await
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
 
-class PlayerDao(db: Database) extends DatabaseSchema {
+case class PlayerDao(db: Database) extends PlayerDaoInterface with DatabaseSchema {
 
-  def createPlayer(player: Player): Future[Player] = {
+  def createPlayer(player: Player): Unit = {
     val addPlayer = players returning players.map(_.name) into ((player, name) => player.copy(name = name)) += player
     db.run(addPlayer)
   }
@@ -18,7 +19,7 @@ class PlayerDao(db: Database) extends DatabaseSchema {
     Await.result(db.run(players.result), Duration.Inf).toList
   }
 
-  def updatePoints(player: Player): Future[Int] = {
+  def updatePoints(player: Player): Unit = {
     val updatePoints = players.filter(r => r.name === player.name).map(_.points).update(player.points)
     db.run(updatePoints)
   }

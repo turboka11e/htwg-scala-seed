@@ -1,4 +1,4 @@
-package de.htwg.se.Carcassonne.database.slickImpl
+package de.htwg.se.Carcassonne.database.databaseComponent.slickImpl
 
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import slick.jdbc.PostgresProfile.api._

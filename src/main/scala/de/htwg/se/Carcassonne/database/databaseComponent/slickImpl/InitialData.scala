@@ -1,4 +1,4 @@
-package de.htwg.se.Carcassonne.database.slickImpl
+package de.htwg.se.Carcassonne.database.databaseComponent.slickImpl
 
 import slick.dbio.DBIO
 import slick.jdbc.JdbcBackend.Database

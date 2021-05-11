@@ -1,6 +1,6 @@
 package de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl
 
-import de.htwg.se.Carcassonne.database.slickImpl.DatabaseSlick.dao
+import de.htwg.se.Carcassonne.database.Database
 import de.htwg.se.Carcassonne.model.gridComponent.GridInterface
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.Carcassonne.model.playerComponent.Player
@@ -20,7 +20,7 @@ case class Playfield(players: List[Player] = Nil, isOn: Int = 0, grid: GridInter
 
   def addPlayer(name: String): Playfield = copy(players = {
     val newPlayer = Player(name)
-    dao.createPlayer(newPlayer)
+    Database.playerDao.createPlayer(newPlayer)
     players ::: List(newPlayer)
   }, gameState = 2) // GameState 1
 
@@ -57,7 +57,7 @@ case class Playfield(players: List[Player] = Nil, isOn: Int = 0, grid: GridInter
   }
 
   def nextPlayer: Playfield = {
-    println(dao.readPlayers())
+    println(Database.playerDao.readPlayers())
     if (isOn == players.size - 1) {
       copy(isOn = 0)
     } else {
