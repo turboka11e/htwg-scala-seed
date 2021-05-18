@@ -17,7 +17,7 @@ class CarcassonneModule extends AbstractModule with ScalaModule {
     bind[PlayfieldInterface].to[playfieldBaseImpl.Playfield]
     //    bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
     bind[FileInterface].to[FileIO]
-//    bind[DatabaseInterface].to[DatabaseSlick]
-    bind[DatabaseInterface].to[DatabaseMongoDb]
+    bind[DatabaseInterface].to[DatabaseSlick]
+//    bind[DatabaseInterface].to[DatabaseMongoDb]
   }
 }
