@@ -4,6 +4,7 @@ import com.google.inject.{Guice, Inject, Injector}
 import de.htwg.se.Carcassonne.CarcassonneModule
 import de.htwg.se.Carcassonne.controller.controllerComponent.GameStatus._
 import de.htwg.se.Carcassonne.controller.controllerComponent.{ControllerInterface, GameStatus}
+import de.htwg.se.Carcassonne.database.Database
 import de.htwg.se.Carcassonne.model.fileComponent.FileInterface
 import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
 import de.htwg.se.Carcassonne.util.UndoManager
@@ -112,6 +113,12 @@ class Controller @Inject()(var playfield: PlayfieldInterface) extends Controller
     playfield = fileIo.load
     gameStatus = LOADED
     publish(new PlayfieldChanged)
+  }
+
+  def getScore(): String = {
+    val score = Database.playerDao.readPlayers().toString()
+    println(score)
+    score
   }
 
 }

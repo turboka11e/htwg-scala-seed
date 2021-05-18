@@ -32,7 +32,7 @@ case class PlayerDao(collection: MongoCollection[Document]) extends PlayerDaoInt
         playerList = Player(result.getString("_id"), result.getDouble("points")) :: playerList
       }
 
-      override def onError(e: Throwable): Unit = println("Failed to load playerlist")
+      override def onError(e: Throwable): Unit = playerListPromise.failure(e)
 
       override def onComplete(): Unit = playerListPromise.success(playerList)
     })

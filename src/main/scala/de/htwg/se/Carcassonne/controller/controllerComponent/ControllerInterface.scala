@@ -24,5 +24,5 @@ trait ControllerInterface extends Publisher {
   def redo(): Unit
   def save(): Unit
   def load(): Unit
-
+  def getScore(): String
 }

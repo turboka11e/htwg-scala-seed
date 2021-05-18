@@ -3,7 +3,7 @@ package de.htwg.se.Carcassonne.controller.controllerComponent
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.model._
-import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Directives.{path, _}
 import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.{Http, server}
 import de.htwg.se.Carcassonne.Carcassonne.controller
@@ -84,6 +84,11 @@ object RestControllerRoot extends Reactor {
         commandNoPara("redo", () => controller.redo()),
         commandNoPara("save", () => controller.save()),
         commandNoPara("load", () => controller.load()),
+        path("controller" / "getScore") {
+            get {
+              complete(HttpEntity(ContentTypes.`text/html(UTF-8)`, controller.getScore()))
+            }
+        },
       )
     Http().newServerAt(rootUrl, port).bind(route)
   }

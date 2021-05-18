@@ -10,7 +10,7 @@ import scala.concurrent.duration.Duration
 
 class DatabaseMongoDb extends DatabaseInterface {
 
-  val client: MongoClient = MongoClient("mongodb://root:example@localhost:27017")
+  val client: MongoClient = MongoClient("mongodb://root:example@mongo:27017")
   val database: MongoDatabase = client.getDatabase("Carcassonne")
   val playerCollection = "Player"
   dropCollection(playerCollection)
