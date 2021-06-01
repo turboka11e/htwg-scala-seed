@@ -10,6 +10,9 @@ import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
 import de.htwg.se.Carcassonne.util.UndoManager
 import net.codingwell.scalaguice.InjectorExtensions._
 
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
 
 class Controller @Inject()(var playfield: PlayfieldInterface) extends ControllerInterface {
 
@@ -116,7 +119,9 @@ class Controller @Inject()(var playfield: PlayfieldInterface) extends Controller
   }
 
   def getScore(): String = {
-    val score = Database.playerDao.readPlayers().toString()
+    val promiseList = Database.playerDao.readPlayers()
+    println("Hier könnten wir jetzt noch was anderes machen!")
+    val score = Await.result(promiseList.future, Duration.Inf).toString
     println(score)
     score
   }

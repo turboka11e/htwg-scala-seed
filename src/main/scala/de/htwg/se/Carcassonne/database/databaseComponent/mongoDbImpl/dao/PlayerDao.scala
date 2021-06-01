@@ -9,7 +9,7 @@ import org.mongodb.scala.result.UpdateResult
 import org.mongodb.scala.{Completed, MongoCollection, Observer}
 
 import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Promise}
+import scala.concurrent.{Await, Future, Promise}
 
 case class PlayerDao(collection: MongoCollection[Document]) extends PlayerDaoInterface {
 
@@ -23,8 +23,8 @@ case class PlayerDao(collection: MongoCollection[Document]) extends PlayerDaoInt
     })
   }
 
-  override def readPlayers(): List[Player] = {
-    val playerListPromise: Promise[List[Player]] = Promise[List[Player]]()
+  override def readPlayers(): Promise[Seq[Player]] = {
+    val playerListPromise: Promise[Seq[Player]] = Promise[Seq[Player]]()
     collection.find().subscribe(new Observer[Document] {
       var playerList: List[Player] = Nil
 
@@ -36,7 +36,7 @@ case class PlayerDao(collection: MongoCollection[Document]) extends PlayerDaoInt
 
       override def onComplete(): Unit = playerListPromise.success(playerList)
     })
-    Await.result(playerListPromise.future, Duration.Inf)
+    playerListPromise
   }
 
   override def updatePoints(player: Player): Unit = {

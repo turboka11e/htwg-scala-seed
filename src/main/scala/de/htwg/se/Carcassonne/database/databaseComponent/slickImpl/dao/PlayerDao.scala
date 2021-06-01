@@ -5,7 +5,7 @@ import de.htwg.se.Carcassonne.database.databaseComponent.slickImpl.DatabaseSchem
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import slick.jdbc.PostgresProfile.api._
 
-import scala.concurrent.Await
+import scala.concurrent.{Await, Future, Promise}
 import scala.concurrent.duration.Duration
 
 case class PlayerDao(db: Database) extends PlayerDaoInterface with DatabaseSchema {
@@ -15,8 +15,10 @@ case class PlayerDao(db: Database) extends PlayerDaoInterface with DatabaseSchem
     db.run(addPlayer)
   }
 
-  def readPlayers(): List[Player] = {
-    Await.result(db.run(players.result), Duration.Inf).toList
+  def readPlayers(): Promise[Seq[Player]] = {
+    val promise = Promise[Seq[Player]]()
+    promise.completeWith(db.run(players.result))
+    promise
   }
 
   def updatePoints(player: Player): Unit = {
