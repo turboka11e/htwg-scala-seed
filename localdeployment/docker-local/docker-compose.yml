@@ -1,9 +1,0 @@
-version: '3'
-services:
-  board-games-postgres:
-    build:
-      dockerfile: localdeployment/docker-local/board-games-postgres/init/Dockerfile
-      context: ../..
-    restart: "no"
-    ports:
-      - 5432:5432
