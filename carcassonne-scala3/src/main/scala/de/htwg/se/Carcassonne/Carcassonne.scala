@@ -30,19 +30,23 @@ import scala.io.StdIn._
         
       case 1 =>
         print("\nSpieler hinzufügen!\n")
-
+        print("Name eingeben: ")
+        input = readLine()
+        preGrid = tui.processAddingPlayer(input, preGrid)
+        print("Weitere Spieler hinzufügen?\n('Y', 'N') Eingabe: ")
+        input = readLine()
         while 
-          (input == "Y" || input == "y")
-            grid = preGrid.getPlayerReadyGrid
-            playerList = grid.getPlayerlist
-            print(grid.toString)
-            gameMode += 1
+          input == "Y" || input == "y"
         do
           print("Name eingeben: ")
           input = readLine()
           preGrid = tui.processAddingPlayer(input, preGrid)
           print("Weitere Spieler hinzufügen?\n('Y', 'N') Eingabe: ")
           input = readLine()
+        grid = preGrid.getPlayerReadyGrid
+        playerList = grid.getPlayerlist
+        print(grid.toString)
+        gameMode += 1
 
       case 2 =>
         val currentplayer = playerList(playerIsOn)
