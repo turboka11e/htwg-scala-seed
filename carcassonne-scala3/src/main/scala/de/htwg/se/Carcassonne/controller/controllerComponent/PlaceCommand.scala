@@ -7,24 +7,19 @@ class PlaceCommand(x:Int, y:Int, oldPlayfield:Playfield, controller: Controller)
 
   var oldFreshCard:CardManipulator = _
 
-  override def doStep():Unit = {
+  override def doStep():Unit =
     controller.playfield = controller.playfield.placeCard(x, y)
-    if(controller.playfield.getSuccess) {
+    if(controller.playfield.getSuccess)
       controller.playfield = controller.playfield.nextPlayer.getFreshCard
-    }
     oldFreshCard = controller.playfield.freshCard
-  }
 
-  override def undoStep(): Unit = {
+  override def undoStep(): Unit =
     controller.playfield = oldPlayfield
-  }
 
-  override def redoStep(): Unit = {
+  override def redoStep(): Unit =
     controller.playfield = controller.playfield.placeCard(x, y)
-    if(controller.playfield.getSuccess) {
+    if(controller.playfield.getSuccess)
       controller.playfield = controller.playfield.nextPlayer
       controller.playfield = controller.playfield.copy(freshCard = oldFreshCard)
-    }
-  }
 
 }
