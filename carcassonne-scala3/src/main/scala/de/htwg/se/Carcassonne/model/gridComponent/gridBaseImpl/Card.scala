@@ -32,11 +32,10 @@ case class Card(areas:List[AreaInterface] = List(Area()), private val id:(Int, I
     var check = true
     for(x <- areas)
       for(y <- areas)
-        for(c <- x.getCorners){
+        for(c <- x.getCorners)
           if(y.getCorners.contains(c)  && y != x)
             check = false                
     check
-  }
 
   def rotateRight():CardInterface = 
     val rotatedAreas:List[AreaInterface] = areas.map { x => x.rotateRight() }
