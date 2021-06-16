@@ -29,17 +29,14 @@ case class Points(terriList:List[List[(Int, AreaInterface)]], players:List[Playe
 
     var perPlayerPointsList: List[Double] = List.fill(players.size)(elem = 0)
 
-    for (terri <- pointsForPlayersOnTerri) {
-      for (player <- terri._1) {
-        perPlayerPointsList = perPlayerPointsList.updated(player, perPlayerPointsList.apply(player) + terri._2)
-      }
-    }
+    for (terri <- pointsForPlayersOnTerri)
+      for (player <- terri._1)
+        perPlayerPointsList = perPlayerPointsList updated (player, perPlayerPointsList.apply(player) + terri._2)
 
     var newPlayerList:List[Player] = players
 
-    for(x <- perPlayerPointsList.indices){
-      newPlayerList = newPlayerList.updated(x, players(x).copy(points = perPlayerPointsList(x)))
-    }
+    for(x <- perPlayerPointsList.indices)
+      newPlayerList = newPlayerList updated (x, players(x) copy (points = perPlayerPointsList(x)) )
     newPlayerList
   }
 
