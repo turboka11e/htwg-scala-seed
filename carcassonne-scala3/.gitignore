@@ -11,8 +11,12 @@ bin/
 target/
 
 # VScode
-.vscode/
 .metals/
+.ammonite/
+metals.sbt
+metals/project/
+
+.vscode/
 
 # Maven
 log/
