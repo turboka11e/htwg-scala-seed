@@ -31,32 +31,29 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: GridInterf
   def rotateL:Playfield = copy(freshCard = freshCard.rotateLeft)                                    // Gamestate 3
 
   def selectArea(nr:Int):Playfield = {
-    if(!freshCard.card.getAreas.exists(p => p.getPlayer != -1) && freshCard.card.getAreas.apply(nr).getValue != 'g') {
+    if(!freshCard.card.getAreas.exists(p => p.getPlayer != -1) && freshCard.card.getAreas.apply(nr).getValue != 'g') 
       copy(freshCard = freshCard.setPlayerToArea(nr), gameState = PlaceCard)
-    } else {
-      this
-    }
-  }                // Gamestate 4
+     else 
+      this    
+    }                // Gamestate 4
 
-  def placeCard(x: Int, y: Int): Playfield = { // Gamestate 5
+  def placeCard(x: Int, y: Int): Playfield =  // Gamestate 5
     val check = grid.getCount
     val CardAdded = grid.place(x, y, freshCard.finalCard(x, y))
-    if (check == CardAdded.getCount){
+    if (check == CardAdded.getCount)
       copy(success = false)
-    }else{
-      copy(grid = CardAdded, success = true, gameState = DrawCard, players = Points(CardAdded.getTerritories, players).updatePoints())
-    }
-  }
+    else
+      copy(grid = CardAdded, success = true, gameState = DrawCard, players = Points(CardAdded.getTerritories, players).updatePoints())   
+  
 
-  def nextPlayer: Playfield = {
-    if(isOn == players.size - 1){
+  def nextPlayer: Playfield = 
+    if(isOn == players.size - 1)
       copy(isOn = 0)
-    } else {
+    else 
       copy(isOn = isOn + 1)
-    }
-  }
+    
+  
 
-  def playFieldToString:String = {
-    new PrettyPrint(grid, freshCard, players, isOn, success).printo(gameState)
-  }
+  def playFieldToString:String = 
+    new PrettyPrint(grid, freshCard, players, isOn, success).printo(gameState)  
 }

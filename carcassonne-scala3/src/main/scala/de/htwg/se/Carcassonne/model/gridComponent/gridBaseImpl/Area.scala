@@ -18,9 +18,9 @@ case class Area(value:Char = ' ', corners:List[Char] = List('n', 'w', 'e', 's'),
 
   def setCoord(x:Int, y:Int):AreaInterface = copy(xy = (x, y))
 
-  def rotateRight():AreaInterface = {
+  def rotateRight():AreaInterface = 
     val rotatedcorners = corners.map {case 'w' => 'n'; case 'n' => 'e'; case 'e' => 's'; case 's' => 'w'}
     Area(getValue, rotatedcorners, player)
-  }
+  
 
 }

@@ -11,15 +11,15 @@ case class CardManipulator(playerCard: Int, card: CardInterface = new Card((0, 0
 
   def rotateLeft:CardManipulator = copy(card = card.rotateRight().rotateRight().rotateRight())
 
-  def setPlayerToArea(index:Int):CardManipulator = {
-    if(index < card.getAreas.size){
+  def setPlayerToArea(index:Int):CardManipulator = 
+    if(index < card.getAreas.size)
       val replacedPlayer = card.getAreas.apply(index).setPlayer(playerCard)
       val replacedCard = card.getAreas.updated(index, replacedPlayer)
       this.copy(card = Card(replacedCard, card.getID))
-    } else {
+    else 
       this
-    }
-  }
+    
+  
 
   def finalCard(x:Int, y:Int):CardInterface = this.card.setAreasXY(x, y)
 
