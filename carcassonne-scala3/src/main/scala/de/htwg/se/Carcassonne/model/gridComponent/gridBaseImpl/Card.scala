@@ -28,28 +28,26 @@ case class Card(areas:List[AreaInterface] = List(Area()), private val id:(Int, I
 
   def getAreaLookingFrom(dir:Char): AreaInterface = areas.find(_.getCorners.contains(dir)).get
 
-  def isValid: Boolean = {
+  def isValid: Boolean =
     var check = true
     for(x <- areas)
       for(y <- areas)
         for(c <- x.getCorners){
-          if(y.getCorners.contains(c)  && y != x){
-            check = false
-          }
-        }
+          if(y.getCorners.contains(c)  && y != x)
+            check = false                
     check
   }
 
-  def rotateRight():CardInterface = {
+  def rotateRight():CardInterface = 
     val rotatedAreas:List[AreaInterface] = areas.map { x => x.rotateRight() }
     var rotations = id._2 + 1
-    if(rotations == 4){
+    if(rotations == 4)
      rotations = 0
-    }
+    
     Card(rotatedAreas, id = (id._1, rotations))
-  }
+  
 
-  override def toString:String = {
+  override def toString:String = 
 
     var tmpstring = ""
 
@@ -82,34 +80,34 @@ case class Card(areas:List[AreaInterface] = List(Area()), private val id:(Int, I
 
     tmpstring
 
-  }
+  
 
   private val color = List(Console.BLUE, Console.RED, Console.YELLOW, Console.GREEN)
 
-  def topString:String = {
+  def topString:String = 
     val o = color(areas.indexWhere(p => p == getAreaLookingFrom('n')) ) + getValue('n') + Console.RESET
     var ol = "┌"
     var or = "┐"
     if (getCornersLookingFrom('n').contains('w')) ol = o
     if (getCornersLookingFrom('n').contains('e')) or = o
     s" $ol $o $or"
-  }
+  
 
-  def midString:String = {
+  def midString:String = 
     val l = color(areas.indexWhere(p => p == getAreaLookingFrom('w')) ) + getValue('w') + Console.RESET
     val r = color(areas.indexWhere(p => p == getAreaLookingFrom('e')) ) + getValue('e') + Console.RESET
     var m = " "
     if (getCornersLookingFrom('e').contains('w')) m = l
     if (getCornersLookingFrom('n').contains('s')) m = color(areas.indexWhere(p => p == getAreaLookingFrom('n')) ) + getValue('n') + Console.RESET
     s" $l $m $r"
-  }
+  
 
-  def lowString:String = {
+  def lowString:String = 
     val u = color(areas.indexWhere(p => p == getAreaLookingFrom('s')) ) + getValue('s') + Console.RESET
     var ul = "└"
     var ur = "┘"
     if (getCornersLookingFrom('s').contains('w')) ul = u
     if (getCornersLookingFrom('s').contains('e')) ur = u
     s" $ul $u $ur"
-  }
+  
 }
