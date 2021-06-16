@@ -2,6 +2,8 @@ package de.htwg.se.Carcassonne.controller.controllerComponent
 
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfield
 import de.htwg.se.Carcassonne.util.UndoManager
+import de.htwg.se.Carcassonne.controller.GameState
+import de.htwg.se.Carcassonne.controller.GameState._
 
 
 class Controller(var playfield: Playfield) extends ControllerInterface {
@@ -20,27 +22,27 @@ class Controller(var playfield: Playfield) extends ControllerInterface {
 
   def addPlayer(name: String): Unit = {
     playfield.getGameState match {
-      case 1 => playfield = playfield.addPlayer(name)
+      case NewGame => playfield = playfield.addPlayer(name)
         publish(new AddPlayers)
       case _ =>
     }
   }
 
   def firstCard():Unit = {
-    playfield = playfield.changeGameState(3).getFreshCard
+    playfield = playfield.changeGameState(DrawCard).getFreshCard
     publish(new PlayfieldChanged)
   }
 
   def firstCard(select: Int):Unit = {
-    playfield = playfield.changeGameState(3).getFreshCard(select)
+    playfield = playfield.changeGameState(DrawCard).getFreshCard(select)
     publish(new PlayfieldChanged)
   }
 
-  def changeGameState(gs: Int):Unit = {
+  def changeGameState(gs: GameState):Unit = {
     playfield = playfield.changeGameState(gs)
   }
 
-  def getGameState:Int = playfield.getGameState
+  def getGameState:GameState = playfield.getGameState
 
   def rotateRight():Unit = {
     playfield = playfield.rotateR

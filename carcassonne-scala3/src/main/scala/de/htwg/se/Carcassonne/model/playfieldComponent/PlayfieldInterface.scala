@@ -1,8 +1,9 @@
 package de.htwg.se.Carcassonne.model.playfieldComponent
+import de.htwg.se.Carcassonne.controller.GameState
 
 trait PlayfieldInterface {
-  def changeGameState(gs:Int):PlayfieldInterface
-  def getGameState:Int
+  def changeGameState(gs:GameState):PlayfieldInterface
+  def getGameState:GameState
   def getSuccess:Boolean
   def fieldSize(size:Int):PlayfieldInterface
   def addPlayer(name:String):PlayfieldInterface

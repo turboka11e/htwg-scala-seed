@@ -54,3 +54,5 @@ project/.sbtserver
 yourgame.log
 
 .metals
+
+.bloop

@@ -5,19 +5,22 @@ import de.htwg.se.Carcassonne.model.gridComponent.GridInterface
 import de.htwg.se.Carcassonne.model.gridComponent.gridBaseImpl.Grid
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
+import de.htwg.se.Carcassonne.controller.GameState
+import de.htwg.se.Carcassonne.controller.GameState._
+
 
 case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: GridInterface = new Grid(1),
-                     freshCard:CardManipulator = new CardManipulator(), gameState:Int =  0, success:Boolean = true) extends PlayfieldInterface {
+                     freshCard:CardManipulator = new CardManipulator(), gameState:GameState = EmptyGame, success:Boolean = true) extends PlayfieldInterface {
 
-  def changeGameState(gs:Int):Playfield = copy(gameState = gs)
+  def changeGameState(gs:GameState):Playfield = copy(gameState = gs)
 
-  def getGameState:Int = gameState
+  def getGameState:GameState = gameState
 
   def getSuccess:Boolean = success
 
-  def fieldSize(size:Int):Playfield = copy(grid = new Grid(size), gameState = 1)                    // GameState 0
+  def fieldSize(size:Int):Playfield = copy(grid = new Grid(size), gameState = NewGame)                    // GameState 0
 
-  def addPlayer(name:String):Playfield = copy(players = players ::: List(Player(name)), gameState = 2)       // GameState 1
+  def addPlayer(name:String):Playfield = copy(players = players ::: List(Player(name)), gameState = AddPlayer)       // GameState 1
 
   def getFreshCard:Playfield = copy(freshCard = RawCardFactory("randomCard", isOn).drawCard())            // GameState 2
 
@@ -29,7 +32,7 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: GridInterf
 
   def selectArea(nr:Int):Playfield = {
     if(!freshCard.card.getAreas.exists(p => p.getPlayer != -1) && freshCard.card.getAreas.apply(nr).getValue != 'g') {
-      copy(freshCard = freshCard.setPlayerToArea(nr), gameState = 5)
+      copy(freshCard = freshCard.setPlayerToArea(nr), gameState = PlaceCard)
     } else {
       this
     }
@@ -41,7 +44,7 @@ case class Playfield(players:List[Player] = Nil, isOn: Int = 0, grid: GridInterf
     if (check == CardAdded.getCount){
       copy(success = false)
     }else{
-      copy(grid = CardAdded, success = true, gameState = 3, players = Points(CardAdded.getTerritories, players).updatePoints())
+      copy(grid = CardAdded, success = true, gameState = DrawCard, players = Points(CardAdded.getTerritories, players).updatePoints())
     }
   }
 

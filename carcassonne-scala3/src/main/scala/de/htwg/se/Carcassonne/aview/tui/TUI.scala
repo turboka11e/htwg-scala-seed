@@ -2,6 +2,7 @@ package de.htwg.se.Carcassonne.aview.tui
 
 import de.htwg.se.Carcassonne.controller._
 import de.htwg.se.Carcassonne.controller.controllerComponent.{AddPlayers, Controller, NewGame, PlayfieldChanged, RotateR, SetGrid}
+import de.htwg.se.Carcassonne.controller.GameState._
 
 import scala.swing.Reactor
 
@@ -25,15 +26,15 @@ class TUI(controller: Controller) extends Reactor {
 
   def decide(dc:Boolean):Unit = {
     controller.getGameState match {
-      case 2 =>
+      case AddPlayer =>
         if(!dc){
           controller.firstCard()
         } else {
-          controller.changeGameState(1)
+          controller.changeGameState(GameState.NewGame)
         }
-      case 3 => if(dc) controller.changeGameState(4)
+      case DrawCard => if(dc) controller.changeGameState(SelectArea)
 
-      case 4 => if(!dc) controller.changeGameState(5)
+      case SelectArea => if(!dc) controller.changeGameState(PlaceCard)
 
       case _ =>
     }
@@ -55,8 +56,8 @@ class TUI(controller: Controller) extends Reactor {
 
   def forkDigit(input:Int):Unit = {
     controller.getGameState match {
-      case 0 => controller.createGrid(input)
-      case 4 => controller.selectArea(input)
+      case EmptyGame => controller.createGrid(input)
+      case SelectArea => controller.selectArea(input)
       case _ =>
     }
   }

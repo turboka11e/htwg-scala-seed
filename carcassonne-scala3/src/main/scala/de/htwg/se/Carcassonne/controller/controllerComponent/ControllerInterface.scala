@@ -1,4 +1,5 @@
 package de.htwg.se.Carcassonne.controller.controllerComponent
+import de.htwg.se.Carcassonne.controller.GameState
 
 import scala.swing.Publisher
 
@@ -9,8 +10,8 @@ trait ControllerInterface extends Publisher {
   def addPlayer(name: String): Unit
   def firstCard():Unit
   def firstCard(select: Int):Unit
-  def changeGameState(gs: Int):Unit
-  def getGameState:Int
+  def changeGameState(gs: GameState):Unit
+  def getGameState:GameState
   def rotateRight():Unit
   def rotateLeft():Unit
   def selectArea(nr: Int):Unit

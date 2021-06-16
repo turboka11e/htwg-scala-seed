@@ -3,6 +3,8 @@ package de.htwg.se.Carcassonne.aview.tui
 import de.htwg.se.Carcassonne.model.gridComponent.GridInterface
 import de.htwg.se.Carcassonne.model.playerComponent.Player
 import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.CardManipulator
+import de.htwg.se.Carcassonne.controller.GameState
+import de.htwg.se.Carcassonne.controller.GameState._
 
 class PrettyPrint(grid: GridInterface, freshCard:CardManipulator, players:List[Player], isOn: Int, success: Boolean) extends PrettyPrintStrategyTemplate {
 
@@ -10,15 +12,15 @@ class PrettyPrint(grid: GridInterface, freshCard:CardManipulator, players:List[P
 
   var printable: String = g0
 
-  override def printo(gameState: Int):String = {
+  override def printo(gameState: GameState):String = {
 
     gameState match {
-      case 0 => printable = g0
-      case 1 => printable = g1
-      case 2 => printable = g2
-      case 3 => printable = g3
-      case 4 => printable = g4
-      case 5 => printable = g5
+      case EmptyGame => printable = g0
+      case NewGame => printable = g1
+      case AddPlayer => printable = g2
+      case DrawCard => printable = g3
+      case SelectArea => printable = g4
+      case PlaceCard => printable = g5
     }
     printable
   }
