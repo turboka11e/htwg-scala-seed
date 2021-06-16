@@ -10,70 +10,56 @@ class Controller(var playfield: Playfield) extends ControllerInterface {
 
   private val undoManager = new UndoManager
 
-  def newGame():Unit = {
+  def newGame():Unit = 
     playfield = Playfield()
     publish(new SetGrid)
-  }
 
-  def createGrid(size: Int):Unit = {
+  def createGrid(size: Int):Unit =
     playfield = playfield.fieldSize(size)
     publish(new AddPlayers)
-  }
 
-  def addPlayer(name: String): Unit = {
-    playfield.getGameState match {
+  def addPlayer(name: String): Unit =
+    playfield.getGameState match
       case NewGame => playfield = playfield.addPlayer(name)
         publish(new AddPlayers)
       case _ =>
-    }
-  }
 
-  def firstCard():Unit = {
+  def firstCard():Unit =
     playfield = playfield.changeGameState(DrawCard).getFreshCard
     publish(new PlayfieldChanged)
-  }
 
-  def firstCard(select: Int):Unit = {
+  def firstCard(select: Int):Unit =
     playfield = playfield.changeGameState(DrawCard).getFreshCard(select)
     publish(new PlayfieldChanged)
-  }
 
-  def changeGameState(gs: GameState):Unit = {
+  def changeGameState(gs: GameState):Unit =
     playfield = playfield.changeGameState(gs)
-  }
 
   def getGameState:GameState = playfield.getGameState
 
-  def rotateRight():Unit = {
+  def rotateRight():Unit =
     playfield = playfield.rotateR
     publish(new PlayfieldChanged)
-  }
 
-  def rotateLeft():Unit = {
+  def rotateLeft():Unit =
     playfield = playfield.rotateL
     publish(new PlayfieldChanged)
-  }
 
-  def selectArea(nr: Int):Unit = {
+  def selectArea(nr: Int):Unit =
     playfield = playfield.selectArea(nr)
     publish(new PlayfieldChanged)
-  }
 
-  def placeCard(x:Int, y:Int):Unit = {
+  def placeCard(x:Int, y:Int):Unit =
     undoManager.doStep(new PlaceCommand(x, y, playfield, this))
     publish(new PlayfieldChanged)
-  }
 
-  def undo(): Unit = {
+  def undo(): Unit =
     undoManager.undoStep()
     publish(new PlayfieldChanged)
-  }
 
-  def redo(): Unit = {
+  def redo(): Unit =
     undoManager.redoStep()
     publish(new PlayfieldChanged)
-  }
-
 
   def playFieldToString: String = playfield.playFieldToString
 
