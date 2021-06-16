@@ -13,7 +13,7 @@ class UndoManager {
     undoStack match {
       case  Nil =>
       case head::stack =>
-        head.undoStep
+        head.undoStep()
         undoStack=stack
         redoStack= head::redoStack
     }
@@ -23,7 +23,7 @@ class UndoManager {
     redoStack match {
       case Nil =>
       case head::stack =>
-        head.redoStep
+        head.redoStep()
         redoStack=stack
         undoStack=head::undoStack
     }

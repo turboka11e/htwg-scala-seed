@@ -22,7 +22,7 @@ case class Card(areas:List[AreaInterface] = List(Area()), private val id:(Int, I
 
   def getPlayer(dir:Char): Int = areas.find(_.getCorners.contains(dir)).get.getPlayer
 
-  def getAreas():List[AreaInterface] = areas
+  def getAreas:List[AreaInterface] = areas
 
   def getCornersLookingFrom(dir:Char): List[Char] = areas.find(_.getCorners.contains(dir)).get.getCorners
 
