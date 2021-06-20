@@ -26,4 +26,6 @@ libraryDependencies += "com.typesafe.akka" %% "akka-actor-typed" % "2.6.8"
 
 libraryDependencies += "com.typesafe.akka" %% "akka-stream" % "2.6.8"
 
+libraryDependencies += "org.scalatestplus" %% "mockito-3-4" % "3.2.7.0" % "test"
+
 

@@ -9,7 +9,7 @@ import scala.io.StdIn.readLine
 
 object TUI {
 
-  val controller: ControllerInterface = new Controller
+  var controller: ControllerInterface = new Controller
   val tui = new TUI(controller)
   val restController = RestControllerTUI
 

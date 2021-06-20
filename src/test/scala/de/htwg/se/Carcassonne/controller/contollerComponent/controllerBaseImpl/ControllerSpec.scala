@@ -6,7 +6,7 @@ import de.htwg.se.Carcassonne.model.playfieldComponent.playfieldBaseImpl.Playfie
 import org.scalatest.{Matchers, WordSpec}
 
 class ControllerSpec extends WordSpec with Matchers {
-  "A Controller" when {
+
     "A Controller" when {
       "initilised" should {
         val play = Playfield()
@@ -66,7 +66,7 @@ class ControllerSpec extends WordSpec with Matchers {
         }
       }
     }
-  }
+
 }
 
 
