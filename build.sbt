@@ -1,7 +1,7 @@
 name          := "Carcassonne"
 organization  := "de.htwg.se"
 version       := "0.7.0"
-scalaVersion  := "2.12.2"
+scalaVersion  := "2.13.6"
 
 libraryDependencies += "org.scalactic" %% "scalactic" % "3.0.5"
 libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.5" % "test"
