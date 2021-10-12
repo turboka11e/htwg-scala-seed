@@ -10,7 +10,7 @@ import de.htwg.se.Carcassonne.model.playfieldComponent.PlayfieldInterface
 
 class CarcassonneModule extends AbstractModule with ScalaModule {
 
-  def configure(): Unit = {
+  override def configure(): Unit = {
     bind[ControllerInterface].to[controllerBaseImpl.Controller]
     bind[PlayfieldInterface].to[playfieldBaseImpl.Playfield]
     bind[FileIOInterface].to[fileIoXmlImpl.FileIO]
